@@ -1,0 +1,242 @@
+.courses {
+  &__list {
+    user-select: none;
+  }
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  &__delete {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 500px;
+    height: auto;
+    padding: 20px;
+    background-color: #fff;
+    z-index: 999;
+    &--notification {
+      font-size: 1.6rem;
+      color: #333;
+      font-weight: 700;
+    }
+    &--action {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    &--btn {
+      width: 100px;
+      padding: 10px;
+      font-size: 1.6rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.1;
+      }
+    }
+    &--sure {
+      background: #d9534f;
+      border-radius: 10px;
+      color: #fff;
+    }
+    &--cancel {
+      border: 1px solid #333;
+      border-radius: 10px;
+    }
+  }
+  &__item {
+    width: 100%;
+    margin: 20px auto;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+      thead {
+        tr {
+          th {
+            font-weight: 700;
+            font-size: 2rem;
+            background-color: #f4f4f4; /* Màu nền cho phần tiêu đề */
+            color: #333;
+            text-align: left;
+            padding: 10px 15px;
+            border-bottom: 2px solid #ccc; /* Đường viền dưới tiêu đề */
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: #f9f9f9; /* Màu nền cho các dòng lẻ */
+          }
+
+          &:nth-child(even) {
+            background-color: #e6e6e6; /* Màu nền cho các dòng chẵn */
+          }
+
+          &:hover {
+            background-color: #d1e7dd; /* Đổi màu nền khi hover */
+            cursor: pointer;
+          }
+
+          td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd; /* Đường viền giữa các dòng */
+            overflow: hidden;
+          }
+
+          /* Style cho các button */
+          .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+
+            &.btn-warning {
+              padding: 10px;
+              background-color: #f0ad4e;
+              &:hover {
+                background-color: #ec971f;
+              }
+            }
+
+            &.btn-danger {
+              padding: 10px;
+              margin-left: 10px;
+              background-color: #d9534f;
+              &:hover {
+                background-color: #c9302c;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &__heading {
+    line-height: 148%;
+    font-weight: 700;
+    font-size: 4rem;
+    color: #c9302c;
+    user-select: none;
+  }
+  &__create {
+    user-select: none;
+    &--btn {
+      background: #d1e7dd;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    &--link {
+      color: #333;
+      font-weight: 500;
+      font-size: 1.6rem;
+      color: #333;
+    }
+  }
+}
+.course-creation {
+  &__submit {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    &--btn {
+      background: #f0ad4e !important;
+      color: #ffff !important;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.1;
+      }
+    }
+  }
+  &__title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: red;
+  }
+  &__field {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__label {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  &__input {
+    padding: 15px;
+    width: 100%;
+    border: 1px solid #333;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    &::placeholder {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 128%;
+    }
+  }
+  &__textarea {
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 128%;
+    &::placeholder {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 128%;
+    }
+  }
+  &__select {
+    font-size: 16px;
+    padding: 15px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    appearance: none; // Ẩn mũi tên mặc định
+    position: relative;
+    cursor: pointer;
+    &::placeholder {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 128%;
+    }
+  }
+  &__subtitle {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: red;
+  }
+  &__lesson-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #ec971f;
+  }
+  &__button {
+    width: 200px;
+    padding: 15px;
+    font-weight: 700;
+    background: #d1e7dd;
+    color: #333;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    font-size: 1.8rem;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

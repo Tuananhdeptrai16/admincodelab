@@ -1,0 +1,22 @@
+.admin__heading {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: red;
+  line-height: 148%;
+}
+
+.nav {
+  &__icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+.ant-layout {
+  min-height: 100vh !important;
+}
+.ant-menu-item {
+  margin-top: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
