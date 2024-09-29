@@ -1,0 +1,12 @@
+.home {
+  &__heading {
+    font-size: 4rem;
+    font-weight: 600;
+    color: red;
+    line-height: 148%;
+  }
+  &__phone {
+    color: blue;
+    text-decoration: underline;
+  }
+}

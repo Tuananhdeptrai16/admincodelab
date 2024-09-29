@@ -43,31 +43,19 @@ const LayoutAdmin = () => {
             {
               key: "2",
               icon: (
-                <NavLink to="/post">
+                <NavLink to="/exercise">
                   <img
-                    src={`${process.env.PUBLIC_URL}/images/icon/post.svg`}
+                    src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
                     alt="svg"
                     className="nav__icon icon"
                   />
                 </NavLink>
               ),
-              label: <NavLink to="/post">Post</NavLink>,
+              label: <NavLink to="/exercise">Exercise</NavLink>,
             },
+
             {
               key: "3",
-              icon: (
-                <NavLink to="/codelab/courses">
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
-                    alt="svg"
-                    className="nav__icon icon"
-                  />
-                </NavLink>
-              ),
-              label: <NavLink to="/uploads">Blog</NavLink>,
-            },
-            {
-              key: "4",
               icon: (
                 <NavLink to="/page">
                   <img
@@ -77,10 +65,36 @@ const LayoutAdmin = () => {
                   />
                 </NavLink>
               ),
-              label: <NavLink to="/page">Page</NavLink>,
+              label: <NavLink to="/page">Courses</NavLink>,
+            },
+            {
+              key: "4",
+              icon: (
+                <NavLink to="/blog">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
+                    alt="svg"
+                    className="nav__icon icon"
+                  />
+                </NavLink>
+              ),
+              label: <NavLink to="/blog">Blog</NavLink>,
             },
             {
               key: "5",
+              icon: (
+                <NavLink to="/comment">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
+                    alt="svg"
+                    className="nav__icon icon"
+                  />
+                </NavLink>
+              ),
+              label: <NavLink to="/comment">Comment</NavLink>,
+            },
+            {
+              key: "6",
               icon: (
                 <NavLink to="/tools">
                   <img
@@ -92,19 +106,18 @@ const LayoutAdmin = () => {
               ),
               label: <NavLink to="/tools">Tools</NavLink>,
             },
-
             {
               key: "7",
               icon: (
-                <NavLink to="/comment">
+                <NavLink to="/tools">
                   <img
-                    src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
+                    src={`${process.env.PUBLIC_URL}/images/icon/logout.svg`}
                     alt="svg"
                     className="nav__icon icon"
                   />
                 </NavLink>
               ),
-              label: <NavLink to="/comment">Comment</NavLink>,
+              label: <NavLink to="/tools">Logout</NavLink>,
             },
           ]}
         />

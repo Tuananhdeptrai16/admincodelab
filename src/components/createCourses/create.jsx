@@ -9,7 +9,7 @@ const CourseForm = () => {
   const [courseData, setCourseData] = useState({
     title: "",
     description: "",
-    category: "",
+    category: "Web Development",
     price: "",
     duration: "",
     level: "beginner",
@@ -72,7 +72,7 @@ const CourseForm = () => {
     setCourseData({
       title: "",
       description: "",
-      category: "",
+      category: "Web Development",
       price: "",
       duration: "",
       level: "beginner",
