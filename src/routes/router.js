@@ -5,10 +5,11 @@ import CourseCreation from "../components/createCourses/courses"; // Uncomment k
 import CourseForm from "../components/createCourses/create";
 import { User } from "../components/user/user";
 import { Exercise } from "../components/exersise/excersise";
-import { Blog } from "../components/blog/blog";
+import Blog from "../components/blog/blog";
 import { Tools } from "../components/tools/tools";
 import { Comment } from "../components/comment/comment";
 import { Home } from "../components/home/home";
+import BlogForm from "../components/blog/create_bog";
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,8 @@ const AppRoutes = () => {
         <Route path="/page/create_courses" element={<CourseForm />} />
         <Route path="/exercise" element={<Exercise />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/page/create_blog" element={<BlogForm />} />
+
         <Route path="/tools" element={<Tools />} />
         <Route path="/comment" element={<Comment />} />
       </Route>

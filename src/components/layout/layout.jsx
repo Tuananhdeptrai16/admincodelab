@@ -143,7 +143,6 @@ const LayoutAdmin = () => {
           />
         </Header>
 
-        {/* Content chính */}
         <Content
           style={{
             margin: "24px 16px",
@@ -153,7 +152,7 @@ const LayoutAdmin = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <Outlet /> {/* Render route con ở đây */}
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
