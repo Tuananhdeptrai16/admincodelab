@@ -49,6 +49,21 @@ const CourseCreation = () => {
     <>
       {toastSuccess === true ? <ToastSuccess></ToastSuccess> : ""}
       <div className="courses">
+        <div className="breadcrumb">
+          <div className="breadcrumb__wrap">
+            <NavLink to="/home" className="breadcrumb__item">
+              <p className="breadcrumb__name">Trang chủ</p>
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
+                alt=""
+                className="breadcrumb__icon-arrow"
+              />
+            </NavLink>
+            <NavLink to="/page" className="breadcrumb__item">
+              <p className="breadcrumb__name  breadcrumb__active">Khóa học</p>
+            </NavLink>
+          </div>
+        </div>
         <h1 className="courses__heading">Khóa học đã tạo</h1>
         {showModel && (
           <>
@@ -82,11 +97,13 @@ const CourseCreation = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="courses__id">id</th>
-                  <th>Title</th>
+                  <th className="courses__id">Mã khóa học</th>
+                  <th>Khóa học</th>
+                  <th>Người tạo</th>
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
-                  <th>Action</th>
+                  <th>Danh mục</th>
+                  <th>Sửa / Xóa</th>
                 </tr>
               </thead>
               <tbody>
@@ -96,9 +113,10 @@ const CourseCreation = () => {
                       <tr key={`${index}-tutorials`}>
                         <td>{item._id}</td>
                         <td>{item.title}</td>
+                        <td>{item.author}</td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                         <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
-
+                        <td>{item.category}</td>
                         <td>
                           <button
                             onClick={() => {

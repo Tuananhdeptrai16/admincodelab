@@ -4,10 +4,12 @@ import "./reset.scss";
 import "./grid.scss";
 import "./layout.scss";
 import "./base.scss";
+import "./breadcrumbs.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import Logo from "../logo/logo";
 import { LogoOnly } from "../logo/logo_only";
+import { Footer } from "./footer";
 
 const { Header, Sider, Content } = Layout;
 
@@ -24,10 +26,23 @@ const LayoutAdmin = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
           items={[
             {
               key: "1",
+              icon: (
+                <NavLink to="/">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/dashboard.png`}
+                    alt="svg"
+                    className="nav__icon icon"
+                  />
+                </NavLink>
+              ),
+              label: <NavLink to="/">Dashboard</NavLink>,
+            },
+
+            {
+              key: "2",
               icon: (
                 <NavLink to="/user">
                   <img
@@ -41,7 +56,7 @@ const LayoutAdmin = () => {
             },
 
             {
-              key: "2",
+              key: "3",
               icon: (
                 <NavLink to="/exercise">
                   <img
@@ -55,7 +70,7 @@ const LayoutAdmin = () => {
             },
 
             {
-              key: "3",
+              key: "4",
               icon: (
                 <NavLink to="/page">
                   <img
@@ -68,7 +83,7 @@ const LayoutAdmin = () => {
               label: <NavLink to="/page">Courses</NavLink>,
             },
             {
-              key: "4",
+              key: "5",
               icon: (
                 <NavLink to="/blog">
                   <img
@@ -81,7 +96,7 @@ const LayoutAdmin = () => {
               label: <NavLink to="/blog">Blog</NavLink>,
             },
             {
-              key: "5",
+              key: "6",
               icon: (
                 <NavLink to="/comment">
                   <img
@@ -94,7 +109,7 @@ const LayoutAdmin = () => {
               label: <NavLink to="/comment">Comment</NavLink>,
             },
             {
-              key: "6",
+              key: "7",
               icon: (
                 <NavLink to="/tools">
                   <img
@@ -107,7 +122,7 @@ const LayoutAdmin = () => {
               label: <NavLink to="/tools">Tools</NavLink>,
             },
             {
-              key: "7",
+              key: "8",
               icon: (
                 <NavLink to="/tools">
                   <img
@@ -124,7 +139,6 @@ const LayoutAdmin = () => {
       </Sider>
 
       <Layout>
-        {/* Header với nút toggle */}
         <Header
           style={{
             padding: 0,
@@ -141,6 +155,38 @@ const LayoutAdmin = () => {
               height: 64,
             }}
           />
+          <div className="header__wrap">
+            <div className="notification">
+              <button className="notification__action">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/notification.svg`}
+                  alt=""
+                  className="notification__img"
+                />
+              </button>
+            </div>
+            <div className="country">
+              <button className="country__action">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/vietnam.png`}
+                  alt=""
+                  className="country__img"
+                />
+              </button>
+            </div>
+            <div className="avatar">
+              <button className="avatar__action">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/avatar.jpg`}
+                  alt=""
+                  className="avatar__img"
+                />
+              </button>
+              <div className="avatar__user">
+                <p className="avatar__user--name">Truong Tuan Anh</p>
+              </div>
+            </div>
+          </div>
         </Header>
 
         <Content
@@ -154,6 +200,7 @@ const LayoutAdmin = () => {
         >
           <Outlet />
         </Content>
+        <Footer></Footer>
       </Layout>
     </Layout>
   );

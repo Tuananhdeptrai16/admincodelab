@@ -1,0 +1,65 @@
+// The code was written by programmer Truong Tuan Anh
+// Thanks for watching and sharing
+
+.footer {
+  padding: 20px;
+  border-top: 1px solid #d9d9d9;
+  width: 100%;
+  background: #d9d9d9;
+  &__logo {
+    display: flex;
+    justify-content: flex-start;
+    & .logo {
+      justify-content: flex-start;
+    }
+  }
+  &__desc {
+    max-width: 260px;
+    margin-top: 18px;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 128%;
+  }
+  &__social {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+  }
+  &__link {
+    color: var(--text-color-main-light-2);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 185.714%;
+    &--active {
+      font-weight: 700;
+    }
+    & span {
+      font-weight: 800;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  &__item + &__item {
+    margin-top: 20px;
+  }
+  &__separate {
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+  }
+  &__copyright {
+    margin-top: 10px;
+    text-align: center;
+    font-style: 1rem;
+    color: #353434;
+    font-weight: 500;
+    line-height: 148%;
+  }
+  &__more {
+    display: block;
+  }
+}

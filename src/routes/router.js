@@ -15,6 +15,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LayoutAdmin />}>
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/user" element={<User />} />
         <Route path="/page" element={<CourseCreation />} />
@@ -22,7 +23,6 @@ const AppRoutes = () => {
         <Route path="/exercise" element={<Exercise />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/page/create_blog" element={<BlogForm />} />
-
         <Route path="/tools" element={<Tools />} />
         <Route path="/comment" element={<Comment />} />
       </Route>

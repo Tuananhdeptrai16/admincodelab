@@ -1,0 +1,36 @@
+// The code was written by programmer Truong Tuan Anh
+// Thanks for watching and sharing
+.breadcrumb {
+  margin-bottom: 20px;
+  &__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px 20px 20px 20px;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px;
+    background: rgb(245 245 245);
+    box-shadow: 0px 20px 60px 10px var(--boxShadow__breadcrumb);
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  &__name {
+    white-space: nowrap;
+    color: #767575;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 150%;
+
+    &:hover {
+      color: #69b1ff;
+      text-decoration: underline;
+    }
+  }
+  &__active {
+    color: #333;
+  }
+}
