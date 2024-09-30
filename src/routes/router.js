@@ -10,6 +10,7 @@ import { Tools } from "../components/tools/tools";
 import { Comment } from "../components/comment/comment";
 import { Home } from "../components/home/home";
 import BlogForm from "../components/blog/create_bog";
+import { Dashboard } from "../components/dashboard/dashboard";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
       <Route path="/" element={<LayoutAdmin />}>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user" element={<User />} />
         <Route path="/page" element={<CourseCreation />} />
         <Route path="/page/create_courses" element={<CourseForm />} />

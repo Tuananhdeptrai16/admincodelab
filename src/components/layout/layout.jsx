@@ -30,7 +30,7 @@ const LayoutAdmin = () => {
             {
               key: "1",
               icon: (
-                <NavLink to="/">
+                <NavLink to="/dashboard">
                   <img
                     src={`${process.env.PUBLIC_URL}/images/icon/dashboard.png`}
                     alt="svg"
@@ -38,7 +38,7 @@ const LayoutAdmin = () => {
                   />
                 </NavLink>
               ),
-              label: <NavLink to="/">Dashboard</NavLink>,
+              label: <NavLink to="/dashboard">Dashboard</NavLink>,
             },
 
             {
