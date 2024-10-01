@@ -126,13 +126,13 @@ const LayoutAdmin = () => {
               icon: (
                 <NavLink to="/tools">
                   <img
-                    src={`${process.env.PUBLIC_URL}/images/icon/logout.svg`}
+                    src={`${process.env.PUBLIC_URL}/images/icon/help.svg`}
                     alt="svg"
                     className="nav__icon icon"
                   />
                 </NavLink>
               ),
-              label: <NavLink to="/tools">Logout</NavLink>,
+              label: <NavLink to="/tools">Help</NavLink>,
             },
           ]}
         />

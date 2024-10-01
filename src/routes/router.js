@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import LayoutAdmin from "../components/layout/layout";
-import CourseCreation from "../components/createCourses/courses"; // Uncomment khi cần sử dụng
+import CourseCreation from "../components/createCourses/courses";
 import CourseForm from "../components/createCourses/create";
-import { User } from "../components/user/user";
 import { Exercise } from "../components/exersise/excersise";
 import Blog from "../components/blog/blog";
+import Users from "../components/user/user";
 import { Tools } from "../components/tools/tools";
 import { Comment } from "../components/comment/comment";
 import { Home } from "../components/home/home";
@@ -19,7 +19,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user" element={<Users />} />
         <Route path="/page" element={<CourseCreation />} />
         <Route path="/page/create_courses" element={<CourseForm />} />
         <Route path="/exercise" element={<Exercise />} />

@@ -64,7 +64,8 @@ const CourseCreation = () => {
             </NavLink>
           </div>
         </div>
-        <h1 className="courses__heading">Khóa học đã tạo</h1>
+        <h1 className="courses__heading">Quản lý khóa học</h1>
+        <div className="courses__seperate"></div>
         {showModel && (
           <>
             <div className="courses__delete">

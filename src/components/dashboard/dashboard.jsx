@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./dashboard.scss";
-import Item from "antd/es/list/Item";
 export const Dashboard = () => {
   return (
     <div className="dashboard">
@@ -23,39 +22,70 @@ export const Dashboard = () => {
 
       <div className="dashboard__wrap">
         <div className="dashboard__total">
+          <h1 className="dashboard__heading">DashBoard</h1>
           <div className="row row-cols-3">
             <div className="col">
               <div className="dashboard__item dashboard__courses">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
+                  alt=""
+                  className="dashboard__icon"
+                />
                 <span className="dashboard__number">01</span>
-                <p className="dashboard__desc">Tổng số khóa học đã tạo</p>
+                <p className="dashboard__desc">khóa học đã tạo</p>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__lesson">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
+                  alt="svg"
+                  className="dashboard__icon"
+                />
                 <span className="dashboard__number">02</span>
-                <p className="dashboard__desc">Tổng số bài học đã tạo</p>
+                <p className="dashboard__desc">bài học đã tạo</p>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__blog">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
+                  alt="svg"
+                  className="dashboard__icon"
+                />
                 <span className="dashboard__number">54</span>
-                <p className="dashboard__desc">Tổng số blog đã tạo</p>
+                <p className="dashboard__desc">blog đã tạo</p>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__comment">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
+                  alt="svg"
+                  className="dashboard__icon"
+                />
                 <span className="dashboard__number">33</span>
                 <p className="dashboard__desc">Bình luận </p>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__members">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/user_group.svg`}
+                  alt="svg"
+                  className="dashboard__icon"
+                />
                 <span className="dashboard__number">22</span>
-                <p className="dashboard__desc">Tổng số thành viên</p>
+                <p className="dashboard__desc">thành viên</p>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__admin-total">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
+                  alt="svg"
+                  className="dashboard__icon"
+                />
                 <span className="dashboard__number">01</span>
                 <p className="dashboard__desc">Số Admin</p>
               </div>
@@ -64,6 +94,7 @@ export const Dashboard = () => {
         </div>
       </div>
       <div className="dashboard__admin">
+        <h1 className="dashboard__heading">Quản lý admin</h1>
         <div className="row ">
           <div className="col-8">
             <table>

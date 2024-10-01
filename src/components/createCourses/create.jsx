@@ -10,7 +10,6 @@ const CourseForm = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
-
   const [courseData, setCourseData] = useState({
     title: "",
     author: "",
@@ -94,7 +93,6 @@ const CourseForm = () => {
       studentsEnrolled: 0,
     });
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCourseData((prevData) => ({
@@ -102,7 +100,6 @@ const CourseForm = () => {
       [name]: value,
     }));
   };
-
   const handleAddLesson = () => {
     setCourseData((prevData) => ({
       ...prevData,
@@ -159,9 +156,6 @@ const CourseForm = () => {
       };
     });
   };
-  console.log(">>>targetCourseID", targetCourseID);
-  console.log(">>>>courses data", JSON.stringify(courseData));
-  console.log(`${process.env.REACT_APP_API_BACKEND_URL}/courses`);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -196,115 +190,138 @@ const CourseForm = () => {
         ""
       )}
       <div className="course-creation">
-        <h1 className="course-creation__title">
-          {action === "C" ? "Tạo" : "Sửa"} Khóa Học Mới
-        </h1>
+        <h1 className="course-creation__title">Thông tin khóa học</h1>
+        <div className="courses__seperate"></div>
         <form className="course-creation__form" onSubmit={handleSubmit}>
-          <div className="course-creation__field">
-            <label htmlFor="title" className="course-creation__label">
-              Tiêu đề khóa học
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="course-creation__input"
-              placeholder="Nhập tiêu đề khóa học"
-              value={courseData.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="course-creation__field">
-            <label htmlFor="title" className="course-creation__label">
-              Người hướng dẫn
-            </label>
-            <input
-              type="text"
-              id="author"
-              name="author"
-              className="course-creation__input"
-              placeholder="Nhập tiêu đề khóa học"
-              value={courseData.author}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="course-creation__field">
-            <label htmlFor="description" className="course-creation__label">
-              Mô tả
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              className="course-creation__textarea"
-              placeholder="Nhập mô tả khóa học"
-              value={courseData.description}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <div className="course-creation__field">
-            <label htmlFor="category" className="course-creation__label">
-              Danh mục
-            </label>
-            <select
-              id="category"
-              name="category"
-              className="course-creation__select"
-              value={courseData.category}
-              onChange={handleChange}
-            >
-              <option value="web-development">Web Development</option>
-              <option value="mobile-development">Mobile Development</option>
-              <option value="data-science">Data Science</option>
-            </select>
-          </div>
-          <div className="course-creation__field">
-            <label htmlFor="price" className="course-creation__label">
-              Giá khóa học
-            </label>
-            <input
-              type="number"
-              id="price"
-              name="price"
-              className="course-creation__input"
-              placeholder="Nhập giá khóa học"
-              min="0"
-              value={courseData.price}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="course-creation__field">
-            <label htmlFor="duration" className="course-creation__label">
-              Thời gian (phút)
-            </label>
-            <input
-              type="number"
-              id="duration"
-              name="duration"
-              className="course-creation__input"
-              placeholder="Nhập thời gian"
-              min="0"
-              value={courseData.duration}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="course-creation__field">
-            <label htmlFor="level" className="course-creation__label">
-              Cấp độ
-            </label>
-            <select
-              id="level"
-              name="level"
-              className="course-creation__select"
-              value={courseData.level}
-              onChange={handleChange}
-            >
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
+          <div className="row row-cols-2">
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="title" className="course-creation__label">
+                  Tiêu đề khóa học
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="course-creation__input"
+                  placeholder="Nhập tiêu đề khóa học"
+                  value={courseData.title}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="title" className="course-creation__label">
+                  Người hướng dẫn
+                </label>
+                <input
+                  type="text"
+                  id="author"
+                  name="author"
+                  className="course-creation__input"
+                  placeholder="Nhập tiêu đề khóa học"
+                  value={courseData.author}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
           </div>
 
-          <h2 className="course-creation__subtitle">Thêm bài học</h2>
+          <div className="row row-cols-3">
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="price" className="course-creation__label">
+                  Giá khóa học
+                </label>
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  className="course-creation__input"
+                  placeholder="Nhập giá khóa học"
+                  min="0"
+                  value={courseData.price}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="duration" className="course-creation__label">
+                  Thời gian (phút)
+                </label>
+                <input
+                  type="number"
+                  id="duration"
+                  name="duration"
+                  className="course-creation__input"
+                  placeholder="Nhập thời gian"
+                  min="0"
+                  value={courseData.duration}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="level" className="course-creation__label">
+                  Cấp độ
+                </label>
+                <select
+                  id="level"
+                  name="level"
+                  className="course-creation__select"
+                  value={courseData.level}
+                  onChange={handleChange}
+                >
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="row ">
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="category" className="course-creation__label">
+                  Danh mục
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  className="course-creation__select"
+                  value={courseData.category}
+                  onChange={handleChange}
+                >
+                  <option value="web-development">Web Development</option>
+                  <option value="mobile-development">Mobile Development</option>
+                  <option value="data-science">Data Science</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="description" className="course-creation__label">
+                  Mô tả
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="course-creation__textarea"
+                  placeholder="Nhập mô tả khóa học"
+                  value={courseData.description}
+                  onChange={handleChange}
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <h2 className="course-creation__subtitle">Thông tin bài học</h2>
+          <div className="courses__seperate"></div>
+
           <div className="course-creation__lessons">
             {courseData.lessons.map((lesson, lessonIndex) => (
               <div key={lessonIndex} className="course-creation__lesson">
@@ -333,50 +350,56 @@ const CourseForm = () => {
                       key={paragraphIndex}
                       className="course-creation__paragraph"
                     >
-                      <div className="course-creation__field">
-                        <label
-                          htmlFor={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                          className="course-creation__label"
-                        >
-                          Nội dung đoạn văn {paragraphIndex + 1}
-                        </label>
-                        <textarea
-                          id={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                          className="course-creation__textarea"
-                          placeholder="Nhập nội dung đoạn văn"
-                          name="text"
-                          value={paragraph.text}
-                          onChange={(e) =>
-                            handleParagraphChange(
-                              lessonIndex,
-                              paragraphIndex,
-                              e
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="course-creation__field">
-                        <label
-                          htmlFor={`lesson-image-${lessonIndex}-${paragraphIndex}`}
-                          className="course-creation__label"
-                        >
-                          URL hình ảnh {paragraphIndex + 1}
-                        </label>
-                        <input
-                          type="text"
-                          id={`lesson-image-${lessonIndex}-${paragraphIndex}`}
-                          className="course-creation__input"
-                          placeholder="Nhập URL hình ảnh"
-                          name="imageUrl"
-                          value={paragraph.imageUrl}
-                          onChange={(e) =>
-                            handleParagraphChange(
-                              lessonIndex,
-                              paragraphIndex,
-                              e
-                            )
-                          }
-                        />
+                      <div className="row row-cols-2">
+                        <div className="col gx-1">
+                          <div className="course-creation__field">
+                            <label
+                              htmlFor={`lesson-text-${lessonIndex}-${paragraphIndex}`}
+                              className="course-creation__label"
+                            >
+                              Nội dung đoạn văn {paragraphIndex + 1}
+                            </label>
+                            <textarea
+                              id={`lesson-text-${lessonIndex}-${paragraphIndex}`}
+                              className="course-creation__textarea"
+                              placeholder="Nhập nội dung đoạn văn"
+                              name="text"
+                              value={paragraph.text}
+                              onChange={(e) =>
+                                handleParagraphChange(
+                                  lessonIndex,
+                                  paragraphIndex,
+                                  e
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="col gx-1 ">
+                          <div className="course-creation__field">
+                            <label
+                              htmlFor={`lesson-image-${lessonIndex}-${paragraphIndex}`}
+                              className="course-creation__label"
+                            >
+                              Hình {paragraphIndex + 1}
+                            </label>
+                            <input
+                              type="text"
+                              id={`lesson-image-${lessonIndex}-${paragraphIndex}`}
+                              className="course-creation__input"
+                              placeholder="Nhập URL hình ảnh"
+                              name="imageUrl"
+                              value={paragraph.imageUrl}
+                              onChange={(e) =>
+                                handleParagraphChange(
+                                  lessonIndex,
+                                  paragraphIndex,
+                                  e
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}

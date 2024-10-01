@@ -1,9 +1,13 @@
-.courses {
+.user {
   &__seperate {
     width: 100%;
     margin: 10px 0 40px 0;
     height: 2px;
     background-color: #b7e732;
+  }
+  &__admin {
+    font-weight: 700;
+    color: #d9534f;
   }
   &__list {
     user-select: none;
@@ -27,8 +31,9 @@
     z-index: 999;
     &--notification {
       font-size: 1.6rem;
-      color: #333;
+      color: #727070;
       font-weight: 700;
+      line-height: 150%;
     }
     &--action {
       margin-top: 20px;
@@ -101,6 +106,8 @@
 
           /* Style cho các button */
           .btn {
+            width: 150px !important;
+            font-weight: 700;
             padding: 5px 10px;
             border: none;
             border-radius: 10px;
@@ -113,17 +120,17 @@
               padding: 10px;
               background-color: #f0ad4e;
               &:hover {
-                background-color: #ec971f;
+                background-color: #cd061a;
                 scale: 1.1;
               }
             }
 
             &.btn-danger {
+              margin: 0 !important;
               padding: 10px;
-              margin-left: 10px;
-              background-color: #d9534f;
+              background-color: #84dd90;
               &:hover {
-                background-color: #c9302c;
+                background-color: #84dd90;
                 scale: 1.1;
               }
             }
@@ -154,7 +161,7 @@
     }
   }
 }
-.course-creation {
+.user-creation {
   &__submit {
     margin: 0 auto;
     display: flex;

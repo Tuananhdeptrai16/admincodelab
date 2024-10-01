@@ -40,6 +40,11 @@
   padding: 5px 10px;
   border-radius: 20px;
   background: #f1eeee;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  &:hover {
+    scale: 1.02;
+  }
   &__action {
     border-radius: 50%;
     width: 40px;
@@ -83,6 +88,11 @@
     height: 40px;
     background: #f1eeee;
     border-radius: 50%;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    &:hover {
+      scale: 1.02;
+    }
   }
   &__img {
     width: 20px;
