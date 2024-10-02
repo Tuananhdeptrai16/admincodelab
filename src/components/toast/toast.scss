@@ -6,7 +6,6 @@
 }
 
 .toast {
-  font-family: "Roboto";
   display: flex;
   align-items: center;
   background-color: #fff;
@@ -78,9 +77,10 @@
 }
 
 .toast__title {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: #333;
+  line-height: 128%;
 }
 
 .toast__msg {

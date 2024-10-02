@@ -4,7 +4,7 @@ import StoreContext from "../../context/context";
 import axios from "axios";
 import { ToastSuccess } from "../toast/toastsuccess";
 import { Toast } from "../toast/toasterror";
-
+import { NavLink } from "react-router-dom";
 const CourseForm = () => {
   const { action, targetCourseID } = useContext(StoreContext);
   const [listTutorials, setListTutorials] = useState([]);
@@ -130,6 +130,7 @@ const CourseForm = () => {
           // Thêm đoạn văn mới vào nội dung của bài học
           text: "",
           imageUrl: "",
+          descImage: "",
         });
       }
       return {
@@ -190,6 +191,29 @@ const CourseForm = () => {
         ""
       )}
       <div className="course-creation">
+        <div className="breadcrumb">
+          <div className="breadcrumb__wrap">
+            <NavLink to="/home" className="breadcrumb__item">
+              <p className="breadcrumb__name">Trang chủ</p>
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
+                alt=""
+                className="breadcrumb__icon-arrow"
+              />
+            </NavLink>
+            <NavLink to="/page" className="breadcrumb__item">
+              <p className="breadcrumb__name">Khóa học</p>
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
+                alt=""
+                className="breadcrumb__icon-arrow"
+              />
+            </NavLink>
+            <NavLink to="#!" className="breadcrumb__item">
+              <p className="breadcrumb__name  breadcrumb__active">DashBoard</p>
+            </NavLink>
+          </div>
+        </div>
         <h1 className="course-creation__title">Thông tin khóa học</h1>
         <div className="courses__seperate"></div>
         <form className="course-creation__form" onSubmit={handleSubmit}>
@@ -366,32 +390,30 @@ const CourseForm = () => {
                       key={paragraphIndex}
                       className="course-creation__paragraph"
                     >
+                      <div className="course-creation__field">
+                        <label
+                          htmlFor={`lesson-text-${lessonIndex}-${paragraphIndex}`}
+                          className="course-creation__label"
+                        >
+                          Nội dung đoạn văn {paragraphIndex + 1}
+                        </label>
+                        <textarea
+                          id={`lesson-text-${lessonIndex}-${paragraphIndex}`}
+                          className="course-creation__textarea"
+                          placeholder="Nhập nội dung đoạn văn"
+                          name="text"
+                          value={paragraph.text}
+                          onChange={(e) =>
+                            handleParagraphChange(
+                              lessonIndex,
+                              paragraphIndex,
+                              e
+                            )
+                          }
+                        />
+                      </div>
                       <div className="row row-cols-2">
-                        <div className="col gx-1">
-                          <div className="course-creation__field">
-                            <label
-                              htmlFor={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                              className="course-creation__label"
-                            >
-                              Nội dung đoạn văn {paragraphIndex + 1}
-                            </label>
-                            <textarea
-                              id={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                              className="course-creation__textarea"
-                              placeholder="Nhập nội dung đoạn văn"
-                              name="text"
-                              value={paragraph.text}
-                              onChange={(e) =>
-                                handleParagraphChange(
-                                  lessonIndex,
-                                  paragraphIndex,
-                                  e
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                        <div className="col gx-1 ">
+                        <div className="col gx-2 ">
                           <div className="course-creation__field">
                             <label
                               htmlFor={`lesson-image-${lessonIndex}-${paragraphIndex}`}
@@ -406,6 +428,31 @@ const CourseForm = () => {
                               placeholder="Nhập URL hình ảnh"
                               name="imageUrl"
                               value={paragraph.imageUrl}
+                              onChange={(e) =>
+                                handleParagraphChange(
+                                  lessonIndex,
+                                  paragraphIndex,
+                                  e
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="col gx-2">
+                          <div className="course-creation__field">
+                            <label
+                              htmlFor={`desc-image-${lessonIndex}-${paragraphIndex}`}
+                              className="blog-creation__label"
+                            >
+                              Chú thích hình ảnh {paragraphIndex + 1}
+                            </label>
+                            <input
+                              type="text"
+                              id={`desc-image-${lessonIndex}-${paragraphIndex}`}
+                              className="blog-creation__input"
+                              placeholder="Chú thích hình ảnh"
+                              name="descImage"
+                              value={paragraph.descImage || ""}
                               onChange={(e) =>
                                 handleParagraphChange(
                                   lessonIndex,

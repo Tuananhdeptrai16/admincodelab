@@ -25,6 +25,10 @@
   align-items: center;
   justify-content: space-between;
 }
+.ant-menu-title-content {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
 .header__wrap {
   display: flex;
   align-items: center;
@@ -46,6 +50,9 @@
     scale: 1.02;
   }
   &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -64,10 +71,10 @@
   }
 }
 .country {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     background: #f1eeee;
@@ -80,10 +87,10 @@
   }
 }
 .notification {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     background: #f1eeee;

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./dashboard.scss";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import Calendar from "../calendar/calendar";
 export const Dashboard = () => {
   const percentage = 50;
 
@@ -36,8 +37,14 @@ export const Dashboard = () => {
                       Xin chào , <span>Tuan Anh </span>
                     </h2>
                     <p className="dashboard__welcome--desc">
-                      Chào mừng các bạn đến với DashBoard, những thông tin chi
-                      tiết của trang CodeLab sẽ hiển thị tại đây!!!!
+                      Chào mừng các bạn đến với DashBoard! Đây là nơi cung cấp
+                      những thông tin chi tiết và hữu ích nhất về trang CodeLab.
+                      Tại đây, các bạn sẽ được cập nhật những số liệu thống kê,
+                      báo cáo tiến độ học tập, cũng như các hoạt động nổi bật
+                      của hệ thống. Hãy cùng khám phá và tận dụng những thông
+                      tin này để nâng cao trải nghiệm học tập của mình! Chúng
+                      tôi rất vui được đồng hành cùng các bạn trên hành trình
+                      này!
                     </p>
                     <button className="dashboard__more">Xem thêm </button>
                   </div>
@@ -246,6 +253,11 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="dashboard__calendar">
+        <h1 className="dashboard__heading">Lịch trình </h1>
+
+        <Calendar></Calendar>
       </div>
     </div>
   );

@@ -148,7 +148,7 @@ const Users = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="user__id">Mã người dùng</th>
+                  <th>Avatar</th>
                   <th>Tên</th>
                   <th>Ngày tạo</th>
                   <th>Email</th>
@@ -161,7 +161,19 @@ const Users = () => {
                   listTutorials.data.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
-                        <td>{item._id}</td>
+                        <td>
+                          <div className="user__avatar">
+                            <img
+                              src={
+                                item.data.photoURL
+                                  ? `${item.data.photoURL}`
+                                  : `${process.env.PUBLIC_URL}/images/avataruser.jpg`
+                              }
+                              alt=""
+                              className="user__img"
+                            />
+                          </div>
+                        </td>
                         <td>
                           <p>
                             {item.data.displayName

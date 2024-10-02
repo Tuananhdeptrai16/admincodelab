@@ -8,9 +8,9 @@ import Blog from "../components/blog/blog";
 import Users from "../components/user/user";
 import { Tools } from "../components/tools/tools";
 import { Comment } from "../components/comment/comment";
-import { Home } from "../components/home/home";
 import BlogForm from "../components/blog/create_bog";
 import { Dashboard } from "../components/dashboard/dashboard";
+import { Help } from "../components/help/help";
 
 const AppRoutes = () => {
   return (
@@ -27,6 +27,7 @@ const AppRoutes = () => {
         <Route path="/page/create_blog" element={<BlogForm />} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/comment" element={<Comment />} />
+        <Route path="/help" element={<Help />} />
       </Route>
     </Routes>
   );

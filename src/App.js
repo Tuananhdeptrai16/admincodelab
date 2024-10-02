@@ -5,9 +5,18 @@ import { useState } from "react";
 function App() {
   const [action, setAction] = useState("C");
   const [targetCourseID, setTargetCourseID] = useState("");
+  const [targetBlogID, setTargetBlogID] = useState("");
+
   return (
     <StoreContext.Provider
-      value={{ action, setAction, targetCourseID, setTargetCourseID }}
+      value={{
+        action,
+        setAction,
+        targetCourseID,
+        setTargetCourseID,
+        targetBlogID,
+        setTargetBlogID,
+      }}
     >
       <Router>
         <AppRoutes /> {/* Thêm AppRoutes ở đây để quản lý các routes */}
