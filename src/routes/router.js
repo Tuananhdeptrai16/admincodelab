@@ -16,8 +16,8 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LayoutAdmin />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/home" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/user" element={<Users />} />
         <Route path="/page" element={<CourseCreation />} />

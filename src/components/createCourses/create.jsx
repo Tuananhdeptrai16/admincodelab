@@ -179,7 +179,7 @@ const CourseForm = () => {
       setToastError(true);
     }
   };
-
+  console.log(courseData);
   return (
     <>
       {toastSuccess === true ? (
@@ -299,6 +299,22 @@ const CourseForm = () => {
                   <option value="mobile-development">Mobile Development</option>
                   <option value="data-science">Data Science</option>
                 </select>
+              </div>
+            </div>
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="background" className="course-creation__label">
+                  URL ảnh nền
+                </label>
+                <input
+                  type="text"
+                  id="background"
+                  name="background"
+                  className="course-creation__input"
+                  placeholder="Nhập link hình ảnh"
+                  value={courseData.background}
+                  onChange={handleChange}
+                />
               </div>
             </div>
           </div>

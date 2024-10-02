@@ -104,7 +104,7 @@ const CourseCreation = () => {
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
                   <th>Danh mục</th>
-                  <th>Sửa / Xóa</th>
+                  <th>Hành động </th>
                 </tr>
               </thead>
               <tbody>
@@ -126,7 +126,13 @@ const CourseCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/page/create_courses">Sửa</NavLink>
+                            <NavLink to="/page/create_courses">
+                              <img
+                                src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
+                                alt=""
+                                className="user__icon"
+                              />
+                            </NavLink>
                           </button>
                           <button
                             onClick={() => {
@@ -135,7 +141,11 @@ const CourseCreation = () => {
                             }}
                             className="btn btn-danger"
                           >
-                            Xóa
+                            <img
+                              src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
+                              alt=""
+                              className="user__icon"
+                            />
                           </button>
                         </td>
                       </tr>
@@ -152,17 +162,22 @@ const CourseCreation = () => {
         </div>
 
         <div className="courses__create">
-          <button
-            onClick={() => setAction("C")}
-            className="courses__create--btn"
+          <NavLink
+            to="/page/create_courses"
+            className={"courses__create--link"}
           >
-            <NavLink
-              to="/page/create_courses"
-              className={"courses__create--link"}
+            <button
+              onClick={() => setAction("C")}
+              className="courses__create--btn"
             >
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
+                alt=""
+                className="user__icon"
+              />
               Thêm Khóa Học
-            </NavLink>
-          </button>
+            </button>
+          </NavLink>
         </div>
       </div>
     </>

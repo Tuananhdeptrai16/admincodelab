@@ -1,53 +1,94 @@
 .dashboard {
-  &__item {
-    border-radius: 10px;
+  &__welcome-wrap {
+    position: relative;
+    height: 300px;
+    background: #5795e1;
+    border-radius: 20px;
+  }
+  &__background {
+    position: absolute;
+    bottom: -43px;
+    right: -52px;
+    width: 400px;
+    height: 400px;
+    &--img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__welcome {
+    padding: 20px;
+    &--desc {
+      width: 60%;
+      font-size: 1.6rem;
+      margin-top: 20px;
+      line-height: 130%;
+      font-weight: 600;
+      color: #fff;
+    }
+  }
+  &__hello {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 138%;
     color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-    height: 200px;
-    background: #ccc;
-    gap: 5px;
+  }
+  &__more {
+    margin-top: 100px;
+    width: 200px;
+    height: 50px;
+    background: #fff;
+    color: #5795e1;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    font-weight: 700;
     transition: all 0.2s ease;
     &:hover {
       scale: 1.05;
     }
   }
-  &__courses {
-    background: #725ce0;
+  &__list {
+    margin-top: 50px;
   }
-  &__lesson {
-    background: #baea3e;
-  }
-  &__blog {
-    background: #e8ec0b;
-  }
-  &__comment {
-    background: #a26e40;
-  }
-  &__members {
-    background: #b41919;
-  }
-  &__admin-total {
-    background: #d07ab3;
-  }
-  &__number {
-    font-size: 3rem;
-    font-weight: 700;
-  }
-  &__desc {
-    font-size: 2rem;
-    font-weight: 400;
-  }
-  &__background {
-    margin-bottom: 20px;
-    width: 100%;
-    height: 100%;
+  &__item {
+    border-radius: 10px;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 10px;
+    height: 100px;
+    background: #f9f6f6;
+    gap: 50px;
+    transition: all 0.2s ease;
+    &:hover {
+      scale: 1.05;
+    }
+  }
+  &__item--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    background: #5795e1;
+    border-radius: 50%;
+  }
+  &__desc {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #333;
+  }
+  &__number {
+    display: block;
+    margin-top: 10px;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #333;
+    &--desc {
+      font-size: 2rem;
+      color: #4a4a4a;
+    }
   }
   &__money--icon {
     width: 400px;
@@ -62,8 +103,8 @@
     margin-bottom: 20px;
   }
   &__icon {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
   }
 }
 table {

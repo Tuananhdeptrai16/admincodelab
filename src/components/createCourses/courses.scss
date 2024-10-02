@@ -135,22 +135,30 @@
   &__heading {
     line-height: 148%;
     font-weight: 700;
-    font-size: 4rem;
+    font-size: 3rem;
     color: #333;
     user-select: none;
   }
   &__create {
     user-select: none;
     &--btn {
-      background: #d1e7dd;
+      background: #99ecc7;
       padding: 15px;
       border-radius: 10px;
-    }
-    &--link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       color: #333;
-      font-weight: 500;
+      font-weight: 700;
       font-size: 1.6rem;
       color: #333;
+    }
+    &--link {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
     }
   }
 }

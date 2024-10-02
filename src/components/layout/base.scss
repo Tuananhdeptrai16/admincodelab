@@ -59,10 +59,6 @@ textarea:-webkit-autofill:hover {
   transition: background-color 1s 999999s, color 1s 999999s;
 }
 
-.icon {
-  filter: var(--icon-color);
-}
-
 i,
 em {
   font-style: italic;
@@ -84,5 +80,5 @@ strong {
   overflow: hidden;
 }
 .icon {
-  filter: var(--filter--icon) !important;
+  filter: #54aef2 !important;
 }

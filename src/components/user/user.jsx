@@ -163,9 +163,11 @@ const Users = () => {
                       <tr key={`${index}-tutorials`}>
                         <td>{item._id}</td>
                         <td>
-                          {item.data.displayName
-                            ? item.data.displayName
-                            : item.data.email}
+                          <p>
+                            {item.data.displayName
+                              ? item.data.displayName
+                              : item.data.email}
+                          </p>
                         </td>
 
                         <td>
@@ -178,7 +180,7 @@ const Users = () => {
                           {item.admin === true ? (
                             <p className="user__admin">Admin</p>
                           ) : (
-                            "User"
+                            <p className="user__user">User</p>
                           )}
                         </td>
                         <td>

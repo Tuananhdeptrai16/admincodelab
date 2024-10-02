@@ -1,7 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./dashboard.scss";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 export const Dashboard = () => {
+  const percentage = 50;
+
   return (
     <div className="dashboard">
       <div className="breadcrumb">
@@ -23,113 +27,222 @@ export const Dashboard = () => {
       <div className="dashboard__wrap">
         <div className="dashboard__total">
           <h1 className="dashboard__heading">DashBoard</h1>
-          <div className="row row-cols-3">
+          <div className="row">
+            <div className="col">
+              <div className="dashboard__welcome-wrap">
+                <div className="dashboard__welcome">
+                  <div className="dashboard__content">
+                    <h2 className="dashboard__hello">
+                      Xin chào , <span>Tuan Anh </span>
+                    </h2>
+                    <p className="dashboard__welcome--desc">
+                      Chào mừng các bạn đến với DashBoard, những thông tin chi
+                      tiết của trang CodeLab sẽ hiển thị tại đây!!!!
+                    </p>
+                    <button className="dashboard__more">Xem thêm </button>
+                  </div>
+                  <div className="dashboard__background">
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/background.svg`}
+                      alt=""
+                      className="dashboard__background--img"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard__list row row-cols-3">
             <div className="col">
               <div className="dashboard__item dashboard__courses">
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
-                  alt=""
-                  className="dashboard__icon"
-                />
-                <span className="dashboard__number">01</span>
-                <p className="dashboard__desc">khóa học đã tạo</p>
+                <div className="dashboard__item--icon">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
+                    alt=""
+                    className="dashboard__icon icon"
+                  />
+                </div>
+                <div className="dashboard__item--content">
+                  <p className="dashboard__desc">khóa học đã tạo</p>
+                  <span className="dashboard__number">
+                    01 <span className="dashboard__number--desc">khóa</span>
+                  </span>
+                </div>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__lesson">
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
-                  alt="svg"
-                  className="dashboard__icon"
-                />
-                <span className="dashboard__number">02</span>
-                <p className="dashboard__desc">bài học đã tạo</p>
+                <div className="dashboard__item--icon">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
+                    alt="svg"
+                    className="dashboard__icon"
+                  />
+                </div>
+                <div className="dashboard__item--content">
+                  <p className="dashboard__desc">khóa học đã tạo</p>
+                  <span className="dashboard__number">
+                    01 <span className="dashboard__number--desc">khóa</span>
+                  </span>
+                </div>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__blog">
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
-                  alt="svg"
-                  className="dashboard__icon"
-                />
-                <span className="dashboard__number">54</span>
-                <p className="dashboard__desc">blog đã tạo</p>
+                <div className="dashboard__item--icon">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
+                    alt="svg"
+                    className="dashboard__icon"
+                  />
+                </div>
+                <div className="dashboard__item--content">
+                  <p className="dashboard__desc">khóa học đã tạo</p>
+                  <span className="dashboard__number">
+                    01 <span className="dashboard__number--desc">khóa</span>
+                  </span>
+                </div>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__comment">
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
-                  alt="svg"
-                  className="dashboard__icon"
-                />
-                <span className="dashboard__number">33</span>
-                <p className="dashboard__desc">Bình luận </p>
+                <div className="dashboard__item--icon">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
+                    alt="svg"
+                    className="dashboard__icon"
+                  />
+                </div>
+                <div className="dashboard__item--content">
+                  <p className="dashboard__desc">khóa học đã tạo</p>
+                  <span className="dashboard__number">
+                    01 <span className="dashboard__number--desc">khóa</span>
+                  </span>
+                </div>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__members">
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/icon/user_group.svg`}
-                  alt="svg"
-                  className="dashboard__icon"
-                />
-                <span className="dashboard__number">22</span>
-                <p className="dashboard__desc">thành viên</p>
+                <div className="dashboard__item--icon">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/user_group.svg`}
+                    alt="svg"
+                    className="dashboard__icon"
+                  />
+                </div>
+                <div className="dashboard__item--content">
+                  <p className="dashboard__desc">khóa học đã tạo</p>
+                  <span className="dashboard__number">
+                    01 <span className="dashboard__number--desc">khóa</span>
+                  </span>
+                </div>
               </div>
             </div>
             <div className="col">
               <div className="dashboard__item dashboard__admin-total">
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
-                  alt="svg"
-                  className="dashboard__icon"
-                />
-                <span className="dashboard__number">01</span>
-                <p className="dashboard__desc">Số Admin</p>
+                <div className="dashboard__item--icon">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
+                    alt="svg"
+                    className="dashboard__icon icon"
+                  />
+                </div>
+                <div className="dashboard__item--content">
+                  <p className="dashboard__desc">khóa học đã tạo</p>
+                  <span className="dashboard__number">
+                    01 <span className="dashboard__number--desc">khóa</span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div className="dashboard__admin">
-        <h1 className="dashboard__heading">Quản lý admin</h1>
-        <div className="row ">
-          <div className="col-8">
-            <table>
-              <thead>
-                <tr>
-                  <th>avatar</th>
-                  <th>Tên</th>
-                  <th>Thông tin</th>
-                  <th>Lĩnh vực</th>
-                  <th>Sửa / Xóa</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>item</td>
-                  <td>item</td>
-                  <td>Chưa có người yêu</td>
-                  <td>item</td>
-                  <td>
-                    <button className="btn btn-warning mx-3 d-inline-block">
-                      <NavLink to="/page/create_courses">Sửa</NavLink>
-                    </button>
-                    <button className="btn btn-danger">Xóa</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <h1 className="dashboard__heading">Tiến độ</h1>
+        <div className="row row-cols-3 ">
+          <div className="col">
+            <div className="dashboard__item dashboard__admin-total">
+              <div style={{ width: 80, height: 80 }}>
+                <CircularProgressbar
+                  value={percentage}
+                  text={`${percentage}%`}
+                  styles={buildStyles({
+                    // rotation: 0.25,
+                    strokeLinecap: "round",
+                    textSize: "16px",
+                    pathTransitionDuration: 0.5,
+                    pathColor: `rgba(62, 152, 199, ${percentage / 100})`,
+                    textColor: "#333",
+                    trailColor: "#d6d6d6",
+                    backgroundColor: "#5795e1",
+                    strokeWidth: 50, // Tăng độ dày của viền
+                  })}
+                />
+                ;
+              </div>
+              <div className="dashboard__item--content">
+                <p className="dashboard__desc">khóa học đã tạo</p>
+                <span className="dashboard__number">
+                  01 <span className="dashboard__number--desc">khóa</span>
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="col-4">
-            <div className="dashboard__background">
-              <img
-                src={`${process.env.PUBLIC_URL}/images/money.svg`}
-                alt=""
-                className="dashboard__money--icon"
-              />
+          <div className="col">
+            <div className="dashboard__item dashboard__admin-total">
+              <div style={{ width: 80, height: 80 }}>
+                <CircularProgressbar
+                  value={percentage}
+                  text={`${percentage}%`}
+                  styles={buildStyles({
+                    // rotation: 0.25,
+                    strokeLinecap: "round",
+                    textSize: "16px",
+                    pathTransitionDuration: 0.5,
+                    pathColor: `rgba(62, 152, 199, ${percentage / 100})`,
+                    textColor: "#333",
+                    trailColor: "#d6d6d6",
+                    backgroundColor: "#3e98c7",
+                    strokeWidth: 50, // Tăng độ dày của viền
+                  })}
+                />
+                ;
+              </div>
+              <div className="dashboard__item--content">
+                <p className="dashboard__desc">khóa học đã tạo</p>
+                <span className="dashboard__number">
+                  01 <span className="dashboard__number--desc">khóa</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div className="dashboard__item dashboard__admin-total">
+              <div style={{ width: 80, height: 80 }}>
+                <CircularProgressbar
+                  value={percentage}
+                  text={`${percentage}%`}
+                  styles={buildStyles({
+                    // rotation: 0.25,
+                    strokeLinecap: "round",
+                    textSize: "16px",
+                    pathTransitionDuration: 0.5,
+                    pathColor: `rgba(62, 152, 199, ${percentage / 100})`,
+                    textColor: "#333",
+                    trailColor: "#d6d6d6",
+                    backgroundColor: "#3e98c7",
+                    strokeWidth: 50, // Tăng độ dày của viền
+                  })}
+                />
+                ;
+              </div>
+              <div className="dashboard__item--content">
+                <p className="dashboard__desc">khóa học đã tạo</p>
+                <span className="dashboard__number">
+                  01 <span className="dashboard__number--desc">khóa</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
