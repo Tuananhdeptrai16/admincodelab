@@ -16,7 +16,7 @@ const BlogForm = () => {
     urlImage: "",
     description: "",
     duration: "",
-    lessons: [
+    blogItems: [
       {
         title: "",
         content: [],
@@ -43,8 +43,7 @@ const BlogForm = () => {
         if (listTutorials.length === 0) {
           await getListTutorials();
         }
-        console.log(">>listTutorials data", listTutorials.data);
-        if (listTutorials.data && listTutorials.errorCode === 0) {
+        if (listTutorials.data) {
           const foundBlog = listTutorials.data.find(
             (blog) => blog._id === targetBlogID
           );
@@ -55,7 +54,7 @@ const BlogForm = () => {
               urlImage: foundBlog.urlImage,
               description: foundBlog.description,
               duration: foundBlog.duration,
-              lessons: foundBlog.blogItems || [],
+              blogItems: foundBlog.blogItems || [],
               rating: foundBlog.rating,
               studentsEnrolled: foundBlog.studentsEnrolled || 0,
             });
@@ -74,7 +73,7 @@ const BlogForm = () => {
       urlImage: "",
       description: "",
       duration: "",
-      lessons: [
+      blogItems: [
         {
           title: "",
           content: [],
@@ -95,18 +94,18 @@ const BlogForm = () => {
   const handleLessonTitleChange = (index, e) => {
     const { value } = e.target;
     setBlogData((prevData) => {
-      const updatedLessons = [...prevData.lessons]; // Thay đổi ở đây
+      const updatedLessons = [...prevData.blogItems]; // Thay đổi ở đây
       updatedLessons[index].title = value;
       return {
         ...prevData,
-        lessons: updatedLessons, // Thay đổi ở đây
+        blogItems: updatedLessons, // Thay đổi ở đây
       };
     });
   };
 
   const handleAddParagraph = (blogIndex) => {
     setBlogData((prevData) => {
-      const updatedLessons = [...prevData.lessons]; // Tạo bản sao của mảng lessons
+      const updatedLessons = [...prevData.blogItems]; // Tạo bản sao của mảng lessons
       // Kiểm tra xem blogIndex có hợp lệ không
       if (updatedLessons[blogIndex]) {
         updatedLessons[blogIndex].content.push({
@@ -118,7 +117,7 @@ const BlogForm = () => {
       }
       return {
         ...prevData,
-        lessons: updatedLessons, // Cập nhật lại mảng lessons
+        blogItems: updatedLessons, // Cập nhật lại mảng lessons
       };
     });
   };
@@ -126,7 +125,7 @@ const BlogForm = () => {
   const handleParagraphChange = (blogIndex, paragraphIndex, e) => {
     const { name, value } = e.target;
     setBlogData((prevData) => {
-      const updatedLessons = [...prevData.lessons];
+      const updatedLessons = [...prevData.blogItems];
       // Đảm bảo cập nhật đúng thuộc tính trong content
       if (
         updatedLessons[blogIndex] &&
@@ -136,7 +135,7 @@ const BlogForm = () => {
       }
       return {
         ...prevData,
-        lessons: updatedLessons,
+        blogItems: updatedLessons,
       };
     });
   };
@@ -294,7 +293,7 @@ const BlogForm = () => {
           <div className="blog__seperate"></div>
 
           <div className="blog-creation__lessons">
-            {blogData.lessons.map((lesson, blogIndex) => (
+            {blogData.blogItems.map((blogItem, blogIndex) => (
               <div key={blogIndex} className="blog-creation__lesson">
                 <h3 className="blog-creation__lesson-title">Tiêu đề</h3>
                 <div className="blog-creation__field">
@@ -309,12 +308,12 @@ const BlogForm = () => {
                     id={`lesson-title-${blogIndex}`}
                     className="blog-creation__input"
                     placeholder="Nhập tiêu đề blog"
-                    value={lesson.title || ""}
+                    value={blogItem.title || ""}
                     onChange={(e) => handleLessonTitleChange(blogIndex, e)}
                   />
                 </div>
-                {Array.isArray(lesson.content) &&
-                  lesson.content.map((paragraph, paragraphIndex) => (
+                {Array.isArray(blogItem.content) &&
+                  blogItem.content.map((paragraph, paragraphIndex) => (
                     <div
                       key={paragraphIndex}
                       className="blog-creation__paragraph"

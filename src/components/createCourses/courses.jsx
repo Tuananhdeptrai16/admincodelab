@@ -118,7 +118,7 @@ const CourseCreation = () => {
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                         <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
                         <td>{item.category}</td>
-                        <td>
+                        <td className="courses__action">
                           <button
                             onClick={() => {
                               setAction("U");
