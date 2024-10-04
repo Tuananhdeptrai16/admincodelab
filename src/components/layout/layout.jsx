@@ -52,7 +52,7 @@ const LayoutAdmin = () => {
                   />
                 </NavLink>
               ),
-              label: <NavLink to="/user">User</NavLink>,
+              label: <NavLink to="/user">Members</NavLink>,
             },
 
             {

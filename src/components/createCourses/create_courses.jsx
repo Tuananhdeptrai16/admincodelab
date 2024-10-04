@@ -16,6 +16,7 @@ const CourseForm = () => {
     description: "",
     category: "Web Development",
     price: "",
+    background: "",
     duration: "",
     level: "beginner",
     lessons: [
@@ -59,6 +60,7 @@ const CourseForm = () => {
               description: foundCourses.description,
               category: foundCourses.category,
               price: foundCourses.price,
+              background: foundCourses.background,
               duration: foundCourses.duration,
               level: foundCourses.level,
               lessons: foundCourses.content || [],
@@ -81,6 +83,7 @@ const CourseForm = () => {
       description: "",
       category: "Web Development",
       price: "",
+      background: "",
       duration: "",
       level: "beginner",
       lessons: [
@@ -215,7 +218,7 @@ const CourseForm = () => {
           </div>
         </div>
         <h1 className="course-creation__title">Thông tin khóa học</h1>
-        <div className="courses__seperate"></div>
+        <div className="courses__separate"></div>
         <form className="course-creation__form" onSubmit={handleSubmit}>
           <div className="row row-cols-2">
             <div className="col gx-2">
@@ -360,7 +363,7 @@ const CourseForm = () => {
             </div>
           </div>
           <h2 className="course-creation__subtitle">Thông tin bài học</h2>
-          <div className="courses__seperate"></div>
+          <div className="courses__separate"></div>
 
           <div className="course-creation__lessons">
             {courseData.lessons.map((lesson, lessonIndex) => (

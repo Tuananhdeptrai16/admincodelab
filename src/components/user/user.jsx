@@ -94,7 +94,7 @@ const Users = () => {
             Thêm người dùng
           </button>
         </div>
-        <div className="user__seperate"></div>
+        <div className="user__separate"></div>
         <div className="user__search">
           <input
             type="text"
@@ -174,12 +174,12 @@ const Users = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th className="user__border--left">Name</th>
                   <th>Ngày tạo</th>
                   <th>Email</th>
                   <th>Nhà cung cấp</th>
                   <th>Trạng thái </th>
-                  <th>Hành động</th>
+                  <th className="user__border--right">Hành động</th>
                 </tr>
               </thead>
               <tbody>

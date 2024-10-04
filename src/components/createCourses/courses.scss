@@ -2,7 +2,7 @@
   &__action {
     display: flex;
   }
-  &__seperate {
+  &__separate {
     width: 100%;
     margin: 10px 0 40px 0;
     height: 1px;
@@ -60,6 +60,12 @@
       border-radius: 10px;
     }
   }
+  &__border--left {
+    border-radius: 10px 0 0 0;
+  }
+  &__border--right {
+    border-radius: 0 10px 0 0;
+  }
   &__item {
     width: 100%;
     margin: 20px auto;
@@ -71,7 +77,7 @@
         tr {
           th {
             font-weight: 700;
-            font-size: 2rem;
+            font-size: 1.6rem;
             background-color: #f4f4f4; /* Màu nền cho phần tiêu đề */
             color: #333;
             text-align: left;

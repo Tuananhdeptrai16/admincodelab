@@ -65,7 +65,7 @@ const CourseCreation = () => {
           </div>
         </div>
         <h1 className="blog__heading">Quản lý Blog</h1>
-        <div className="blog__seperate"></div>
+        <div className="blog__separate"></div>
         {showModel && (
           <>
             <div className="blog__delete">

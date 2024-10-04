@@ -65,7 +65,7 @@ const CourseCreation = () => {
           </div>
         </div>
         <h1 className="courses__heading">Quản lý khóa học</h1>
-        <div className="courses__seperate"></div>
+        <div className="courses__separate"></div>
         {showModel && (
           <>
             <div className="courses__delete">
@@ -93,18 +93,21 @@ const CourseCreation = () => {
             ></div>
           </>
         )}
+
         <div className="courses__list">
           <div className="courses__item">
             <table>
               <thead>
                 <tr>
-                  <th className="courses__id">Mã khóa học</th>
+                  <th className="courses__id courses__border--left">
+                    Mã khóa học
+                  </th>
                   <th>Khóa học</th>
                   <th>Người tạo</th>
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
                   <th>Danh mục</th>
-                  <th>Hành động </th>
+                  <th className="courses__border--right">Hành động </th>
                 </tr>
               </thead>
               <tbody>
@@ -153,7 +156,7 @@ const CourseCreation = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="5">No courses found</td>
+                    <td colSpan="7">No courses found</td>
                   </tr>
                 )}
               </tbody>

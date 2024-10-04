@@ -199,7 +199,7 @@ const BlogForm = () => {
           </div>
         </div>
         <h1 className="blog-creation__title">Thông tin Blog</h1>
-        <div className="blog__seperate"></div>
+        <div className="blog__separate"></div>
         <form className="blog-creation__form" onSubmit={handleSubmit}>
           <div className="row row-cols-2">
             <div className="col gx-2">
@@ -290,7 +290,7 @@ const BlogForm = () => {
             </div>
           </div>
           <h2 className="blog-creation__subtitle">Chi tiết</h2>
-          <div className="blog__seperate"></div>
+          <div className="blog__separate"></div>
 
           <div className="blog-creation__lessons">
             {blogData.blogItems.map((blogItem, blogIndex) => (

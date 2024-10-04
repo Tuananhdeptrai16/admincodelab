@@ -6,6 +6,7 @@ function App() {
   const [action, setAction] = useState("C");
   const [targetCourseID, setTargetCourseID] = useState("");
   const [targetBlogID, setTargetBlogID] = useState("");
+  const [targetLessonID, setTargetLessonID] = useState("");
 
   return (
     <StoreContext.Provider
@@ -16,6 +17,8 @@ function App() {
         setTargetCourseID,
         targetBlogID,
         setTargetBlogID,
+        targetLessonID,
+        setTargetLessonID,
       }}
     >
       <Router>
