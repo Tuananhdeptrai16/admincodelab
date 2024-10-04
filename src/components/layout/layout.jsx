@@ -111,6 +111,19 @@ const LayoutAdmin = () => {
             {
               key: "7",
               icon: (
+                <NavLink to="/calendar">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/calendar.svg`}
+                    alt="svg"
+                    className="nav__icon icon"
+                  />
+                </NavLink>
+              ),
+              label: <NavLink to="/calendar">Calendar</NavLink>,
+            },
+            {
+              key: "8",
+              icon: (
                 <NavLink to="/tools">
                   <img
                     src={`${process.env.PUBLIC_URL}/images/icon/tools.svg`}
@@ -122,7 +135,7 @@ const LayoutAdmin = () => {
               label: <NavLink to="/tools">Tools</NavLink>,
             },
             {
-              key: "8",
+              key: "9",
               icon: (
                 <NavLink to="/help">
                   <img

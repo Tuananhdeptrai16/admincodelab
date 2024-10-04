@@ -56,14 +56,16 @@ const Calendar = () => {
       );
 
       return (
-        <ul className="calendar-todo-list">
-          {displayList.map((item, index) => (
-            <li key={index}>
-              <Badge /> <b>{item.time}</b> - {item.title}
-            </li>
-          ))}
-          {moreCount ? moreItem : null}
-        </ul>
+        <>
+          <ul className="calendar-todo-list">
+            {displayList.map((item, index) => (
+              <li key={index}>
+                <Badge /> <b>{item.time}</b> - {item.title}
+              </li>
+            ))}
+            {moreCount ? moreItem : null}
+          </ul>
+        </>
       );
     }
 
@@ -72,6 +74,7 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container">
+      <h1 className="calendar__heading">Lịch trình </h1>
       <RsuiteCalendar bordered renderCell={renderCell} />
     </div>
   );

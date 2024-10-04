@@ -83,8 +83,34 @@ const Users = () => {
             </NavLink>
           </div>
         </div>
-        <h1 className="user__heading">Quản lý người dùng</h1>
+        <div className="user__wrap">
+          <h1 className="user__heading">Quản lý người dùng</h1>
+          <button className="user__adding">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
+              className="user__adding--icon"
+              alt=""
+            />
+            Thêm người dùng
+          </button>
+        </div>
         <div className="user__seperate"></div>
+        <div className="user__search">
+          <input
+            type="text"
+            name=""
+            placeholder="Tìm kiếm người dùng..."
+            id=""
+            className="user__search--input"
+          />
+          <button className="user__search--btn">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/search.svg`}
+              className="user__adding--icon"
+              alt=""
+            />
+          </button>
+        </div>
         {showModel && (
           <>
             <div className="user__delete">
@@ -148,11 +174,11 @@ const Users = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Avatar</th>
-                  <th>Tên</th>
+                  <th>Name</th>
                   <th>Ngày tạo</th>
                   <th>Email</th>
-                  <th>CTV </th>
+                  <th>Nhà cung cấp</th>
+                  <th>Trạng thái </th>
                   <th>Hành động</th>
                 </tr>
               </thead>
@@ -172,16 +198,13 @@ const Users = () => {
                               alt=""
                               className="user__img"
                             />
+                            <p className="user__name">
+                              {item.data.displayName
+                                ? item.data.displayName
+                                : item.data.email}
+                            </p>
                           </div>
                         </td>
-                        <td>
-                          <p>
-                            {item.data.displayName
-                              ? item.data.displayName
-                              : item.data.email}
-                          </p>
-                        </td>
-
                         <td>
                           {new Date(
                             item.data.metadata.creationTime
@@ -189,10 +212,18 @@ const Users = () => {
                         </td>
                         <td>{item.data.email}</td>
                         <td>
+                          {item.data.providerData.map((provider, index) => {
+                            return (
+                              <span key={index}>{provider.providerId}</span>
+                            );
+                          })}
+                        </td>
+
+                        <td>
                           {item.admin === true ? (
                             <p className="user__admin">Admin</p>
                           ) : (
-                            <p className="user__user">User</p>
+                            <p className="user__user">Member</p>
                           )}
                         </td>
                         <td>

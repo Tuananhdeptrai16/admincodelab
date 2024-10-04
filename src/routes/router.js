@@ -11,6 +11,7 @@ import { Comment } from "../components/comment/comment";
 import BlogForm from "../components/blog/create_bog";
 import { Dashboard } from "../components/dashboard/dashboard";
 import { Help } from "../components/help/help";
+import Calendar from "../components/calendar/calendar";
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/home" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/calendar" element={<Calendar />} />
         <Route path="/user" element={<Users />} />
         <Route path="/page" element={<CourseCreation />} />
         <Route path="/page/create_courses" element={<CourseForm />} />

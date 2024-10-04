@@ -255,8 +255,6 @@ export const Dashboard = () => {
         </div>
       </div>
       <div className="dashboard__calendar">
-        <h1 className="dashboard__heading">Lịch trình </h1>
-
         <Calendar></Calendar>
       </div>
     </div>
