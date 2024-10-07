@@ -12,10 +12,9 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    color: #333;
+    color: #ffff;
     font-weight: 700;
     font-size: 1.6rem;
-    color: #333;
     transition: all 0.2s ease;
     &:hover {
       scale: 1.05;
@@ -76,7 +75,7 @@
     background-color: #dadcd6;
   }
   &__admin {
-    border-radius: 2px;
+    border-radius: 20px;
     text-align: center;
     font-weight: 600;
     color: #f2f1f1;
@@ -84,7 +83,7 @@
     background: #d9534f;
   }
   &__user {
-    border-radius: 2px;
+    border-radius: 20px;
     text-align: center;
     font-weight: 600;
     color: #f2f1f1;
@@ -149,6 +148,8 @@
   }
   &__border--left {
     border-radius: 10px 0 0 0;
+    display: flex;
+    gap: 10px;
   }
   &__border--right {
     border-radius: 0 10px 0 0;
@@ -156,8 +157,6 @@
   &__item {
     width: 100%;
     margin: 20px auto;
-    height: 600px;
-    overflow: auto;
     table {
       width: 100%;
       border-collapse: collapse;

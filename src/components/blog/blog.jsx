@@ -4,29 +4,31 @@ import "./blog.scss";
 import { NavLink } from "react-router-dom";
 import StoreContext from "../../context/context";
 import { ToastSuccess } from "../toast/toastsuccess";
+import { Pagination } from "antd";
 const CourseCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [getBlogId, setGetBlogId] = useState("");
   const { setAction, setTargetBlogID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
-  const getListTutorials = async () => {
+  const handlePageChange = async (page) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/blog`
+        `${process.env.REACT_APP_API_BACKEND_URL}/blog?limit=5&page=${page}`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
   };
+
   const deleteBlog = async () => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_BACKEND_URL}/blog`,
         { data: { _id: getBlogId } } // Truyền ID khóa học trong body
       );
-      getListTutorials(); // Cập nhật lại danh sách sau khi xóa
+      handlePageChange(); // Cập nhật lại danh sách sau khi xóa
       setShowModel(false);
       setTimeout(() => {
         setToastSuccess(true);
@@ -40,7 +42,7 @@ const CourseCreation = () => {
   };
 
   useEffect(() => {
-    getListTutorials();
+    handlePageChange();
   }, []);
   if (!listTutorials || !listTutorials.data) {
     return <div className="loading">Loading...</div>;
@@ -174,6 +176,12 @@ const CourseCreation = () => {
             </button>
           </NavLink>
         </div>
+        <Pagination
+          align="center"
+          defaultCurrent={1}
+          total={50}
+          onChange={handlePageChange}
+        />
       </div>
     </>
   );

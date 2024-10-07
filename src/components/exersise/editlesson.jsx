@@ -7,7 +7,7 @@ import { ToastSuccess } from "../toast/toastsuccess";
 export const EditLesson = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
-  const [getLessonId, setGetLessonId] = useState("");
+  const [getLessonId] = useState("");
 
   const { targetCourseID, setTargetLessonID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
@@ -41,7 +41,7 @@ export const EditLesson = () => {
       console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
     }
   };
-  const findLessonByCourseId = () => {
+  const findLessonByCourseId = async () => {
     const listLessonByCourseId =
       Array.isArray(listTutorials.data) &&
       listTutorials.data.find((item) => item._id === targetCourseID);
@@ -53,10 +53,8 @@ export const EditLesson = () => {
   }, []);
 
   useEffect(() => {
-    if (listTutorials && listTutorials.data) {
-      findLessonByCourseId(); // Gọi tìm kiếm mỗi khi listTutorials thay đổi
-    }
-  }, [listTutorials, targetCourseID]); // Thêm phụ thuộc vào mảng
+    findLessonByCourseId();
+  }, []); // Thêm phụ thuộc vào mảng
 
   if (!listTutorials || !listTutorials.data) {
     return <div className="loading">Loading...</div>;

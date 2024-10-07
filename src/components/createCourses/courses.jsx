@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./courses.scss";
+import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
 import StoreContext from "../../context/context";
 import { ToastSuccess } from "../toast/toastsuccess";
@@ -10,23 +11,25 @@ const CourseCreation = () => {
   const [getCoursesId, setGetCoursesId] = useState("");
   const { setAction, setTargetCourseID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
-  const getListTutorials = async () => {
+  const handlePageChange = async (page) => {
+    console.log(page);
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/courses`
+        `${process.env.REACT_APP_API_BACKEND_URL}/courses?limit=5&page=${page}`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
   };
+
   const deleteCourses = async () => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_BACKEND_URL}/courses`,
         { data: { _id: getCoursesId } } // Truyền ID khóa học trong body
       );
-      getListTutorials(); // Cập nhật lại danh sách sau khi xóa
+      handlePageChange(); // Cập nhật lại danh sách sau khi xóa
       setShowModel(false);
       setTimeout(() => {
         setToastSuccess(true);
@@ -40,7 +43,7 @@ const CourseCreation = () => {
   };
 
   useEffect(() => {
-    getListTutorials();
+    handlePageChange();
   }, []);
   if (!listTutorials || !listTutorials.data) {
     return <div className="loading">Loading...</div>;
@@ -182,6 +185,12 @@ const CourseCreation = () => {
             </button>
           </NavLink>
         </div>
+        <Pagination
+          align="center"
+          defaultCurrent={1}
+          total={50}
+          onChange={handlePageChange}
+        />
       </div>
     </>
   );

@@ -79,9 +79,19 @@ strong {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.icon {
-  filter: #54aef2 !important;
+.icon-svg {
+  filter: invert(100%) brightness(150%) contrast(150%);
 }
 a {
   text-decoration: none !important;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background-color: #fafafa;
+}
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
+  border-radius: 50px;
 }

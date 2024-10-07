@@ -1,4 +1,70 @@
 .dashboard {
+  &__avatar {
+    &--img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+  }
+  &__right {
+    width: 30%;
+    margin-left: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  &__social {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+
+    &--item {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      box-shadow: 6px 10px 15px -3px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.05;
+      }
+    }
+    &--icon {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__information {
+    &--wrap {
+      padding: 10px;
+      background: #f9f6f7;
+      border-radius: 10px;
+    }
+  }
+  &__name {
+    &--text {
+      margin-top: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 2rem;
+    }
+  }
+  &__calendar {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   &__welcome-wrap {
     position: relative;
     background: #5795e1;

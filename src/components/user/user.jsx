@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./user.scss";
 import { NavLink } from "react-router-dom";
-
+import { Pagination } from "antd";
 import { ToastSuccess } from "../toast/toastsuccess";
 const Users = () => {
   const [listTutorials, setListTutorials] = useState([]);
@@ -11,23 +11,24 @@ const Users = () => {
   const [getUserId, setGetUserId] = useState("");
 
   const [toastSuccess, setToastSuccess] = useState(false);
-  const getListTutorials = async () => {
+  const handlePageChange = async (page) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/users`
+        `${process.env.REACT_APP_API_BACKEND_URL}/users?limit=5&page=${page}`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
   };
+
   const deleteAdmin = async () => {
     try {
       await axios.put(
         `${process.env.REACT_APP_API_BACKEND_URL}/users/${getUserId}`,
         { admin: false }
       );
-      getListTutorials();
+      handlePageChange();
       setShowModel(false);
       setTimeout(() => {
         setToastSuccess(true);
@@ -45,7 +46,7 @@ const Users = () => {
         `${process.env.REACT_APP_API_BACKEND_URL}/users/${getUserId}`,
         { admin: true } // Truyền đối tượng trực tiếp, không cần bọc trong "data"
       );
-      getListTutorials();
+      handlePageChange();
       setShowModel(false);
       setTimeout(() => {
         setToastSuccess(true);
@@ -59,11 +60,12 @@ const Users = () => {
   };
 
   useEffect(() => {
-    getListTutorials();
+    handlePageChange();
   }, []);
   if (!listTutorials || !listTutorials.data) {
     return <div className="loading">Loading...</div>;
   }
+
   return (
     <>
       {toastSuccess === true ? <ToastSuccess></ToastSuccess> : ""}
@@ -84,11 +86,11 @@ const Users = () => {
           </div>
         </div>
         <div className="user__wrap">
-          <h1 className="user__heading">Quản lý người dùng</h1>
+          <h1 className="user__heading">Người dùng </h1>
           <button className="user__adding">
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
-              className="user__adding--icon"
+              className="user__adding--icon icon-svg"
               alt=""
             />
             Thêm người dùng
@@ -174,11 +176,13 @@ const Users = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="user__border--left">Name</th>
+                  <th className="user__border--left">
+                    <input type="checkbox" name="" id="" />
+                  </th>
+                  <th>Thông tin người dùng</th>
                   <th>Ngày tạo</th>
-                  <th>Email</th>
                   <th>Nhà cung cấp</th>
-                  <th>Trạng thái </th>
+                  <th>Trạng thái</th>
                   <th className="user__border--right">Hành động</th>
                 </tr>
               </thead>
@@ -187,6 +191,9 @@ const Users = () => {
                   listTutorials.data.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
+                        <td>
+                          <input type="checkbox" name="" id="" />
+                        </td>
                         <td>
                           <div className="user__avatar">
                             <img
@@ -210,7 +217,6 @@ const Users = () => {
                             item.data.metadata.creationTime
                           ).toLocaleDateString()}
                         </td>
-                        <td>{item.data.email}</td>
                         <td>
                           {item.data.providerData.map((provider, index) => {
                             return (
@@ -261,6 +267,12 @@ const Users = () => {
             </table>
           </div>
         </div>
+        <Pagination
+          align="center"
+          defaultCurrent={1}
+          total={50}
+          onChange={handlePageChange}
+        />
       </div>
     </>
   );

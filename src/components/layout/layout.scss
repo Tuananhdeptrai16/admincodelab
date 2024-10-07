@@ -107,3 +107,6 @@
     object-fit: contain;
   }
 }
+.custom-calendar .ant-picker-calendar {
+  height: 500px !important; /* Thay đổi chiều cao theo ý bạn */
+}

@@ -11,7 +11,7 @@ export const AddExercise = () => {
   const { targetLessonID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [questionData, setQuestionData] = useState({
-    couresId: targetLessonID,
+    coursesId: targetLessonID,
     questions: [
       {
         title: "",
@@ -37,14 +37,13 @@ export const AddExercise = () => {
   const getListTutorials = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/courses`
+        `${process.env.REACT_APP_API_BACKEND_URL}/exercise`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
   };
-
   const deleteLesson = async () => {
     try {
       await axios.delete(
@@ -109,7 +108,17 @@ export const AddExercise = () => {
   if (!listTutorials || !listTutorials.data) {
     return <div className="loading">Loading...</div>;
   }
-  console.log(questionData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(questionData); // Kiểm tra dữ liệu trước khi gửi
+    const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/exercise`;
+    try {
+      await axios.post(`${apiUrl}/${targetLessonID}`, questionData);
+    } catch (error) {
+      console.error("Error submitting data: ", error); // Bắt lỗi khi gửi dữ liệu
+    }
+  };
+
   return (
     <>
       {toastSuccess === true ? <ToastSuccess></ToastSuccess> : ""}
@@ -246,7 +255,12 @@ export const AddExercise = () => {
           </div>
         ))}
         <div className="Lesson__action-btn">
-          <button className="Lesson__btn Lesson__action--save">Save</button>
+          <button
+            onClick={(e) => handleSubmit(e)}
+            className="Lesson__btn Lesson__action--save"
+          >
+            Save
+          </button>
           <button className="Lesson__btn Lesson__action--cancel">Cancel</button>
         </div>
       </div>
