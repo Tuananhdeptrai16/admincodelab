@@ -63,7 +63,12 @@ const Users = () => {
     handlePageChange();
   }, []);
   if (!listTutorials || !listTutorials.data) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loader__wrap">
+        <div className="loader"></div>
+        <h1 className="loader__text">Loading....</h1>
+      </div>
+    );
   }
 
   return (

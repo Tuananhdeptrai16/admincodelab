@@ -175,9 +175,9 @@ const CourseForm = () => {
       setTimeout(() => {
         setToastSuccess(true);
         setTimeout(() => {
-          window.location.href = "/page"; // Chuyển hướng sau khi toast thành công
-        }, 1000); // Đợi 1 giây sau khi toast thành công
-      }, 1000); // Thời gian hiển thị toast
+          window.location.href = "/page";
+        }, 1000);
+      }, 1000);
     } catch (error) {
       console.error("Error submitting form: ", error);
       setToastError(true);
