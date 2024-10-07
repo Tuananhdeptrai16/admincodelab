@@ -46,7 +46,6 @@ const CourseForm = () => {
         if (listTutorials.length === 0) {
           await getListTutorials();
         }
-
         console.log("Updated listTutorials:", listTutorials);
 
         if (listTutorials.data && listTutorials.errorCode === 0) {
@@ -63,11 +62,12 @@ const CourseForm = () => {
               background: foundCourses.background,
               duration: foundCourses.duration,
               level: foundCourses.level,
-              lessons: foundCourses.content || [],
+              lessons: foundCourses.lessons || [],
               rating: foundCourses.rating,
               studentsEnrolled: foundCourses.studentsEnrolled || 0,
             });
           }
+          console.log(foundCourses.lessons);
         }
       } else {
         resetForm();
@@ -183,7 +183,6 @@ const CourseForm = () => {
       setToastError(true);
     }
   };
-  console.log(courseData);
   return (
     <>
       {toastSuccess === true ? (
@@ -490,7 +489,8 @@ const CourseForm = () => {
           <div className="course-creation__submit">
             <button
               type="submit"
-              className="  course-creation__button course-creation__submit--btn"
+              onClick={handleSubmit}
+              className="course-creation__button course-creation__submit--btn"
             >
               {action === "C" ? "Tạo" : "Cập nhật"} khóa học
             </button>
