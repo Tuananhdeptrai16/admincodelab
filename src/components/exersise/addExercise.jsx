@@ -110,10 +110,15 @@ export const AddExercise = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(questionData); // Kiểm tra dữ liệu trước khi gửi
     const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/exercise`;
     try {
-      await axios.post(`${apiUrl}/${targetLessonID}`, questionData);
+      await axios.post(`${apiUrl}`, questionData);
+      setTimeout(() => {
+        setToastSuccess(true);
+        setTimeout(() => {
+          window.location.href = "/exercise"; // Chuyển hướng sau khi toast thành công
+        }, 1000); // Đợi 1 giây sau khi toast thành công
+      }, 1000); // Thời gian hiển thị toast
     } catch (error) {
       console.error("Error submitting data: ", error); // Bắt lỗi khi gửi dữ liệu
     }

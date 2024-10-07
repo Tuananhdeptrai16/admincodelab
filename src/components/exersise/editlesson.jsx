@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import "./lesson.scss";
 import { NavLink } from "react-router-dom";
@@ -8,20 +8,23 @@ export const EditLesson = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [getLessonId] = useState("");
-
   const { targetCourseID, setTargetLessonID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [listLesson, setListLesson] = useState("");
-  const getListTutorials = async () => {
+  const getListTutorials = useCallback(async () => {
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_API_BACKEND_URL}/courses`
       );
       setListTutorials(res.data);
+      const listLessonByCourseId =
+        Array.isArray(listTutorials.data) &&
+        listTutorials.data.find((item) => item._id === targetCourseID);
+      setListLesson(listLessonByCourseId);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
-  };
+  }, [listTutorials.data, targetCourseID]);
 
   const deleteLesson = async () => {
     try {
@@ -41,20 +44,9 @@ export const EditLesson = () => {
       console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
     }
   };
-  const findLessonByCourseId = async () => {
-    const listLessonByCourseId =
-      Array.isArray(listTutorials.data) &&
-      listTutorials.data.find((item) => item._id === targetCourseID);
-    setListLesson(listLessonByCourseId);
-  };
-
   useEffect(() => {
     getListTutorials();
-  }, []);
-
-  useEffect(() => {
-    findLessonByCourseId();
-  }, []); // Thêm phụ thuộc vào mảng
+  }, [getListTutorials]);
 
   if (!listTutorials || !listTutorials.data) {
     return <div className="loading">Loading...</div>;

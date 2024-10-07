@@ -24,7 +24,6 @@ export const Exercise = () => {
     return <div className="loading">Loading...</div>;
   }
 
-  console.log(listTutorials);
   return (
     <>
       <div className="Lesson">

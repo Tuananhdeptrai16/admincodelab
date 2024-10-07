@@ -12,7 +12,6 @@ const CourseCreation = () => {
   const { setAction, setTargetCourseID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const handlePageChange = async (page) => {
-    console.log(page);
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_API_BACKEND_URL}/courses?limit=5&page=${page}`
