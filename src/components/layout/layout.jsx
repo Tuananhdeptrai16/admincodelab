@@ -5,6 +5,7 @@ import "./grid.scss";
 import "./layout.scss";
 import "./base.scss";
 import "./breadcrumbs.scss";
+import "./checkbox.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import Logo from "../logo/logo";

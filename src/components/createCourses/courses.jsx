@@ -40,9 +40,28 @@ const CourseCreation = () => {
       console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
     }
   };
-
+  const [checkAll, setCheckAll] = useState(false);
+  const [checkedItems, setCheckedItems] = useState({});
+  const handleCheckAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setCheckAll(isChecked);
+    const newCheckedItems = {};
+    listTutorials.data.forEach((item) => {
+      newCheckedItems[item._id] = isChecked;
+    });
+    setCheckedItems(newCheckedItems);
+  };
+  const handleCheckboxChange = (id) => {
+    setCheckedItems((prev) => {
+      const updatedItems = {
+        ...prev,
+        [id]: !prev[id],
+      };
+      return updatedItems;
+    });
+  };
   useEffect(() => {
-    handlePageChange();
+    handlePageChange(1);
   }, []);
   if (!listTutorials || !listTutorials.data) {
     return (
@@ -73,6 +92,22 @@ const CourseCreation = () => {
         </div>
         <h1 className="courses__heading">Quản lý khóa học</h1>
         <div className="courses__separate"></div>
+        <div className="user__search">
+          <input
+            type="text"
+            name=""
+            placeholder="Tìm kiếm khóa học..."
+            id=""
+            className="courses__search--input"
+          />
+          <button className="courses__search--btn">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/search.svg`}
+              className="courses__adding--icon"
+              alt=""
+            />
+          </button>
+        </div>
         {showModel && (
           <>
             <div className="courses__delete">
@@ -106,8 +141,21 @@ const CourseCreation = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="courses__id courses__border--left">
-                    Mã khóa học
+                  <th className="courses__border--left">
+                    <div className="checkbox-wrapper-43">
+                      <input
+                        onChange={handleCheckAllChange}
+                        checked={checkAll}
+                        type="checkbox"
+                        id="checkall"
+                      />
+                      <label htmlFor="checkall" className="check">
+                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                          <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                          <polyline points="1 9 7 14 15 4"></polyline>
+                        </svg>
+                      </label>
+                    </div>
                   </th>
                   <th>Khóa học</th>
                   <th>Người tạo</th>
@@ -122,8 +170,43 @@ const CourseCreation = () => {
                   listTutorials.data.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
-                        <td>{item._id}</td>
-                        <td>{item.title}</td>
+                        <td>
+                          <div className="checkbox-wrapper-43">
+                            <input
+                              checked={!!checkedItems[item._id]}
+                              onChange={() => handleCheckboxChange(item._id)}
+                              type="checkbox"
+                              id={`input_${item._id}`}
+                            />
+                            <label
+                              htmlFor={`input_${item._id}`}
+                              className="check"
+                            >
+                              <svg
+                                width="18px"
+                                height="18px"
+                                viewBox="0 0 18 18"
+                              >
+                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                              </svg>
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="courses__avatar">
+                            <img
+                              src={
+                                item.background
+                                  ? `${item.background}`
+                                  : `${process.env.PUBLIC_URL}/images/avatarLesson.jpg`
+                              }
+                              alt=""
+                              className="courses__img"
+                            />
+                            <p className="courses__name">{item.title}</p>
+                          </div>
+                        </td>
                         <td>{item.author}</td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                         <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
@@ -140,7 +223,7 @@ const CourseCreation = () => {
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
-                                className="user__icon"
+                                className="courses__icon"
                               />
                             </NavLink>
                           </button>
@@ -183,7 +266,7 @@ const CourseCreation = () => {
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
                 alt=""
-                className="user__icon"
+                className="courses__icon  icon-svg"
               />
               Thêm Khóa Học
             </button>

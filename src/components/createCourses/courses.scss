@@ -1,12 +1,30 @@
 .courses {
   &__action {
-    display: flex;
+    height: 100%;
   }
   &__separate {
     width: 100%;
     margin: 10px 0 40px 0;
     height: 1px;
     background-color: #dadcd6;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  &__icon {
+    width: 20px;
+  }
+  &__name {
+    font-weight: 700;
+  }
+  &__img {
+    border-radius: 10px;
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
   }
   &__list {
     user-select: none;
@@ -60,6 +78,56 @@
       border-radius: 10px;
     }
   }
+  &__search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    &--input {
+      background: #f5f5f5;
+      border-radius: 10px;
+      color: #292e39;
+      font-size: 1.6rem;
+      font-weight: 600;
+      width: 100%;
+      height: 100%;
+      line-height: 100%;
+      padding: 15px;
+    }
+    &--btn {
+      border-radius: 10px;
+      width: 100px;
+      padding: 12px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.05;
+      }
+    }
+  }
+  &__adding {
+    background: #99ecc7;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #ffff;
+    font-weight: 700;
+    font-size: 1.6rem;
+    transition: all 0.2s ease;
+    &:hover {
+      scale: 1.05;
+    }
+    &--icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
   &__border--left {
     border-radius: 10px 0 0 0;
   }
@@ -103,6 +171,7 @@
           }
 
           td {
+            vertical-align: middle;
             padding: 10px 15px;
             border-bottom: 1px solid #ddd; /* Đường viền giữa các dòng */
             overflow: hidden;
@@ -158,10 +227,9 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      color: #333;
+      color: #fff;
       font-weight: 700;
       font-size: 1.6rem;
-      color: #333;
     }
     &--link {
       display: flex;
