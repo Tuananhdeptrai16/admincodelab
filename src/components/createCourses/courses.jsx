@@ -287,7 +287,9 @@ const CourseCreation = () => {
                               alt=""
                               className="courses__img"
                             />
-                            <p className="courses__name">{item.title}</p>
+                            <p className="courses__name line-clamp">
+                              {item.title}
+                            </p>
                           </div>
                         </td>
                         <td>{item.instructor.name}</td>

@@ -2,15 +2,15 @@ import React, { useState, useContext, useEffect } from "react";
 import "./courses.scss";
 import StoreContext from "../../context/context";
 import axios from "axios";
-import { ToastSuccess } from "../toast/toastsuccess";
-import { Toast } from "../toast/toasterror";
 import { NavLink } from "react-router-dom";
 const CourseForm = () => {
   const { action, targetCourseID } = useContext(StoreContext);
   const [listTutorials, setListTutorials] = useState([]);
   const [toastSuccess, setToastSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
   console.log(targetCourseID);
+  console.log(">>>error", error);
   const [courseData, setCourseData] = useState({
     type: "EMPTY_COURSES",
     title: "",
@@ -153,16 +153,58 @@ const CourseForm = () => {
         }, 1000);
       }, 1000);
     } catch (error) {
-      console.error("Error submitting form: ", error);
-      setToastError(true);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
+        setError(errorMessage);
+      } else {
+        setError("Có lỗi không xác định");
+      }
+      setToastError(true); // Hiển thị thông báo lỗi
+
+      // Tự động ẩn thông báo sau 3 giây
+      setTimeout(() => {
+        setToastError(false); // Ẩn thông báo sau 3 giây
+      }, 3000);
     }
   };
   return (
     <>
       {toastSuccess === true ? (
-        <ToastSuccess></ToastSuccess>
+        <div id="toast" className="toast toast--success">
+          <div className="toast__icon">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/like.svg`}
+              alt=""
+              className="toast__icon-svg"
+            />
+          </div>
+          <div className="toast__body">
+            <h3 className="toast__title">Thành Công</h3>
+            <p className="toast__msg">Bạn vui lòng đợi kết quả ...</p>
+          </div>
+          <div className="toast__close">
+            <i className="fas fa-times"></i>
+          </div>
+        </div>
       ) : toastError === true ? (
-        <Toast></Toast>
+        <div>
+          <div id="toast" className="toast toast--error">
+            <div className="toast__icon">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/error.svg`}
+                alt=""
+                className="toast__icon-svg"
+              />
+            </div>
+            <div className="toast__body">
+              <h3 className="toast__title">Thông báo lỗi</h3>
+              <p className="toast__msg">{error}</p>
+            </div>
+            <div className="toast__close">
+              <i className="fas fa-times"></i>
+            </div>
+          </div>
+        </div>
       ) : (
         ""
       )}
@@ -258,6 +300,7 @@ const CourseForm = () => {
                   className="course-creation__input"
                   placeholder="Nhập thời gian"
                   min="0"
+                  required
                   value={courseData.duration}
                   onChange={handleChange}
                 />
@@ -312,6 +355,7 @@ const CourseForm = () => {
                   name="courseImage"
                   className="course-creation__input"
                   placeholder="Nhập link hình ảnh"
+                  required
                   value={courseData.courseImage}
                   onChange={handleChange}
                 />
@@ -328,6 +372,7 @@ const CourseForm = () => {
                   name="star"
                   className="course-creation__input"
                   placeholder="Nhập số sao thưởng cho khóa học"
+                  required
                   min="0"
                   value={courseData.star}
                   onChange={handleChange}
@@ -347,6 +392,7 @@ const CourseForm = () => {
                   className="course-creation__textarea"
                   placeholder="Nhập mô tả khóa học"
                   value={courseData.description}
+                  required
                   onChange={handleChange}
                 ></textarea>
               </div>
