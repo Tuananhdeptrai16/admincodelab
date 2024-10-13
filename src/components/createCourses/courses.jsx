@@ -8,9 +8,17 @@ import { ToastSuccess } from "../toast/toastsuccess";
 const CourseCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
+  const [showManyDelete, setShowManyDelete] = useState(false);
   const [getCoursesId, setGetCoursesId] = useState("");
   const { setAction, setTargetCourseID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
+  const [deleteData, setDeleteData] = useState({
+    dataDelete: {
+      _id: {
+        $in: [],
+      },
+    },
+  });
   const handlePageChange = async (page) => {
     try {
       const res = await axios.get(
@@ -40,8 +48,59 @@ const CourseCreation = () => {
       console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
     }
   };
+  const deleteManyCourses = async () => {
+    try {
+      console.log(deleteData);
+      await axios.delete(
+        `${process.env.REACT_APP_API_BACKEND_URL}/manycourses`,
+        { data: deleteData }
+      );
+      handlePageChange();
+      setShowManyDelete(false);
+      setDeleteData({
+        dataDelete: {
+          _id: {
+            $in: [],
+          },
+        },
+      });
+      setTimeout(() => {
+        setToastSuccess(true);
+        setTimeout(() => {
+          setToastSuccess(false);
+        }, 2000);
+      }, 1000);
+    } catch (error) {
+      console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
+    }
+  };
   const [checkAll, setCheckAll] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
+  const [listCheckItem, setListCheckItem] = useState([]);
+  const updateCheckedItems = () => {
+    const checkedItemsArray = Object.keys(checkedItems);
+
+    const trueCheckedItems = checkedItemsArray.filter(
+      (key) => checkedItems[key] === true
+    );
+    setListCheckItem(trueCheckedItems);
+  };
+  useEffect(() => {
+    updateCheckedItems();
+  }, [checkedItems]);
+  useEffect(() => {
+    setDeleteData({
+      dataDelete: {
+        _id: {
+          $in: listCheckItem,
+        },
+      },
+    });
+  }, [checkedItems, listCheckItem]); // Chạy mỗi khi listCheckItem thay đổi
+  useEffect(() => {
+    handlePageChange(1);
+  }, []);
+  const isDisabled = deleteData.dataDelete._id.$in.length === 0;
   const handleCheckAllChange = (e) => {
     const isChecked = e.target.checked;
     setCheckAll(isChecked);
@@ -60,9 +119,7 @@ const CourseCreation = () => {
       return updatedItems;
     });
   };
-  useEffect(() => {
-    handlePageChange(1);
-  }, []);
+
   if (!listTutorials || !listTutorials.data) {
     return (
       <div className="loader__wrap">
@@ -135,7 +192,33 @@ const CourseCreation = () => {
             ></div>
           </>
         )}
-
+        {showManyDelete && (
+          <>
+            <div className="courses__delete">
+              <h1 className="courses__delete--notification">
+                Bạn muốn tất cả các khóa học đã chọn ?
+              </h1>
+              <div className="courses__delete--action">
+                <button
+                  onClick={() => setShowManyDelete(!showManyDelete)}
+                  className=" courses__delete--btn courses__delete--cancel"
+                >
+                  Hủy
+                </button>
+                <button
+                  onClick={() => deleteManyCourses()}
+                  className="courses__delete--btn courses__delete--sure"
+                >
+                  Xóa
+                </button>
+              </div>
+            </div>
+            <div
+              onClick={() => setShowModel(!showModel)}
+              className="courses__overlay"
+            ></div>
+          </>
+        )}
         <div className="courses__list">
           <div className="courses__item">
             <table>
@@ -197,8 +280,8 @@ const CourseCreation = () => {
                           <div className="courses__avatar">
                             <img
                               src={
-                                item.background
-                                  ? `${item.background}`
+                                item.courseImage
+                                  ? `${item.courseImage}`
                                   : `${process.env.PUBLIC_URL}/images/avatarLesson.jpg`
                               }
                               alt=""
@@ -207,7 +290,7 @@ const CourseCreation = () => {
                             <p className="courses__name">{item.title}</p>
                           </div>
                         </td>
-                        <td>{item.author}</td>
+                        <td>{item.instructor.name}</td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                         <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
                         <td>{item.category}</td>
@@ -219,7 +302,7 @@ const CourseCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/page/create_courses">
+                            <NavLink to="/course/create_courses">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
@@ -254,23 +337,40 @@ const CourseCreation = () => {
           </div>
         </div>
 
-        <div className="courses__create">
-          <NavLink
-            to="/page/create_courses"
-            className={"courses__create--link"}
+        <div className="courses__btn-wrap">
+          <button
+            style={{
+              pointerEvents: isDisabled ? "none" : "auto", // Nếu mảng rỗng thì vô hiệu hóa
+              opacity: isDisabled ? 0.5 : 1, // Giảm độ mờ khi bị vô hiệu hóa
+            }}
+            onClick={() => setShowManyDelete(!showManyDelete)}
+            className="courses__btn-delete"
           >
-            <button
-              onClick={() => setAction("C")}
-              className="courses__create--btn"
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
+              alt=""
+              className="courses__icon "
+            />
+            Xóa tất cả
+          </button>
+          <div className="courses__create">
+            <NavLink
+              to="/course/create_courses"
+              className={"courses__create--link"}
             >
-              <img
-                src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
-                alt=""
-                className="courses__icon  icon-svg"
-              />
-              Thêm Khóa Học
-            </button>
-          </NavLink>
+              <button
+                onClick={() => setAction("C")}
+                className="courses__create--btn"
+              >
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
+                  alt=""
+                  className="courses__icon  icon-svg"
+                />
+                Thêm Khóa Học
+              </button>
+            </NavLink>
+          </div>
         </div>
         <Pagination
           align="center"

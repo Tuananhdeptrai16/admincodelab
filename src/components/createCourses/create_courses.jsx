@@ -10,23 +10,28 @@ const CourseForm = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [toastError, setToastError] = useState(false);
+  console.log(targetCourseID);
   const [courseData, setCourseData] = useState({
+    type: "EMPTY_COURSES",
     title: "",
-    author: "",
+    instructor: {
+      name: "",
+      profileImage:
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fheyyitsmyaa%2Fcapybara%2F&psig=AOvVaw1BQdT9qwKZeoWFyZska2zr&ust=1728909528778000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPCD5Yawi4kDFQAAAAAdAAAAABAh",
+    },
     description: "",
-    category: "Web Development",
-    price: "",
-    background: "",
     duration: "",
     level: "beginner",
-    lessons: [
-      {
-        title: "",
-        content: [], // Đảm bảo content là một mảng
+    category: "Web Development",
+    price: {
+      amount: 0,
+      currency: "VND",
+      discount: {
+        percentage: 0,
       },
-    ],
-    rating: 0,
-    studentsEnrolled: 0,
+    },
+    star: 0,
+    courseImage: "",
   });
 
   const getListTutorials = async () => {
@@ -48,23 +53,23 @@ const CourseForm = () => {
         }
         console.log("Updated listTutorials:", listTutorials);
 
-        if (listTutorials.data && listTutorials.errorCode === 0) {
+        if (listTutorials.data) {
           const foundCourses = listTutorials.data.find(
             (courses) => courses._id === targetCourseID
           );
+          console.log(foundCourses.courseImage);
           if (foundCourses) {
             setCourseData({
+              id: targetCourseID,
               title: foundCourses.title,
-              author: foundCourses.author,
+              instructor: foundCourses.instructor,
               description: foundCourses.description,
               category: foundCourses.category,
               price: foundCourses.price,
-              background: foundCourses.background,
+              courseImage: foundCourses.courseImage,
               duration: foundCourses.duration,
               level: foundCourses.level,
-              lessons: foundCourses.lessons || [],
-              rating: foundCourses.rating,
-              studentsEnrolled: foundCourses.studentsEnrolled || 0,
+              star: foundCourses.star,
             });
           }
           console.log(foundCourses.lessons);
@@ -75,25 +80,50 @@ const CourseForm = () => {
     };
     renderUpdateUser();
   }, [action, targetCourseID, listTutorials]); // Bỏ listTutorials ra khỏi dependencies
+  const handleInstructorChange = (e) => {
+    const { value } = e.target;
+    setCourseData((prevData) => ({
+      ...prevData,
+      instructor: {
+        ...prevData.instructor,
+        name: value, // Luôn cập nhật name
+      },
+    }));
+  };
+
+  const handlePriceChange = (e) => {
+    const { value } = e.target;
+    setCourseData((prevData) => ({
+      ...prevData,
+      price: {
+        ...prevData.price,
+        amount: value, // Luôn cập nhật amount
+      },
+    }));
+  };
 
   const resetForm = () => {
     setCourseData({
+      type: "EMPTY_COURSES",
       title: "",
-      author: "",
+      instructor: {
+        name: "",
+        profileImage:
+          "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fheyyitsmyaa%2Fcapybara%2F&psig=AOvVaw1BQdT9qwKZeoWFyZska2zr&ust=1728909528778000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCPCD5Yawi4kDFQAAAAAdAAAAABAh",
+      },
       description: "",
-      category: "Web Development",
-      price: "",
-      background: "",
       duration: "",
       level: "beginner",
-      lessons: [
-        {
-          title: "",
-          content: [],
+      category: "Web Development",
+      price: {
+        amount: 0,
+        currency: "VND",
+        discount: {
+          percentage: 0,
         },
-      ],
-      rating: 0,
-      studentsEnrolled: 0,
+      },
+      star: 0,
+      courseImage: "",
     });
   };
   const handleChange = (e) => {
@@ -103,63 +133,7 @@ const CourseForm = () => {
       [name]: value,
     }));
   };
-  const handleAddLesson = () => {
-    setCourseData((prevData) => ({
-      ...prevData,
-      lessons: [
-        ...prevData.lessons,
-        { title: "", content: [] }, // Đảm bảo rằng cấu trúc này đúng
-      ],
-    }));
-  };
-  const handleLessonTitleChange = (index, e) => {
-    const { value } = e.target;
-    setCourseData((prevData) => {
-      const updatedLessons = [...prevData.lessons]; // Thay đổi ở đây
-      updatedLessons[index].title = value;
-      return {
-        ...prevData,
-        lessons: updatedLessons, // Thay đổi ở đây
-      };
-    });
-  };
-
-  const handleAddParagraph = (lessonIndex) => {
-    setCourseData((prevData) => {
-      const updatedLessons = [...prevData.lessons]; // Tạo bản sao của mảng lessons
-      // Kiểm tra xem lessonIndex có hợp lệ không
-      if (updatedLessons[lessonIndex]) {
-        updatedLessons[lessonIndex].content.push({
-          // Thêm đoạn văn mới vào nội dung của bài học
-          text: "",
-          imageUrl: "",
-          descImage: "",
-        });
-      }
-      return {
-        ...prevData,
-        lessons: updatedLessons, // Cập nhật lại mảng lessons
-      };
-    });
-  };
-
-  const handleParagraphChange = (lessonIndex, paragraphIndex, e) => {
-    const { name, value } = e.target;
-    setCourseData((prevData) => {
-      const updatedLessons = [...prevData.lessons];
-      // Đảm bảo cập nhật đúng thuộc tính trong content
-      if (
-        updatedLessons[lessonIndex] &&
-        updatedLessons[lessonIndex].content[paragraphIndex]
-      ) {
-        updatedLessons[lessonIndex].content[paragraphIndex][name] = value; // Cập nhật đúng thuộc tính
-      }
-      return {
-        ...prevData,
-        lessons: updatedLessons,
-      };
-    });
-  };
+  console.log(courseData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -167,7 +141,7 @@ const CourseForm = () => {
       if (action === "C") {
         await axios.post(apiUrl, { ...courseData });
       } else {
-        await axios.put(`${apiUrl}/${targetCourseID}`, {
+        await axios.put(apiUrl, {
           ...courseData,
         });
       }
@@ -175,7 +149,7 @@ const CourseForm = () => {
       setTimeout(() => {
         setToastSuccess(true);
         setTimeout(() => {
-          window.location.href = "/page";
+          window.location.href = "/course";
         }, 1000);
       }, 1000);
     } catch (error) {
@@ -203,7 +177,7 @@ const CourseForm = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/page" className="breadcrumb__item">
+            <NavLink to="/course" className="breadcrumb__item">
               <p className="breadcrumb__name">Khóa học</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -243,12 +217,12 @@ const CourseForm = () => {
                 </label>
                 <input
                   type="text"
-                  id="author"
-                  name="author"
+                  id="instructor"
+                  name="instructor"
                   className="course-creation__input"
-                  placeholder="Nhập tiêu đề khóa học"
-                  value={courseData.author}
-                  onChange={handleChange}
+                  placeholder="Người hướng dẫn"
+                  value={courseData.instructor.name}
+                  onChange={handleInstructorChange}
                 />
               </div>
             </div>
@@ -267,8 +241,8 @@ const CourseForm = () => {
                   className="course-creation__input"
                   placeholder="Nhập giá khóa học"
                   min="0"
-                  value={courseData.price}
-                  onChange={handleChange}
+                  value={courseData.price.amount}
+                  onChange={handlePriceChange}
                 />
               </div>
             </div>
@@ -329,16 +303,33 @@ const CourseForm = () => {
             </div>
             <div className="col gx-2">
               <div className="course-creation__field">
-                <label htmlFor="background" className="course-creation__label">
+                <label htmlFor="courseImage" className="course-creation__label">
                   URL ảnh nền
                 </label>
                 <input
                   type="text"
-                  id="background"
-                  name="background"
+                  id="courseImage"
+                  name="courseImage"
                   className="course-creation__input"
                   placeholder="Nhập link hình ảnh"
-                  value={courseData.background}
+                  value={courseData.courseImage}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="col gx-2">
+              <div className="course-creation__field">
+                <label htmlFor="star" className="course-creation__label">
+                  Tổng sao
+                </label>
+                <input
+                  type="number"
+                  id="star"
+                  name="star"
+                  className="course-creation__input"
+                  placeholder="Nhập số sao thưởng cho khóa học"
+                  min="0"
+                  value={courseData.star}
                   onChange={handleChange}
                 />
               </div>
@@ -361,131 +352,6 @@ const CourseForm = () => {
               </div>
             </div>
           </div>
-          <h2 className="course-creation__subtitle">Thông tin bài học</h2>
-          <div className="courses__separate"></div>
-
-          <div className="course-creation__lessons">
-            {courseData.lessons.map((lesson, lessonIndex) => (
-              <div key={lessonIndex} className="course-creation__lesson">
-                <h3 className="course-creation__lesson-title">
-                  Bài Học {lessonIndex + 1}
-                </h3>
-                <div className="course-creation__field">
-                  <label
-                    htmlFor={`lesson-title-${lessonIndex}`}
-                    className="course-creation__label"
-                  >
-                    Tiêu đề bài học
-                  </label>
-                  <input
-                    type="text"
-                    id={`lesson-title-${lessonIndex}`}
-                    className="course-creation__input"
-                    placeholder="Nhập tiêu đề bài học"
-                    value={lesson.title}
-                    onChange={(e) => handleLessonTitleChange(lessonIndex, e)}
-                  />
-                </div>
-                {Array.isArray(lesson.content) &&
-                  lesson.content.map((paragraph, paragraphIndex) => (
-                    <div
-                      key={paragraphIndex}
-                      className="course-creation__paragraph"
-                    >
-                      <div className="course-creation__field">
-                        <label
-                          htmlFor={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                          className="course-creation__label"
-                        >
-                          Nội dung đoạn văn {paragraphIndex + 1}
-                        </label>
-                        <textarea
-                          id={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                          className="course-creation__textarea"
-                          placeholder="Nhập nội dung đoạn văn"
-                          name="text"
-                          value={paragraph.text}
-                          onChange={(e) =>
-                            handleParagraphChange(
-                              lessonIndex,
-                              paragraphIndex,
-                              e
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="row row-cols-2">
-                        <div className="col gx-2 ">
-                          <div className="course-creation__field">
-                            <label
-                              htmlFor={`lesson-image-${lessonIndex}-${paragraphIndex}`}
-                              className="course-creation__label"
-                            >
-                              Hình {paragraphIndex + 1}
-                            </label>
-                            <input
-                              type="text"
-                              id={`lesson-image-${lessonIndex}-${paragraphIndex}`}
-                              className="course-creation__input"
-                              placeholder="Nhập URL hình ảnh"
-                              name="imageUrl"
-                              value={paragraph.imageUrl}
-                              onChange={(e) =>
-                                handleParagraphChange(
-                                  lessonIndex,
-                                  paragraphIndex,
-                                  e
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                        <div className="col gx-2">
-                          <div className="course-creation__field">
-                            <label
-                              htmlFor={`desc-image-${lessonIndex}-${paragraphIndex}`}
-                              className="blog-creation__label"
-                            >
-                              Chú thích hình ảnh {paragraphIndex + 1}
-                            </label>
-                            <input
-                              type="text"
-                              id={`desc-image-${lessonIndex}-${paragraphIndex}`}
-                              className="blog-creation__input"
-                              placeholder="Chú thích hình ảnh"
-                              name="descImage"
-                              value={paragraph.descImage || ""}
-                              onChange={(e) =>
-                                handleParagraphChange(
-                                  lessonIndex,
-                                  paragraphIndex,
-                                  e
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                <button
-                  type="button"
-                  className="course-creation__button"
-                  onClick={() => handleAddParagraph(lessonIndex)}
-                >
-                  Thêm nội dung
-                </button>
-              </div>
-            ))}
-            <button
-              type="button"
-              className="course-creation__button"
-              onClick={handleAddLesson}
-            >
-              Thêm bài học
-            </button>
-          </div>
-
           <div className="course-creation__submit">
             <button
               type="submit"

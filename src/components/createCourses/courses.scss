@@ -8,6 +8,12 @@
     height: 1px;
     background-color: #dadcd6;
   }
+  &__btn-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
 
   &__avatar {
     display: flex;
@@ -34,6 +40,18 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.35);
   }
+  &__btn-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    background: #d9534f;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
   &__delete {
     position: fixed;
     top: 50%;
@@ -59,13 +77,18 @@
       gap: 10px;
     }
     &--btn {
-      width: 100px;
-      padding: 10px;
+      width: 160px;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 700;
       font-size: 1.6rem;
-      font-weight: 600;
       transition: all 0.2s ease;
       &:hover {
-        scale: 1.1;
+        scale: 1.01;
       }
     }
     &--sure {
@@ -220,7 +243,7 @@
   &__create {
     user-select: none;
     &--btn {
-      background: #99ecc7;
+      background: #1be189;
       padding: 15px;
       border-radius: 10px;
       display: flex;
@@ -230,6 +253,10 @@
       color: #fff;
       font-weight: 700;
       font-size: 1.6rem;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.01;
+      }
     }
     &--link {
       display: flex;
