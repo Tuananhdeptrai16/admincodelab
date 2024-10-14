@@ -262,7 +262,7 @@ export const Dashboard = () => {
                   src=""
                   className="dashboard__info-bg--img"
                   alt=""
-                  srcset=""
+                  srcSet=""
                 />
               </div>
               <div className="dashboard__avatar">

@@ -148,9 +148,6 @@ const CourseForm = () => {
       resetForm();
       setTimeout(() => {
         setToastSuccess(true);
-        setTimeout(() => {
-          window.location.href = "/course";
-        }, 1000);
       }, 1000);
     } catch (error) {
       if (axios.isAxiosError(error)) {

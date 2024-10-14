@@ -9,7 +9,6 @@ const CourseCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showManyDelete, setShowManyDelete] = useState(false);
-  const [getCoursesId, setGetCoursesId] = useState("");
   const { setAction, setTargetCourseID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [deleteData, setDeleteData] = useState({
@@ -30,24 +29,6 @@ const CourseCreation = () => {
     }
   };
 
-  const deleteCourses = async () => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_BACKEND_URL}/courses`,
-        { data: { _id: getCoursesId } } // Truyền ID khóa học trong body
-      );
-      handlePageChange(); // Cập nhật lại danh sách sau khi xóa
-      setShowModel(false);
-      setTimeout(() => {
-        setToastSuccess(true);
-        setTimeout(() => {
-          setToastSuccess(false);
-        }, 2000);
-      }, 1000);
-    } catch (error) {
-      console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
-    }
-  };
   const deleteManyCourses = async () => {
     try {
       console.log(deleteData);
@@ -119,7 +100,31 @@ const CourseCreation = () => {
       return updatedItems;
     });
   };
-
+  const [getInfoSearch, setGetInfoSearch] = useState("");
+  const [arrInfoSearch, setArrInfoSearch] = useState([]);
+  const [displayInfoArr, setDisplayInfoArr] = useState([]);
+  const handleGetSearchInfo = async () => {
+    let arr = await listTutorials.data;
+    const targetIds = arr
+      .filter((item) => {
+        return item.title
+          .toLocaleLowerCase()
+          .trim()
+          .includes(getInfoSearch.toLocaleLowerCase().trim());
+      })
+      .map((item) => item._id);
+    setArrInfoSearch(targetIds);
+    let TargetCourse = arrInfoSearch.map((id) => {
+      let result = listTutorials.data.find((item1) => item1._id === id);
+      return result;
+    });
+    if (getInfoSearch.trim() === "") {
+      setArrInfoSearch([]);
+      setDisplayInfoArr([]);
+      return; // Thoát khỏi hàm
+    }
+    setDisplayInfoArr(TargetCourse);
+  };
   if (!listTutorials || !listTutorials.data) {
     return (
       <div className="loader__wrap">
@@ -155,9 +160,19 @@ const CourseCreation = () => {
             name=""
             placeholder="Tìm kiếm khóa học..."
             id=""
+            value={getInfoSearch}
+            onChange={(e) => {
+              handleGetSearchInfo();
+              setGetInfoSearch(e.target.value);
+            }}
             className="courses__search--input"
           />
-          <button className="courses__search--btn">
+          <button
+            onClick={() => {
+              handleGetSearchInfo();
+            }}
+            className="courses__search--btn"
+          >
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/search.svg`}
               className="courses__adding--icon"
@@ -165,33 +180,7 @@ const CourseCreation = () => {
             />
           </button>
         </div>
-        {showModel && (
-          <>
-            <div className="courses__delete">
-              <h1 className="courses__delete--notification">
-                Bạn muốn xóa khóa học ?
-              </h1>
-              <div className="courses__delete--action">
-                <button
-                  onClick={() => setShowModel(!showModel)}
-                  className=" courses__delete--btn courses__delete--cancel"
-                >
-                  Hủy
-                </button>
-                <button
-                  onClick={() => deleteCourses()}
-                  className="courses__delete--btn courses__delete--sure"
-                >
-                  Xóa
-                </button>
-              </div>
-            </div>
-            <div
-              onClick={() => setShowModel(!showModel)}
-              className="courses__overlay"
-            ></div>
-          </>
-        )}
+
         {showManyDelete && (
           <>
             <div className="courses__delete">
@@ -240,16 +229,87 @@ const CourseCreation = () => {
                       </label>
                     </div>
                   </th>
-                  <th>Khóa học</th>
-                  <th>Người tạo</th>
+                  <th>Thông tin khóa học</th>
+                  <th>Hướng dẫn</th>
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
                   <th>Danh mục</th>
-                  <th className="courses__border--right">Hành động </th>
+                  <th className="courses__border--right">Sửa</th>
                 </tr>
               </thead>
               <tbody>
-                {listTutorials.data.length > 0 ? (
+                {displayInfoArr.length > 0 ? (
+                  displayInfoArr.map((item, index) => {
+                    return (
+                      <tr key={`${index}-tutorials`}>
+                        <td>
+                          <div className="checkbox-wrapper-43">
+                            <input
+                              checked={!!checkedItems[item._id]}
+                              onChange={() => handleCheckboxChange(item._id)}
+                              type="checkbox"
+                              id={`input_${item._id}`}
+                            />
+                            <label
+                              htmlFor={`input_${item._id}`}
+                              className="check"
+                            >
+                              <svg
+                                width="18px"
+                                height="18px"
+                                viewBox="0 0 18 18"
+                              >
+                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                              </svg>
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="courses__avatar">
+                            <img
+                              src={
+                                item.courseImage
+                                  ? `${item.courseImage}`
+                                  : `${process.env.PUBLIC_URL}/images/avatarLesson.jpg`
+                              }
+                              alt=""
+                              className="courses__img"
+                            />
+                            <p className="courses__name line-clamp">
+                              {item.title}
+                            </p>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="courses__name-author">
+                            {item.instructor.name}
+                          </span>
+                        </td>
+                        <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+                        <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
+                        <td>{item.category}</td>
+                        <td className="courses__action">
+                          <button
+                            onClick={() => {
+                              setAction("U");
+                              setTargetCourseID(item._id);
+                            }}
+                            className="btn btn-warning mx-3 d-inline-block"
+                          >
+                            <NavLink to="/course/create_courses">
+                              <img
+                                src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
+                                alt=""
+                                className="courses__icon"
+                              />
+                            </NavLink>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : listTutorials.data.length > 0 ? (
                   listTutorials.data.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
@@ -292,7 +352,11 @@ const CourseCreation = () => {
                             </p>
                           </div>
                         </td>
-                        <td>{item.instructor.name}</td>
+                        <td>
+                          <span className="courses__name-author">
+                            {item.instructor.name}
+                          </span>
+                        </td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                         <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
                         <td>{item.category}</td>
@@ -312,19 +376,6 @@ const CourseCreation = () => {
                               />
                             </NavLink>
                           </button>
-                          <button
-                            onClick={() => {
-                              setGetCoursesId(item._id);
-                              setShowModel(!showModel);
-                            }}
-                            className="btn btn-danger"
-                          >
-                            <img
-                              src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
-                              alt=""
-                              className="user__icon"
-                            />
-                          </button>
                         </td>
                       </tr>
                     );
@@ -338,7 +389,6 @@ const CourseCreation = () => {
             </table>
           </div>
         </div>
-
         <div className="courses__btn-wrap">
           <button
             style={{
@@ -353,7 +403,7 @@ const CourseCreation = () => {
               alt=""
               className="courses__icon "
             />
-            Xóa tất cả
+            Xóa
           </button>
           <div className="courses__create">
             <NavLink

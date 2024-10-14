@@ -107,6 +107,22 @@
     object-fit: contain;
   }
 }
+.login {
+  &__btn {
+    margin-right: 20px;
+    width: 150px;
+    height: 50px;
+    background: #5795e1;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    &:hover {
+      scale: 1.02;
+    }
+  }
+}
 .custom-calendar .ant-picker-calendar {
   height: 500px !important; /* Thay đổi chiều cao theo ý bạn */
 }
