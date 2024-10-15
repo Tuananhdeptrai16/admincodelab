@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { NavLink, Outlet } from "react-router-dom"; // Import Outlet
+import { NavLink, Outlet } from "react-router-dom";
 import "./reset.scss";
 import "./grid.scss";
 import "./layout.scss";
@@ -48,20 +48,6 @@ const LayoutAdmin = () => {
                 {
                   key: "2",
                   icon: (
-                    <NavLink to="/user">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/user.svg`}
-                        alt="svg"
-                        className="nav__icon icon"
-                      />
-                    </NavLink>
-                  ),
-                  label: <NavLink to="/user">Members</NavLink>,
-                },
-
-                {
-                  key: "3",
-                  icon: (
                     <NavLink to="/exercise">
                       <img
                         src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
@@ -74,7 +60,35 @@ const LayoutAdmin = () => {
                 },
 
                 {
+                  key: "3",
+                  icon: (
+                    <NavLink to="/lesson">
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/icon/file.svg`}
+                        alt="svg"
+                        className="nav__icon icon"
+                      />
+                    </NavLink>
+                  ),
+                  label: <NavLink to="/lesson">Lesson</NavLink>,
+                },
+
+                {
                   key: "4",
+                  icon: (
+                    <NavLink to="/user">
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
+                        alt="svg"
+                        className="nav__icon icon"
+                      />
+                    </NavLink>
+                  ),
+                  label: <NavLink to="/user">Admin</NavLink>,
+                },
+
+                {
+                  key: "5",
                   icon: (
                     <NavLink to="/course">
                       <img
@@ -87,7 +101,7 @@ const LayoutAdmin = () => {
                   label: <NavLink to="/course">Courses</NavLink>,
                 },
                 {
-                  key: "5",
+                  key: "6",
                   icon: (
                     <NavLink to="/blog">
                       <img
@@ -100,7 +114,7 @@ const LayoutAdmin = () => {
                   label: <NavLink to="/blog">Blog</NavLink>,
                 },
                 {
-                  key: "6",
+                  key: "7",
                   icon: (
                     <NavLink to="/comment">
                       <img
@@ -113,7 +127,7 @@ const LayoutAdmin = () => {
                   label: <NavLink to="/comment">Comment</NavLink>,
                 },
                 {
-                  key: "7",
+                  key: "8",
                   icon: (
                     <NavLink to="/calendar">
                       <img
@@ -126,7 +140,7 @@ const LayoutAdmin = () => {
                   label: <NavLink to="/calendar">Calendar</NavLink>,
                 },
                 {
-                  key: "8",
+                  key: "9",
                   icon: (
                     <NavLink to="/tools">
                       <img
@@ -139,7 +153,7 @@ const LayoutAdmin = () => {
                   label: <NavLink to="/tools">Tools</NavLink>,
                 },
                 {
-                  key: "9",
+                  key: "10",
                   icon: (
                     <NavLink to="/help">
                       <img

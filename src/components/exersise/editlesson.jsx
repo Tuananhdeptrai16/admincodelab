@@ -150,7 +150,7 @@ export const EditLesson = () => {
                 </tr>
               </thead>
               <tbody>
-                {listLesson && listLesson.lessons.length > 0
+                {listLesson && listLesson.lessons > 0
                   ? listLesson.lessons.map((item) => {
                       return (
                         <tr key={item._id}>

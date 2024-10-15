@@ -4,13 +4,15 @@ import "./courses.scss";
 import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
 import StoreContext from "../../context/context";
-import { ToastSuccess } from "../toast/toastsuccess";
+
 const CourseCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showManyDelete, setShowManyDelete] = useState(false);
   const { setAction, setTargetCourseID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [toastError, setToastError] = useState(false);
   const [deleteData, setDeleteData] = useState({
     dataDelete: {
       _id: {
@@ -31,7 +33,6 @@ const CourseCreation = () => {
 
   const deleteManyCourses = async () => {
     try {
-      console.log(deleteData);
       await axios.delete(
         `${process.env.REACT_APP_API_BACKEND_URL}/manycourses`,
         { data: deleteData }
@@ -52,7 +53,18 @@ const CourseCreation = () => {
         }, 2000);
       }, 1000);
     } catch (error) {
-      console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
+        setError(errorMessage);
+      } else {
+        setError("Có lỗi không xác định");
+      }
+      setToastError(true); // Hiển thị thông báo lỗi
+
+      // Tự động ẩn thông báo sau 3 giây
+      setTimeout(() => {
+        setToastError(false); // Ẩn thông báo sau 3 giây
+      }, 3000);
     }
   };
   const [checkAll, setCheckAll] = useState(false);
@@ -135,7 +147,45 @@ const CourseCreation = () => {
   }
   return (
     <>
-      {toastSuccess === true ? <ToastSuccess></ToastSuccess> : ""}
+      {toastSuccess === true ? (
+        <div id="toast" className="toast toast--success">
+          <div className="toast__icon">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/like.svg`}
+              alt=""
+              className="toast__icon-svg"
+            />
+          </div>
+          <div className="toast__body">
+            <h3 className="toast__title">Thành Công</h3>
+            <p className="toast__msg">Bạn vui lòng đợi kết quả ...</p>
+          </div>
+          <div className="toast__close">
+            <i className="fas fa-times"></i>
+          </div>
+        </div>
+      ) : toastError === true ? (
+        <div>
+          <div id="toast" className="toast toast--error">
+            <div className="toast__icon">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/error.svg`}
+                alt=""
+                className="toast__icon-svg"
+              />
+            </div>
+            <div className="toast__body">
+              <h3 className="toast__title">Thông báo lỗi</h3>
+              <p className="toast__msg">{error}</p>
+            </div>
+            <div className="toast__close">
+              <i className="fas fa-times"></i>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="courses">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">

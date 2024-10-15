@@ -4,25 +4,15 @@
     align-items: center;
     justify-content: space-between;
   }
-  &__adding {
-    background: #99ecc7;
-    padding: 10px;
-    border-radius: 10px;
+  &__email {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
-    color: #ffff;
-    font-weight: 700;
-    font-size: 1.6rem;
-    transition: all 0.2s ease;
-    &:hover {
-      scale: 1.05;
-    }
-    &--icon {
-      width: 30px;
-      height: 30px;
-    }
+  }
+  &__icon-search {
+    width: 30px;
+    height: 30px;
   }
   &__search {
     display: flex;
@@ -83,6 +73,7 @@
     background: #d9534f;
   }
   &__user {
+    width: 60px;
     border-radius: 20px;
     text-align: center;
     font-weight: 600;
@@ -199,7 +190,6 @@
           }
           /* Style cho các button */
           .btn {
-            width: 150px !important;
             font-weight: 700;
             padding: 5px 10px;
             border: none;
@@ -242,16 +232,48 @@
   &__create {
     user-select: none;
     &--btn {
-      background: #d1e7dd;
+      background: #1be189;
       padding: 15px;
       border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.6rem;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.01;
+      }
     }
     &--link {
-      color: #333;
-      font-weight: 500;
-      font-size: 1.6rem;
-      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
     }
+  }
+  &__btn {
+    width: 80px !important;
+  }
+  &__btn-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  &__btn-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    background: #d9534f;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
   }
 }
 .user-creation {

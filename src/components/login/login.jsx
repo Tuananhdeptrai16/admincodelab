@@ -74,6 +74,7 @@ export const Login = () => {
                   name="username"
                   id="username"
                   placeholder="username"
+                  autoComplete="current-username"
                   value={userName}
                   onChange={(e) => {
                     setUserName(e.target.value);
@@ -87,6 +88,7 @@ export const Login = () => {
                   name="password"
                   id="password"
                   placeholder="password"
+                  autoComplete="current-password"
                   value={passWord}
                   onChange={(e) => {
                     setPassWord(e.target.value);

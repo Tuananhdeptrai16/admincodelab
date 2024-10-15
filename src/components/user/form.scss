@@ -1,0 +1,83 @@
+.title {
+  &__title {
+    line-height: 148%;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #333;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  &__body {
+    margin-top: 30px;
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.6rem;
+  transition: all 0.2s ease;
+}
+.btn:hover {
+  scale: 1.01;
+}
+.btn-save {
+  background-color: rgb(166 236 171);
+  color: rgb(1 123 10);
+  width: 100px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.btn-cancel {
+  background-color: rgb(255 197 197);
+  color: rgb(190, 40, 40);
+  width: 100px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.form {
+  &__group {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+  }
+  &__action {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  &__control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 15px;
+    line-height: 1.5;
+    color: black;
+    background-color: #f1f1f1;
+    background-clip: padding-box;
+    height: 45px;
+    border: 1px solid #dadada;
+    border-radius: 0.357rem;
+    -webkit-transition: border-color 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+    -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+  }
+}
+.control {
+  &__label {
+    white-space: nowrap;
+    color: #767575;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 150%;
+  }
+}

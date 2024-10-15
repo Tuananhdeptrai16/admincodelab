@@ -86,7 +86,7 @@ export const Exercise = () => {
                 </tr>
               </thead>
               <tbody>
-                {listTutorials.data.length > 0 ? (
+                {listTutorials.data > 0 ? (
                   listTutorials.data.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
@@ -107,11 +107,7 @@ export const Exercise = () => {
                         <td>{item.title}</td>
                         <td>{item.author}</td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-                        <td>
-                          {item.lessons.length <= 10
-                            ? `0${item.lessons.length}`
-                            : item.lessons.length}
-                        </td>
+                        <td></td>
                         <td>{item.category}</td>
                         <td className="Lesson__action">
                           <button

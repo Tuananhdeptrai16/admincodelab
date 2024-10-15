@@ -8,20 +8,19 @@ const Users = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showModelDelete, setShowModelDelete] = useState(false);
-  const [getUserId, setGetUserId] = useState("");
+  const [getUserId] = useState("");
 
   const [toastSuccess, setToastSuccess] = useState(false);
   const handlePageChange = async (page) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/users?limit=5&page=${page}`
+        `${process.env.REACT_APP_API_BACKEND_URL}/admins`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
   };
-
   const deleteAdmin = async () => {
     try {
       await axios.put(
@@ -64,7 +63,7 @@ const Users = () => {
     const isChecked = e.target.checked;
     setCheckAll(isChecked);
     const newCheckedItems = {};
-    listTutorials.data.forEach((item) => {
+    listTutorials.forEach((item) => {
       newCheckedItems[item._id] = isChecked;
     });
     setCheckedItems(newCheckedItems);
@@ -81,7 +80,7 @@ const Users = () => {
   useEffect(() => {
     handlePageChange();
   }, []);
-  if (!listTutorials || !listTutorials.data) {
+  if (!listTutorials) {
     return (
       <div className="loader__wrap">
         <div className="loader"></div>
@@ -111,14 +110,6 @@ const Users = () => {
         </div>
         <div className="user__wrap">
           <h1 className="user__heading">Người dùng </h1>
-          <button className="user__adding">
-            <img
-              src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
-              className="user__adding--icon icon-svg"
-              alt=""
-            />
-            Thêm người dùng
-          </button>
         </div>
         <div className="user__separate"></div>
         <div className="user__search">
@@ -132,7 +123,7 @@ const Users = () => {
           <button className="user__search--btn">
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/search.svg`}
-              className="user__adding--icon"
+              className="user__icon-search"
               alt=""
             />
           </button>
@@ -217,15 +208,16 @@ const Users = () => {
                     </div>
                   </th>
                   <th>Thông tin người dùng</th>
+                  <th>Email </th>
                   <th>Ngày tạo</th>
-                  <th>Nhà cung cấp</th>
+                  <th>Ngày sửa</th>
                   <th>Trạng thái</th>
                   <th className="user__border--right">Hành động</th>
                 </tr>
               </thead>
               <tbody>
-                {listTutorials.data.length > 0 ? (
-                  listTutorials.data.map((item, index) => {
+                {listTutorials.length > 0 ? (
+                  listTutorials.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
                         <td>
@@ -255,62 +247,47 @@ const Users = () => {
                           <div className="user__avatar">
                             <img
                               src={
-                                item.data.photoURL
-                                  ? `${item.data.photoURL}`
+                                item.image
+                                  ? `${item.image}`
                                   : `${process.env.PUBLIC_URL}/images/avataruser.jpg`
                               }
                               alt=""
                               className="user__img"
                             />
                             <p className="user__name">
-                              {item.data.displayName
-                                ? item.data.displayName
-                                : item.data.email}
+                              {item.username ? item.username : "User"}
                             </p>
                           </div>
                         </td>
                         <td>
-                          {new Date(
-                            item.data.metadata.creationTime
-                          ).toLocaleDateString()}
+                          <div className="user__email">
+                            <img
+                              src={`${process.env.PUBLIC_URL}/images/gmail.png`}
+                              className="user__icon-search"
+                              alt=""
+                            />
+                            {item.email}
+                          </div>
                         </td>
-                        <td>
-                          {item.data.providerData.map((provider, index) => {
-                            return (
-                              <span key={index}>{provider.providerId}</span>
-                            );
-                          })}
-                        </td>
+                        <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+                        <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
 
                         <td>
-                          {item.admin === true ? (
-                            <p className="user__admin">Admin</p>
-                          ) : (
-                            <p className="user__user">Member</p>
-                          )}
+                          <p className="user__user">status</p>
                         </td>
-                        <td>
-                          {item.admin === true ? (
+                        <td className="user__action">
+                          <NavLink to="/course/create_courses">
                             <button
-                              onClick={() => {
-                                setGetUserId(item._id);
-                                setShowModelDelete(!showModelDelete);
-                              }}
-                              className="btn btn-warning mx-3 d-inline-block"
+                              onClick={() => {}}
+                              className="btn btn-warning mx-3 d-inline-block user__btn"
                             >
-                              Xóa Admin
+                              <img
+                                src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
+                                alt=""
+                                className="user__icon"
+                              />
                             </button>
-                          ) : (
-                            <button
-                              onClick={() => {
-                                setGetUserId(item._id);
-                                setShowModel(!showModel);
-                              }}
-                              className="btn btn-danger"
-                            >
-                              Đề xuất Admin
-                            </button>
-                          )}
+                          </NavLink>
                         </td>
                       </tr>
                     );
@@ -322,6 +299,28 @@ const Users = () => {
                 )}
               </tbody>
             </table>
+          </div>
+        </div>
+        <div className="user__btn-wrap">
+          <button className="user__btn-delete">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
+              alt=""
+              className="user__icon "
+            />
+            Xóa
+          </button>
+          <div className="user__create">
+            <NavLink to="/user/add_user" className={"user__create--link"}>
+              <button className="user__create--btn">
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
+                  alt=""
+                  className="user__icon  icon-svg"
+                />
+                Thêm Admin
+              </button>
+            </NavLink>
           </div>
         </div>
         <Pagination
