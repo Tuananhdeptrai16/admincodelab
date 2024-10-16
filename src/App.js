@@ -7,7 +7,7 @@ function App() {
   const [targetCourseID, setTargetCourseID] = useState("");
   const [targetBlogID, setTargetBlogID] = useState("");
   const [targetLessonID, setTargetLessonID] = useState("");
-  const [Logined, setLogined] = useState(false);
+  const [Logined, setLogined] = useState(true);
   return (
     <StoreContext.Provider
       value={{

@@ -4,6 +4,8 @@ import "./courses.scss";
 import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
 import StoreContext from "../../context/context";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 
 const CourseCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
@@ -32,6 +34,7 @@ const CourseCreation = () => {
   };
 
   const deleteManyCourses = async () => {
+    NProgress.start();
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_BACKEND_URL}/manycourses`,
@@ -66,22 +69,27 @@ const CourseCreation = () => {
         setToastError(false); // Ẩn thông báo sau 3 giây
       }, 3000);
     }
+    NProgress.done();
   };
   const [checkAll, setCheckAll] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
   const [listCheckItem, setListCheckItem] = useState([]);
-  const updateCheckedItems = () => {
-    const checkedItemsArray = Object.keys(checkedItems);
 
-    const trueCheckedItems = checkedItemsArray.filter(
-      (key) => checkedItems[key] === true
-    );
-    setListCheckItem(trueCheckedItems);
-  };
   useEffect(() => {
+    NProgress.start();
+    const updateCheckedItems = () => {
+      const checkedItemsArray = Object.keys(checkedItems);
+
+      const trueCheckedItems = checkedItemsArray.filter(
+        (key) => checkedItems[key] === true
+      );
+      setListCheckItem(trueCheckedItems);
+    };
     updateCheckedItems();
+    NProgress.done();
   }, [checkedItems]);
   useEffect(() => {
+    NProgress.start();
     setDeleteData({
       dataDelete: {
         _id: {
@@ -89,9 +97,12 @@ const CourseCreation = () => {
         },
       },
     });
+    NProgress.done();
   }, [checkedItems, listCheckItem]); // Chạy mỗi khi listCheckItem thay đổi
   useEffect(() => {
+    NProgress.start();
     handlePageChange(1);
+    NProgress.done();
   }, []);
   const isDisabled = deleteData.dataDelete._id.$in.length === 0;
   const handleCheckAllChange = (e) => {

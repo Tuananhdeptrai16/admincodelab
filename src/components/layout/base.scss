@@ -95,3 +95,30 @@ body::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
   border-radius: 50px;
 }
+#nprogress .bar {
+  background: linear-gradient(
+    90deg,
+    #ff6b6b,
+    #ff8e53,
+    #ffc837
+  ); /* Gradient màu sắc đẹp hơn */
+  height: 4px; /* Độ dày vừa phải */
+  box-shadow: 0 0 10px rgba(255, 105, 135, 0.6), 0 0 5px rgba(255, 152, 0, 0.5); /* Hiệu ứng bóng mềm mại */
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+  width: 50%; /* Giả lập đang tải được 50% */
+}
+
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  opacity: 1;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+  box-shadow: 0 0 10px rgba(255, 105, 135, 0.8), 0 0 5px rgba(255, 152, 0, 0.6); /* Bóng mờ chạy theo */
+}

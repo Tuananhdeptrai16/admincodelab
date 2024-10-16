@@ -3,32 +3,52 @@ import axios from "axios";
 import "./user.scss";
 import { NavLink } from "react-router-dom";
 import { Pagination } from "antd";
-import { ToastSuccess } from "../toast/toastsuccess";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 const Users = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showModelDelete, setShowModelDelete] = useState(false);
-  const [getUserId] = useState("");
-
+  const [error, setError] = useState("");
+  const [toastError, setToastError] = useState(false);
+  const [deleteData, setDeleteData] = useState({
+    dataDelete: {
+      _id: {
+        $in: [],
+      },
+    },
+  });
+  const isDisabled = deleteData.dataDelete._id.$in.length === 0;
   const [toastSuccess, setToastSuccess] = useState(false);
   const handlePageChange = async (page) => {
+    NProgress.start();
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/admins`
+        `${process.env.REACT_APP_API_BACKEND_URL}/admins?limit=5&page=${page}`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
+    NProgress.done();
   };
-  const deleteAdmin = async () => {
+
+  const deleteManyAdmin = async () => {
+    NProgress.start();
     try {
-      await axios.put(
-        `${process.env.REACT_APP_API_BACKEND_URL}/users/${getUserId}`,
-        { admin: false }
+      await axios.delete(
+        `${process.env.REACT_APP_API_BACKEND_URL}/many_admin`,
+        { data: deleteData }
       );
       handlePageChange();
-      setShowModel(false);
+      setShowModelDelete(false);
+      setDeleteData({
+        dataDelete: {
+          _id: {
+            $in: [],
+          },
+        },
+      });
       setTimeout(() => {
         setToastSuccess(true);
         setTimeout(() => {
@@ -36,29 +56,49 @@ const Users = () => {
         }, 2000);
       }, 1000);
     } catch (error) {
-      console.log(error);
-    }
-  };
-  const updateAdmin = async () => {
-    try {
-      await axios.put(
-        `${process.env.REACT_APP_API_BACKEND_URL}/users/${getUserId}`,
-        { admin: true } // Truyền đối tượng trực tiếp, không cần bọc trong "data"
-      );
-      handlePageChange();
-      setShowModel(false);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
+        setError(errorMessage);
+      } else {
+        setError("Có lỗi không xác định");
+      }
+      setToastError(true); // Hiển thị thông báo lỗi
+
+      // Tự động ẩn thông báo sau 3 giây
       setTimeout(() => {
-        setToastSuccess(true);
-        setTimeout(() => {
-          setToastSuccess(false);
-        }, 2000);
-      }, 1000);
-    } catch (error) {
-      console.log(error);
+        setToastError(false); // Ẩn thông báo sau 3 giây
+      }, 3000);
     }
+    NProgress.done();
   };
   const [checkAll, setCheckAll] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
+  const [listCheckItem, setListCheckItem] = useState([]);
+
+  useEffect(() => {
+    NProgress.start();
+    const updateCheckedItems = () => {
+      const checkedItemsArray = Object.keys(checkedItems);
+
+      const trueCheckedItems = checkedItemsArray.filter(
+        (key) => checkedItems[key] === true
+      );
+      setListCheckItem(trueCheckedItems);
+    };
+    updateCheckedItems();
+    NProgress.done();
+  }, [checkedItems]);
+  useEffect(() => {
+    NProgress.start();
+    setDeleteData({
+      dataDelete: {
+        _id: {
+          $in: listCheckItem,
+        },
+      },
+    });
+    NProgress.done();
+  }, [checkedItems, listCheckItem]);
   const handleCheckAllChange = (e) => {
     const isChecked = e.target.checked;
     setCheckAll(isChecked);
@@ -91,7 +131,45 @@ const Users = () => {
 
   return (
     <>
-      {toastSuccess === true ? <ToastSuccess></ToastSuccess> : ""}
+      {toastSuccess === true ? (
+        <div id="toast" className="toast toast--success">
+          <div className="toast__icon">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/like.svg`}
+              alt=""
+              className="toast__icon-svg"
+            />
+          </div>
+          <div className="toast__body">
+            <h3 className="toast__title">Thành Công</h3>
+            <p className="toast__msg">Bạn vui lòng đợi kết quả ...</p>
+          </div>
+          <div className="toast__close">
+            <i className="fas fa-times"></i>
+          </div>
+        </div>
+      ) : toastError === true ? (
+        <div>
+          <div id="toast" className="toast toast--error">
+            <div className="toast__icon">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/error.svg`}
+                alt=""
+                className="toast__icon-svg"
+              />
+            </div>
+            <div className="toast__body">
+              <h3 className="toast__title">Thông báo lỗi</h3>
+              <p className="toast__msg">{error}</p>
+            </div>
+            <div className="toast__close">
+              <i className="fas fa-times"></i>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="user">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
@@ -103,13 +181,13 @@ const Users = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/page" className="breadcrumb__item">
-              <p className="breadcrumb__name  breadcrumb__active">Người dùng</p>
+            <NavLink to="/user" className="breadcrumb__item">
+              <p className="breadcrumb__name  breadcrumb__active"> Admin</p>
             </NavLink>
           </div>
         </div>
         <div className="user__wrap">
-          <h1 className="user__heading">Người dùng </h1>
+          <h1 className="user__heading">Admin</h1>
         </div>
         <div className="user__separate"></div>
         <div className="user__search">
@@ -142,10 +220,7 @@ const Users = () => {
                 >
                   Hủy
                 </button>
-                <button
-                  onClick={() => updateAdmin()}
-                  className="user__delete--btn user__delete--sure"
-                >
+                <button className="user__delete--btn user__delete--sure">
                   Đồng ý
                 </button>
               </div>
@@ -170,10 +245,7 @@ const Users = () => {
                   Hủy
                 </button>
                 <button
-                  onClick={() => {
-                    setShowModelDelete(!showModelDelete);
-                    deleteAdmin();
-                  }}
+                  onClick={() => deleteManyAdmin()}
                   className="user__delete--btn user__delete--sure"
                 >
                   Đồng ý
@@ -212,7 +284,7 @@ const Users = () => {
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
                   <th>Trạng thái</th>
-                  <th className="user__border--right">Hành động</th>
+                  <th className="user__border--right">Chỉnh sửa</th>
                 </tr>
               </thead>
               <tbody>
@@ -276,7 +348,7 @@ const Users = () => {
                           <p className="user__user">status</p>
                         </td>
                         <td className="user__action">
-                          <NavLink to="/course/create_courses">
+                          <NavLink to="/user/add_user">
                             <button
                               onClick={() => {}}
                               className="btn btn-warning mx-3 d-inline-block user__btn"
@@ -302,7 +374,14 @@ const Users = () => {
           </div>
         </div>
         <div className="user__btn-wrap">
-          <button className="user__btn-delete">
+          <button
+            style={{
+              pointerEvents: isDisabled ? "none" : "auto", // Nếu mảng rỗng thì vô hiệu hóa
+              opacity: isDisabled ? 0.5 : 1, // Giảm độ mờ khi bị vô hiệu hóa
+            }}
+            onClick={() => setShowModelDelete(true)}
+            className="user__btn-delete"
+          >
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
               alt=""
