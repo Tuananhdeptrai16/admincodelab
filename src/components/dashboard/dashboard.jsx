@@ -1,14 +1,32 @@
 import React from "react";
+import axios from "axios";
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./dashboard.scss";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import CalendarUI from "../calendar/calendar";
 import { Link } from "react-router-dom";
+import StoreContext from "../../context/context";
 // import Calendar from "../calendar/calendar";
 export const Dashboard = () => {
   const percentage = 50;
-
+  const [listTutorials, setListTutorials] = useState([]);
+  const { userLogin } = useContext(StoreContext);
+  useEffect(() => {
+    try {
+      const getUserAdmin = async () => {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BACKEND_URL}/admins`
+        );
+        const foundAdmin = res.data.filter((item) => {
+          return item._id === userLogin;
+        });
+        setListTutorials(foundAdmin);
+      };
+      getUserAdmin();
+    } catch (error) {}
+  }, [userLogin]);
   return (
     <div className="dashboard">
       <div className="breadcrumb">
@@ -38,7 +56,12 @@ export const Dashboard = () => {
                     <div className="dashboard__welcome">
                       <div className="dashboard__content">
                         <h2 className="dashboard__hello">
-                          Xin chào , <span>Tuan Anh </span>
+                          Xin chào ,{" "}
+                          <span>
+                            {listTutorials.length > 0
+                              ? listTutorials[0].fullname
+                              : "loading"}
+                          </span>
                         </h2>
                         <p className="dashboard__welcome--desc">
                           Chào mừng các bạn đến với DashBoard! Đây là nơi cung
@@ -267,13 +290,21 @@ export const Dashboard = () => {
               </div>
               <div className="dashboard__avatar">
                 <img
-                  src={`${process.env.PUBLIC_URL}/images/avatar.jpg`}
+                  src={
+                    listTutorials.length > 0
+                      ? listTutorials[0].image
+                      : "loading"
+                  }
                   alt=""
                   className="dashboard__avatar--img"
                 />
               </div>
               <div className="dashboard__name">
-                <p className="dashboard__name--text">Truong Tuan Anh</p>
+                <p className="dashboard__name--text">
+                  {listTutorials.length > 0
+                    ? listTutorials[0].fullname
+                    : "loading"}
+                </p>
               </div>
             </div>
             <div className="dashboard__social">

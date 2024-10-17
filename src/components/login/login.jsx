@@ -6,11 +6,13 @@ import Logo from "../logo/logo";
 import StoreContext from "../../context/context";
 import { ToastSuccess } from "../toast/toastsuccess";
 import { Toast } from "../toast/toasterror";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 export const Login = () => {
   const [dataAdmin, setDataAdmin] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showError, setShowError] = useState(false);
-  const { setLogined } = useContext(StoreContext);
+  const { setLogined, setUserLogin } = useContext(StoreContext);
   const [passWord, setPassWord] = useState("");
   const [userName, setUserName] = useState("");
   useEffect(() => {
@@ -28,10 +30,12 @@ export const Login = () => {
     fetchData();
   }, []);
   const handleSubmit = (e) => {
+    NProgress.start();
     e.preventDefault(); // Ngăn chặn hành động gửi biểu mẫu
     dataAdmin.forEach((item) => {
       if (userName === item.username && passWord === item.password) {
         setShowModel(true);
+        setUserLogin(item._id);
         setLogined(true);
       } else {
         setShowError(true); // Hiển thị thông báo lỗi
@@ -42,6 +46,7 @@ export const Login = () => {
         }, 3000);
       }
     });
+    NProgress.done();
   };
 
   return (

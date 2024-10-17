@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./form.scss";
+import { useContext } from "react";
+import StoreContext from "../../context/context";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 export const FormAddUser = () => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
+  const { targetIdEdit, action } = useContext(StoreContext);
   const [toastError, setToastError] = useState(false);
   const [user, setUser] = useState({
     fullname: "",
@@ -22,24 +27,102 @@ export const FormAddUser = () => {
     position: "",
     image: "",
   });
+
   const handleChange = (e) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
   };
-  console.log(user);
   const handleSubmit = async (e) => {
     e.preventDefault();
   };
+  useEffect(() => {
+    NProgress.start();
+    if (action === "U") {
+      const getUserAdmin = async () => {
+        try {
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_BACKEND_URL}/admins`
+          );
+          const foundAdmin = res.data.filter(
+            (item) => item._id === targetIdEdit
+          );
+          console.log(foundAdmin[0]);
+          if (foundAdmin[0]) {
+            const idDate = foundAdmin[0]?.idDate;
+            const dob = foundAdmin[0]?.dob;
+            // Chuyển đổi idDate sang đối tượng Date
+            const dateObject = idDate ? new Date(idDate) : null;
+            const dateDob = dob ? new Date(dob) : null;
+            // Định dạng lại ngày tháng thành 'yyyy-MM-dd'
+            const formattedIdDate = dateObject
+              ? `${dateObject.getFullYear()}-${String(
+                  dateObject.getMonth() + 1
+                ).padStart(2, "0")}-${String(dateObject.getDate()).padStart(
+                  2,
+                  "0"
+                )}`
+              : null; // Nếu không có idDate, trả về null
+            const formattedDob = dateDob
+              ? `${dateDob.getFullYear()}-${String(
+                  dateDob.getMonth() + 1
+                ).padStart(2, "0")}-${String(dateDob.getDate()).padStart(
+                  2,
+                  "0"
+                )}`
+              : null; // Nếu không có idDate, trả về null
+            setUser({
+              id: foundAdmin[0]._id,
+              fullname: foundAdmin[0].fullname,
+              username: foundAdmin[0].username,
+              email: foundAdmin[0].email,
+              address: foundAdmin[0].address,
+              password: foundAdmin[0].password,
+              phone: foundAdmin[0].phone.toString(),
+              dob: formattedDob,
+              placeOfBirth: foundAdmin[0].placeOfBirth,
+              idNumber: foundAdmin[0].idNumber.toString(),
+              idDate: formattedIdDate, // Sử dụng ngày đã định dạng
+              idPlace: foundAdmin[0].idPlace,
+              gender: foundAdmin[0].gender,
+              position: foundAdmin[0].position,
+              image: foundAdmin[0].image,
+            });
+          } else {
+            // Xử lý trường hợp không tìm thấy admin
+            console.error("Admin not found");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getUserAdmin();
+    }
+    NProgress.done();
+  }, [targetIdEdit, action]);
   const handelData = async () => {
+    NProgress.start();
     try {
-      await axios.post(`${process.env.REACT_APP_API_BACKEND_URL}/admin`, user);
-      setToastSuccess(true);
-      setTimeout(() => {
-        setToastSuccess(false);
-      }, 3000);
-      resetForm();
+      if (action === "C") {
+        await axios.post(
+          `${process.env.REACT_APP_API_BACKEND_URL}/admin`,
+          user
+        );
+        setToastSuccess(true);
+        setTimeout(() => {
+          setToastSuccess(false);
+        }, 3000);
+        resetForm();
+      }
+      if (action === "U") {
+        await axios.put(`${process.env.REACT_APP_API_BACKEND_URL}/admin`, user);
+        setToastSuccess(true);
+        setTimeout(() => {
+          setToastSuccess(false);
+        }, 3000);
+        resetForm();
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
@@ -54,6 +137,7 @@ export const FormAddUser = () => {
         setToastError(false); // Ẩn thông báo sau 3 giây
       }, 3000);
     }
+    NProgress.done();
   };
   const resetForm = () => {
     setUser({
@@ -141,7 +225,9 @@ export const FormAddUser = () => {
         <div className="row">
           <div className="col-md-12">
             <div className="tile">
-              <h3 className="title__title">Tạo mới admin</h3>
+              <h3 className="title__title">
+                {action === "U" ? "Chỉnh sửa" : "Tạo mới"} admin
+              </h3>
               <div className="title__body">
                 <form className="row" onSubmit={handleSubmit}>
                   <div className="form__group col-4  g-2 ">
@@ -150,7 +236,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="fullname"
-                      value={user.fullname}
+                      value={user.fullname || ""}
                       onChange={handleChange}
                       required
                     />
@@ -161,7 +247,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="email"
                       name="email"
-                      value={user.email}
+                      value={user.email || ""}
                       onChange={handleChange}
                       required
                     />
@@ -172,7 +258,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="address"
-                      value={user.address}
+                      value={user.address || ""}
                       onChange={handleChange}
                       required
                     />
@@ -183,7 +269,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="tel"
                       name="phone"
-                      value={user.phone}
+                      value={user.phone || ""}
                       onChange={handleChange}
                       required
                     />
@@ -194,7 +280,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="date"
                       name="dob"
-                      value={user.dob}
+                      value={user.dob || ""}
                       onChange={handleChange}
                       required
                     />
@@ -205,7 +291,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="placeOfBirth"
-                      value={user.placeOfBirth}
+                      value={user.placeOfBirth || ""}
                       onChange={handleChange}
                       required
                     />
@@ -216,7 +302,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="number"
                       name="idNumber"
-                      value={user.idNumber}
+                      value={user.idNumber || ""}
                       onChange={handleChange}
                       required
                     />
@@ -227,7 +313,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="date"
                       name="idDate"
-                      value={user.idDate}
+                      value={user.idDate || ""}
                       onChange={handleChange}
                       required
                     />
@@ -238,7 +324,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="idPlace"
-                      value={user.idPlace}
+                      value={user.idPlace || ""}
                       onChange={handleChange}
                       required
                     />
@@ -248,7 +334,7 @@ export const FormAddUser = () => {
                     <select
                       className="form__control"
                       name="gender"
-                      value={user.gender}
+                      value={user.gender || ""}
                       onChange={handleChange}
                       required
                     >
@@ -262,7 +348,7 @@ export const FormAddUser = () => {
                     <select
                       className="form__control"
                       name="position"
-                      value={user.position}
+                      value={user.position || ""}
                       onChange={handleChange}
                       required
                     >
@@ -276,7 +362,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="image"
-                      value={user.image}
+                      value={user.image || ""}
                       onChange={handleChange}
                       required
                     />
@@ -287,7 +373,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="username"
-                      value={user.username}
+                      value={user.username || ""}
                       onChange={handleChange}
                       required
                     />
@@ -298,26 +384,46 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="password"
                       name="password"
-                      value={user.password}
+                      value={user.password || ""}
                       onChange={handleChange}
                       required
                     />
                   </div>
                 </form>
                 <div className="form__action col-md-12">
-                  <button
-                    onClick={() => handelData()}
-                    className="btn btn-save"
-                    type="submit"
-                  >
-                    Lưu lại
-                  </button>
-                  <Link
-                    className="btn btn-cancel"
-                    href="/doc/table-data-table.html"
-                  >
-                    Hủy bỏ
-                  </Link>
+                  {action === "U" ? (
+                    <>
+                      <button
+                        onClick={() => handelData()}
+                        className="btn btn-save"
+                        type="submit"
+                      >
+                        Lưu lại
+                      </button>
+                      <Link
+                        className="btn btn-cancel"
+                        href="/doc/table-data-table.html"
+                      >
+                        Hủy bỏ
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => handelData()}
+                        className="btn btn-save"
+                        type="submit"
+                      >
+                        Tạo mới
+                      </button>
+                      <Link
+                        className="btn btn-cancel"
+                        href="/doc/table-data-table.html"
+                      >
+                        Hủy bỏ
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

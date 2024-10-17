@@ -7,7 +7,9 @@ function App() {
   const [targetCourseID, setTargetCourseID] = useState("");
   const [targetBlogID, setTargetBlogID] = useState("");
   const [targetLessonID, setTargetLessonID] = useState("");
-  const [Logined, setLogined] = useState(true);
+  const [targetIdEdit, setTargetIdEdit] = useState("");
+  const [userLogin, setUserLogin] = useState("");
+  const [Logined, setLogined] = useState(false);
   return (
     <StoreContext.Provider
       value={{
@@ -21,6 +23,10 @@ function App() {
         setTargetLessonID,
         Logined,
         setLogined,
+        targetIdEdit,
+        setTargetIdEdit,
+        setUserLogin,
+        userLogin,
       }}
     >
       <Router>

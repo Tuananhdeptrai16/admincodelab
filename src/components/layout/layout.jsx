@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import "./reset.scss";
 import "./grid.scss";
@@ -13,14 +13,29 @@ import { LogoOnly } from "../logo/logo_only";
 import { Footer } from "./footer";
 import StoreContext from "../../context/context";
 import { Login } from "../login/login";
+import axios from "axios";
 const { Header, Sider, Content } = Layout;
-
 const LayoutAdmin = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const { userLogin, Logined } = useContext(StoreContext);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  const { Logined } = useContext(StoreContext);
+  const [listTutorials, setListTutorials] = useState([]);
+  useEffect(() => {
+    try {
+      const getUserAdmin = async () => {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BACKEND_URL}/admins`
+        );
+        const foundAdmin = await res.data.filter((item) => {
+          return item._id === userLogin;
+        });
+        setListTutorials(foundAdmin);
+      };
+      getUserAdmin();
+    } catch (error) {}
+  }, [userLogin]);
   return (
     <>
       {Logined ? (
@@ -208,13 +223,21 @@ const LayoutAdmin = () => {
                 <div className="avatar">
                   <button className="avatar__action">
                     <img
-                      src={`${process.env.PUBLIC_URL}/images/avatar.jpg`}
+                      src={
+                        listTutorials.length > 0
+                          ? listTutorials[0].image
+                          : "loading"
+                      }
                       alt=""
                       className="avatar__img"
                     />
                   </button>
                   <div className="avatar__user">
-                    <p className="avatar__user--name">Truong Tuan Anh</p>
+                    <p className="avatar__user--name">
+                      {listTutorials.length > 0
+                        ? listTutorials[0].username
+                        : "loading"}
+                    </p>
                   </div>
                 </div>
               </div>

@@ -5,9 +5,12 @@ import { NavLink } from "react-router-dom";
 import { Pagination } from "antd";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
+import { useContext } from "react";
+import StoreContext from "../../context/context";
 const Users = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
+  const { setTargetIdEdit, setAction } = useContext(StoreContext);
   const [showModelDelete, setShowModelDelete] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
@@ -350,7 +353,10 @@ const Users = () => {
                         <td className="user__action">
                           <NavLink to="/user/add_user">
                             <button
-                              onClick={() => {}}
+                              onClick={() => {
+                                setAction("U");
+                                setTargetIdEdit(item._id);
+                              }}
                               className="btn btn-warning mx-3 d-inline-block user__btn"
                             >
                               <img
@@ -391,7 +397,10 @@ const Users = () => {
           </button>
           <div className="user__create">
             <NavLink to="/user/add_user" className={"user__create--link"}>
-              <button className="user__create--btn">
+              <button
+                onClick={() => setAction("C")}
+                className="user__create--btn"
+              >
                 <img
                   src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
                   alt=""
