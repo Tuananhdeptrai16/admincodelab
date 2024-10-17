@@ -2,15 +2,15 @@ import React, { useState, useContext, useEffect } from "react";
 import "./blog.scss";
 import StoreContext from "../../context/context";
 import axios from "axios";
-import { ToastSuccess } from "../toast/toastsuccess";
-import { Toast } from "../toast/toasterror";
 import { NavLink } from "react-router-dom";
 const BlogForm = () => {
   const { action, targetBlogID } = useContext(StoreContext);
   const [listTutorials, setListTutorials] = useState([]);
   const [toastSuccess, setToastSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
   const [blogData, setBlogData] = useState({
+    type: "EMPTY_BLOG",
     title: "",
     author: "",
     urlImage: "",
@@ -36,7 +36,6 @@ const BlogForm = () => {
       console.error("Error fetching data: ", error);
     }
   };
-
   useEffect(() => {
     const renderUpdateUser = async () => {
       if (action === "U") {
@@ -68,6 +67,7 @@ const BlogForm = () => {
   }, [action, targetBlogID, listTutorials]); // Bỏ listTutorials ra khỏi dependencies
   const resetForm = () => {
     setBlogData({
+      type: "EMPTY_BLOG",
       title: "",
       author: "",
       urlImage: "",
@@ -79,7 +79,6 @@ const BlogForm = () => {
           content: [],
         },
       ],
-      rating: 0,
       studentsEnrolled: 0,
     });
   };
@@ -139,6 +138,7 @@ const BlogForm = () => {
       };
     });
   };
+  console.log("check blogData ", blogData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -151,24 +151,64 @@ const BlogForm = () => {
         });
       }
       resetForm();
+      setToastSuccess(true);
       setTimeout(() => {
-        setToastSuccess(true);
-        setTimeout(() => {
-          window.location.href = "/blog"; // Chuyển hướng sau khi toast thành công
-        }, 1000); // Đợi 1 giây sau khi toast thành công
-      }, 1000); // Thời gian hiển thị toast
+        setToastSuccess(false);
+      }, 1000); // Đợi 1 giây sau khi toast thành công
     } catch (error) {
-      console.error("Error submitting form: ", error);
-      setToastError(true);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
+        setError(errorMessage);
+      } else {
+        setError("Có lỗi không xác định");
+      }
+      setToastError(true); // Hiển thị thông báo lỗi
+
+      // Tự động ẩn thông báo sau 3 giây
+      setTimeout(() => {
+        setToastError(false); // Ẩn thông báo sau 3 giây
+      }, 3000);
     }
   };
 
   return (
     <>
       {toastSuccess === true ? (
-        <ToastSuccess></ToastSuccess>
+        <div id="toast" className="toast toast--success">
+          <div className="toast__icon">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/like.svg`}
+              alt=""
+              className="toast__icon-svg"
+            />
+          </div>
+          <div className="toast__body">
+            <h3 className="toast__title">Thành Công</h3>
+            <p className="toast__msg">Bạn vui lòng đợi kết quả ...</p>
+          </div>
+          <div className="toast__close">
+            <i className="fas fa-times"></i>
+          </div>
+        </div>
       ) : toastError === true ? (
-        <Toast></Toast>
+        <div>
+          <div id="toast" className="toast toast--error">
+            <div className="toast__icon">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/error.svg`}
+                alt=""
+                className="toast__icon-svg"
+              />
+            </div>
+            <div className="toast__body">
+              <h3 className="toast__title">Thông báo lỗi</h3>
+              <p className="toast__msg">{error}</p>
+            </div>
+            <div className="toast__close">
+              <i className="fas fa-times"></i>
+            </div>
+          </div>
+        </div>
       ) : (
         ""
       )}

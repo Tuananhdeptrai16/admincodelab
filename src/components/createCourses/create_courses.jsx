@@ -133,7 +133,6 @@ const CourseForm = () => {
       [name]: value,
     }));
   };
-  console.log(courseData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -1,16 +1,27 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./blog.scss";
+import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
 import StoreContext from "../../context/context";
-import { ToastSuccess } from "../toast/toastsuccess";
-import { Pagination } from "antd";
-const CourseCreation = () => {
+import NProgress from "nprogress";
+import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
+
+const BlogCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
-  const [getBlogId, setGetBlogId] = useState("");
-  const { setAction, setTargetBlogID } = useContext(StoreContext);
+  const [showManyDelete, setShowManyDelete] = useState(false);
+  const { setAction, setTargetblogID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [toastError, setToastError] = useState(false);
+  const [deleteData, setDeleteData] = useState({
+    dataDelete: {
+      _id: {
+        $in: [],
+      },
+    },
+  });
   const handlePageChange = async (page) => {
     try {
       const res = await axios.get(
@@ -22,14 +33,21 @@ const CourseCreation = () => {
     }
   };
 
-  const deleteBlog = async () => {
+  const deleteManyblog = async () => {
+    NProgress.start();
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_BACKEND_URL}/blog`,
-        { data: { _id: getBlogId } } // Truyền ID khóa học trong body
-      );
-      handlePageChange(); // Cập nhật lại danh sách sau khi xóa
-      setShowModel(false);
+      await axios.delete(`${process.env.REACT_APP_API_BACKEND_URL}/manyblog`, {
+        data: deleteData,
+      });
+      handlePageChange();
+      setShowManyDelete(false);
+      setDeleteData({
+        dataDelete: {
+          _id: {
+            $in: [],
+          },
+        },
+      });
       setTimeout(() => {
         setToastSuccess(true);
         setTimeout(() => {
@@ -37,13 +55,98 @@ const CourseCreation = () => {
         }, 2000);
       }, 1000);
     } catch (error) {
-      console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
+        setError(errorMessage);
+      } else {
+        setError("Có lỗi không xác định");
+      }
+      setToastError(true); // Hiển thị thông báo lỗi
+
+      // Tự động ẩn thông báo sau 3 giây
+      setTimeout(() => {
+        setToastError(false); // Ẩn thông báo sau 3 giây
+      }, 3000);
     }
+    NProgress.done();
   };
+  const [checkAll, setCheckAll] = useState(false);
+  const [checkedItems, setCheckedItems] = useState({});
+  const [listCheckItem, setListCheckItem] = useState([]);
 
   useEffect(() => {
-    handlePageChange();
+    NProgress.start();
+    const updateCheckedItems = () => {
+      const checkedItemsArray = Object.keys(checkedItems);
+
+      const trueCheckedItems = checkedItemsArray.filter(
+        (key) => checkedItems[key] === true
+      );
+      setListCheckItem(trueCheckedItems);
+    };
+    updateCheckedItems();
+    NProgress.done();
+  }, [checkedItems]);
+  useEffect(() => {
+    NProgress.start();
+    setDeleteData({
+      dataDelete: {
+        _id: {
+          $in: listCheckItem,
+        },
+      },
+    });
+    NProgress.done();
+  }, [checkedItems, listCheckItem]); // Chạy mỗi khi listCheckItem thay đổi
+  useEffect(() => {
+    NProgress.start();
+    handlePageChange(1);
+    NProgress.done();
   }, []);
+  const isDisabled = deleteData.dataDelete._id.$in.length === 0;
+  const handleCheckAllChange = (e) => {
+    const isChecked = e.target.checked;
+    setCheckAll(isChecked);
+    const newCheckedItems = {};
+    listTutorials.data.forEach((item) => {
+      newCheckedItems[item._id] = isChecked;
+    });
+    setCheckedItems(newCheckedItems);
+  };
+  const handleCheckboxChange = (id) => {
+    setCheckedItems((prev) => {
+      const updatedItems = {
+        ...prev,
+        [id]: !prev[id],
+      };
+      return updatedItems;
+    });
+  };
+  const [getInfoSearch, setGetInfoSearch] = useState("");
+  const [arrInfoSearch, setArrInfoSearch] = useState([]);
+  const [displayInfoArr, setDisplayInfoArr] = useState([]);
+  const handleGetSearchInfo = async () => {
+    let arr = await listTutorials.data;
+    const targetIds = arr
+      .filter((item) => {
+        return item.title
+          .toLocaleLowerCase()
+          .trim()
+          .includes(getInfoSearch.toLocaleLowerCase().trim());
+      })
+      .map((item) => item._id);
+    setArrInfoSearch(targetIds);
+    let Targetblog = arrInfoSearch.map((id) => {
+      let result = listTutorials.data.find((item1) => item1._id === id);
+      return result;
+    });
+    if (getInfoSearch.trim() === "") {
+      setArrInfoSearch([]);
+      setDisplayInfoArr([]);
+      return; // Thoát khỏi hàm
+    }
+    setDisplayInfoArr(Targetblog);
+  };
   if (!listTutorials || !listTutorials.data) {
     return (
       <div className="loader__wrap">
@@ -52,9 +155,48 @@ const CourseCreation = () => {
       </div>
     );
   }
+  console.log(listTutorials);
   return (
     <>
-      {toastSuccess === true ? <ToastSuccess></ToastSuccess> : ""}
+      {toastSuccess === true ? (
+        <div id="toast" className="toast toast--success">
+          <div className="toast__icon">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/like.svg`}
+              alt=""
+              className="toast__icon-svg"
+            />
+          </div>
+          <div className="toast__body">
+            <h3 className="toast__title">Thành Công</h3>
+            <p className="toast__msg">Bạn vui lòng đợi kết quả ...</p>
+          </div>
+          <div className="toast__close">
+            <i className="fas fa-times"></i>
+          </div>
+        </div>
+      ) : toastError === true ? (
+        <div>
+          <div id="toast" className="toast toast--error">
+            <div className="toast__icon">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/error.svg`}
+                alt=""
+                className="toast__icon-svg"
+              />
+            </div>
+            <div className="toast__body">
+              <h3 className="toast__title">Thông báo lỗi</h3>
+              <p className="toast__msg">{error}</p>
+            </div>
+            <div className="toast__close">
+              <i className="fas fa-times"></i>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="blog">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
@@ -66,28 +208,55 @@ const CourseCreation = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/page" className="breadcrumb__item">
-              <p className="breadcrumb__name  breadcrumb__active">Blog</p>
+            <NavLink to="/blog" className="breadcrumb__item">
+              <p className="breadcrumb__name  breadcrumb__active">blog</p>
             </NavLink>
           </div>
         </div>
-        <h1 className="blog__heading">Quản lý Blog</h1>
+        <h1 className="blog__heading">Blog </h1>
         <div className="blog__separate"></div>
-        {showModel && (
+        <div className="user__search">
+          <input
+            type="text"
+            name=""
+            placeholder="Tìm kiếm khóa học..."
+            id=""
+            value={getInfoSearch}
+            onChange={(e) => {
+              handleGetSearchInfo();
+              setGetInfoSearch(e.target.value);
+            }}
+            className="blog__search--input"
+          />
+          <button
+            onClick={() => {
+              handleGetSearchInfo();
+            }}
+            className="blog__search--btn"
+          >
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/search.svg`}
+              className="blog__adding--icon"
+              alt=""
+            />
+          </button>
+        </div>
+
+        {showManyDelete && (
           <>
             <div className="blog__delete">
               <h1 className="blog__delete--notification">
-                Bạn muốn xóa Blog ?
+                Bạn muốn tất cả các khóa học đã chọn ?
               </h1>
               <div className="blog__delete--action">
                 <button
-                  onClick={() => setShowModel(!showModel)}
+                  onClick={() => setShowManyDelete(!showManyDelete)}
                   className=" blog__delete--btn blog__delete--cancel"
                 >
                   Hủy
                 </button>
                 <button
-                  onClick={() => deleteBlog()}
+                  onClick={() => deleteManyblog()}
                   className="blog__delete--btn blog__delete--sure"
                 >
                   Xóa
@@ -105,52 +274,166 @@ const CourseCreation = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="blog__id">Mã blog</th>
-                  <th>Tiêu đề</th>
-                  <th>Người tạo</th>
+                  <th className="blog__border--left">
+                    <div className="checkbox-wrapper-43">
+                      <input
+                        onChange={handleCheckAllChange}
+                        checked={checkAll}
+                        type="checkbox"
+                        id="checkall"
+                      />
+                      <label htmlFor="checkall" className="check">
+                        <svg width="18px" height="18px" viewBox="0 0 18 18">
+                          <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                          <polyline points="1 9 7 14 15 4"></polyline>
+                        </svg>
+                      </label>
+                    </div>
+                  </th>
+                  <th>Thông tin khóa học</th>
+                  <th>Hướng dẫn</th>
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
-                  <th>Hành động </th>
+                  <th className="blog__border--right">Sửa</th>
                 </tr>
               </thead>
               <tbody>
-                {listTutorials.data.length > 0 ? (
-                  listTutorials.data.map((item, index) => {
+                {displayInfoArr.length > 0 ? (
+                  displayInfoArr.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
-                        <td>{item._id}</td>
-                        <td>{item.title}</td>
-                        <td>{item.author}</td>
+                        <td>
+                          <div className="checkbox-wrapper-43">
+                            <input
+                              checked={!!checkedItems[item._id]}
+                              onChange={() => handleCheckboxChange(item._id)}
+                              type="checkbox"
+                              id={`input_${item._id}`}
+                            />
+                            <label
+                              htmlFor={`input_${item._id}`}
+                              className="check"
+                            >
+                              <svg
+                                width="18px"
+                                height="18px"
+                                viewBox="0 0 18 18"
+                              >
+                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                              </svg>
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="blog__avatar">
+                            <img
+                              src={
+                                item.urlImage
+                                  ? `${item.urlImage}`
+                                  : `${process.env.PUBLIC_URL}/images/avatarLesson.jpg`
+                              }
+                              alt=""
+                              className="blog__img"
+                            />
+                            <p className="blog__name line-clamp">
+                              {console.log(item.urlImage)}
+                              {item.title}
+                            </p>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="blog__name-author">
+                            {item.author}
+                          </span>
+                        </td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                         <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
-                        <td>
-                          <NavLink to="/page/create_blog">
-                            <button
-                              onClick={() => {
-                                setAction("U");
-                                setTargetBlogID(item._id);
-                              }}
-                              className="btn btn-warning mx-3 d-inline-block"
-                            >
+                        <td className="blog__action">
+                          <button
+                            onClick={() => {
+                              setAction("U");
+                              setTargetblogID(item._id);
+                            }}
+                            className="btn btn-warning mx-3 d-inline-block"
+                          >
+                            <NavLink to="/blog/create_blog">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
-                                className="user__icon"
+                                className="blog__icon"
                               />
-                            </button>
-                          </NavLink>
+                            </NavLink>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : listTutorials.data.length > 0 ? (
+                  listTutorials.data.map((item, index) => {
+                    return (
+                      <tr key={`${index}-tutorials`}>
+                        <td>
+                          <div className="checkbox-wrapper-43">
+                            <input
+                              checked={!!checkedItems[item._id]}
+                              onChange={() => handleCheckboxChange(item._id)}
+                              type="checkbox"
+                              id={`input_${item._id}`}
+                            />
+                            <label
+                              htmlFor={`input_${item._id}`}
+                              className="check"
+                            >
+                              <svg
+                                width="18px"
+                                height="18px"
+                                viewBox="0 0 18 18"
+                              >
+                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                              </svg>
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="blog__avatar">
+                            <img
+                              src={
+                                item.blogImage
+                                  ? `${item.blogImage}`
+                                  : `${process.env.PUBLIC_URL}/images/avatarLesson.jpg`
+                              }
+                              alt=""
+                              className="blog__img"
+                            />
+                            <p className="blog__name line-clamp">
+                              {item.title}
+                            </p>
+                          </div>
+                        </td>
+                        <td>
+                          <span className="blog__name-author">
+                            {item.author}
+                          </span>
+                        </td>
+                        <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+                        <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
+                        <td className="blog__action">
                           <button
                             onClick={() => {
-                              setGetBlogId(item._id);
-                              setShowModel(!showModel);
+                              setAction("U");
+                              setTargetblogID(item._id);
                             }}
-                            className="btn btn-danger"
+                            className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <img
-                              src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
-                              alt=""
-                              className="user__icon"
-                            />
+                            <NavLink to="/blog/create_blog">
+                              <img
+                                src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
+                                alt=""
+                                className="blog__icon"
+                              />
+                            </NavLink>
                           </button>
                         </td>
                       </tr>
@@ -158,28 +441,44 @@ const CourseCreation = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="5">No blog found</td>
+                    <td colSpan="7">No blog found</td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
         </div>
-
-        <div className="blog__create">
-          <NavLink to="/page/create_blog" className={"blog__create--link"}>
-            <button
-              onClick={() => setAction("C")}
-              className="blog__create--btn"
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
-                alt=""
-                className="user__icon"
-              />
-              Thêm Blog
-            </button>
-          </NavLink>
+        <div className="blog__btn-wrap">
+          <button
+            style={{
+              pointerEvents: isDisabled ? "none" : "auto", // Nếu mảng rỗng thì vô hiệu hóa
+              opacity: isDisabled ? 0.5 : 1, // Giảm độ mờ khi bị vô hiệu hóa
+            }}
+            onClick={() => setShowManyDelete(!showManyDelete)}
+            className="blog__btn-delete"
+          >
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
+              alt=""
+              className="blog__icon "
+            />
+            Xóa
+          </button>
+          <div className="blog__create">
+            <NavLink to="/blog/create_blog" className={"blog__create--link"}>
+              <button
+                onClick={() => setAction("C")}
+                className="blog__create--btn"
+              >
+                <img
+                  src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
+                  alt=""
+                  className="blog__icon  icon-svg"
+                />
+                Thêm Blog
+              </button>
+            </NavLink>
+          </div>
         </div>
         <Pagination
           align="center"
@@ -192,4 +491,4 @@ const CourseCreation = () => {
   );
 };
 
-export default CourseCreation;
+export default BlogCreation;

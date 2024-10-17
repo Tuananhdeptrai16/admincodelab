@@ -1,9 +1,47 @@
 .blog {
+  &__action {
+    height: 100%;
+  }
   &__separate {
     width: 100%;
     margin: 10px 0 40px 0;
     height: 1px;
     background-color: #dadcd6;
+  }
+  &__btn-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  &__icon {
+    width: 20px;
+  }
+  &__name {
+    width: 240px;
+    font-weight: 700;
+    line-height: 130%;
+  }
+  &__name-author {
+    background: #d5b29a;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 120%;
+  }
+  &__img {
+    border-radius: 10px;
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
   }
   &__list {
     user-select: none;
@@ -12,6 +50,18 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.35);
+  }
+  &__btn-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    background: #d9534f;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
   }
   &__delete {
     position: fixed;
@@ -38,13 +88,18 @@
       gap: 10px;
     }
     &--btn {
-      width: 100px;
-      padding: 10px;
+      width: 160px;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 700;
       font-size: 1.6rem;
-      font-weight: 600;
       transition: all 0.2s ease;
       &:hover {
-        scale: 1.1;
+        scale: 1.01;
       }
     }
     &--sure {
@@ -57,6 +112,62 @@
       border-radius: 10px;
     }
   }
+  &__search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    &--input {
+      background: #f5f5f5;
+      border-radius: 10px;
+      color: #292e39;
+      font-size: 1.6rem;
+      font-weight: 600;
+      width: 100%;
+      height: 100%;
+      line-height: 100%;
+      padding: 15px;
+    }
+    &--btn {
+      border-radius: 10px;
+      width: 100px;
+      padding: 12px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.05;
+      }
+    }
+  }
+  &__adding {
+    background: #99ecc7;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #ffff;
+    font-weight: 700;
+    font-size: 1.6rem;
+    transition: all 0.2s ease;
+    &:hover {
+      scale: 1.05;
+    }
+    &--icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &__border--left {
+    border-radius: 10px 0 0 0;
+  }
+  &__border--right {
+    border-radius: 0 10px 0 0;
+  }
   &__item {
     width: 100%;
     margin: 20px auto;
@@ -68,7 +179,7 @@
         tr {
           th {
             font-weight: 700;
-            font-size: 2rem;
+            font-size: 1.6rem;
             background-color: #f4f4f4; /* Màu nền cho phần tiêu đề */
             color: #333;
             text-align: left;
@@ -94,6 +205,7 @@
           }
 
           td {
+            vertical-align: middle;
             padding: 10px 15px;
             border-bottom: 1px solid #ddd; /* Đường viền giữa các dòng */
             overflow: hidden;
@@ -142,17 +254,45 @@
   &__create {
     user-select: none;
     &--btn {
-      background: #99ecc7;
+      background: #1be189;
       padding: 15px;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      color: #333;
+      color: #fff;
       font-weight: 700;
       font-size: 1.6rem;
-      color: #333;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.01;
+      }
+    }
+    &--link {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  }
+  &__create {
+    user-select: none;
+    &--btn {
+      background: #1be189;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.6rem;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.01;
+      }
     }
     &--link {
       display: flex;
@@ -256,7 +396,6 @@
     }
   }
 }
-
 .loader {
   &__wrap {
     width: 100%;
