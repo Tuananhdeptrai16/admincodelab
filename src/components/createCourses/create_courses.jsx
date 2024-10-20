@@ -232,8 +232,8 @@ const CourseForm = () => {
         <div className="courses__separate"></div>
         <form className="course-creation__form" onSubmit={handleSubmit}>
           <div className="row row-cols-2">
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="title" className="course-creation__label">
                   Tiêu đề khóa học
                 </label>
@@ -241,15 +241,15 @@ const CourseForm = () => {
                   type="text"
                   id="title"
                   name="title"
-                  className="course-creation__input"
+                  className="form__control"
                   placeholder="Nhập tiêu đề khóa học"
                   value={courseData.title}
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="title" className="course-creation__label">
                   Người hướng dẫn
                 </label>
@@ -257,7 +257,7 @@ const CourseForm = () => {
                   type="text"
                   id="instructor"
                   name="instructor"
-                  className="course-creation__input"
+                  className="form__control"
                   placeholder="Người hướng dẫn"
                   value={courseData.instructor.name}
                   onChange={handleInstructorChange}
@@ -267,8 +267,8 @@ const CourseForm = () => {
           </div>
 
           <div className="row row-cols-3">
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="price" className="course-creation__label">
                   Giá khóa học
                 </label>
@@ -276,7 +276,7 @@ const CourseForm = () => {
                   type="number"
                   id="price"
                   name="price"
-                  className="course-creation__input"
+                  className="form__control"
                   placeholder="Nhập giá khóa học"
                   min="0"
                   value={courseData.price.amount}
@@ -284,8 +284,8 @@ const CourseForm = () => {
                 />
               </div>
             </div>
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="duration" className="course-creation__label">
                   Thời gian (phút)
                 </label>
@@ -293,7 +293,7 @@ const CourseForm = () => {
                   type="number"
                   id="duration"
                   name="duration"
-                  className="course-creation__input"
+                  className="form__control"
                   placeholder="Nhập thời gian"
                   min="0"
                   required
@@ -302,15 +302,15 @@ const CourseForm = () => {
                 />
               </div>
             </div>
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="level" className="course-creation__label">
                   Cấp độ
                 </label>
                 <select
                   id="level"
                   name="level"
-                  className="course-creation__select"
+                  className="form__control"
                   value={courseData.level}
                   onChange={handleChange}
                 >
@@ -322,15 +322,15 @@ const CourseForm = () => {
             </div>
           </div>
           <div className="row ">
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="category" className="course-creation__label">
                   Danh mục
                 </label>
                 <select
                   id="category"
                   name="category"
-                  className="course-creation__select"
+                  className="form__control"
                   value={courseData.category}
                   onChange={handleChange}
                 >
@@ -340,8 +340,8 @@ const CourseForm = () => {
                 </select>
               </div>
             </div>
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="courseImage" className="course-creation__label">
                   URL ảnh nền
                 </label>
@@ -349,7 +349,7 @@ const CourseForm = () => {
                   type="text"
                   id="courseImage"
                   name="courseImage"
-                  className="course-creation__input"
+                  className="form__control"
                   placeholder="Nhập link hình ảnh"
                   required
                   value={courseData.courseImage}
@@ -357,8 +357,8 @@ const CourseForm = () => {
                 />
               </div>
             </div>
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="star" className="course-creation__label">
                   Tổng sao
                 </label>
@@ -366,7 +366,7 @@ const CourseForm = () => {
                   type="number"
                   id="star"
                   name="star"
-                  className="course-creation__input"
+                  className="form__control"
                   placeholder="Nhập số sao thưởng cho khóa học"
                   required
                   min="0"
@@ -377,15 +377,15 @@ const CourseForm = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col gx-2">
-              <div className="course-creation__field">
+            <div className="col g-2">
+              <div className="form__group ">
                 <label htmlFor="description" className="course-creation__label">
                   Mô tả
                 </label>
                 <textarea
                   id="description"
                   name="description"
-                  className="course-creation__textarea"
+                  className="form__control"
                   placeholder="Nhập mô tả khóa học"
                   value={courseData.description}
                   required

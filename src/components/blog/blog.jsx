@@ -11,7 +11,7 @@ const BlogCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showManyDelete, setShowManyDelete] = useState(false);
-  const { setAction, setTargetblogID } = useContext(StoreContext);
+  const { setAction, setTargetBlogID, targetBlogID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
@@ -155,7 +155,7 @@ const BlogCreation = () => {
       </div>
     );
   }
-  console.log(listTutorials);
+
   return (
     <>
       {toastSuccess === true ? (
@@ -274,7 +274,7 @@ const BlogCreation = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="blog__border--left">
+                  <th>
                     <div className="checkbox-wrapper-43">
                       <input
                         onChange={handleCheckAllChange}
@@ -291,15 +291,15 @@ const BlogCreation = () => {
                     </div>
                   </th>
                   <th>Thông tin khóa học</th>
-                  <th>Hướng dẫn</th>
+                  <th>Thời gian</th>
+                  <th>Tác giả</th>
                   <th>Ngày tạo</th>
-                  <th>Ngày sửa</th>
-                  <th className="blog__border--right">Sửa</th>
+                  <th>Sửa</th>
                 </tr>
               </thead>
               <tbody>
-                {displayInfoArr.length > 0 ? (
-                  displayInfoArr.map((item, index) => {
+                {listTutorials.data.length > 0 ? (
+                  listTutorials.data.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
                         <td>
@@ -337,23 +337,22 @@ const BlogCreation = () => {
                               className="blog__img"
                             />
                             <p className="blog__name line-clamp">
-                              {console.log(item.urlImage)}
                               {item.title}
                             </p>
                           </div>
                         </td>
+                        <td>{item.duration} phút</td>
                         <td>
                           <span className="blog__name-author">
                             {item.author}
                           </span>
                         </td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-                        <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
                         <td className="blog__action">
                           <button
                             onClick={() => {
                               setAction("U");
-                              setTargetblogID(item._id);
+                              setTargetBlogID(item._id);
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
@@ -423,7 +422,7 @@ const BlogCreation = () => {
                           <button
                             onClick={() => {
                               setAction("U");
-                              setTargetblogID(item._id);
+                              setTargetBlogID(item._id);
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
@@ -441,7 +440,7 @@ const BlogCreation = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="7">No blog found</td>
+                    <td colSpan="7">Blog not found</td>
                   </tr>
                 )}
               </tbody>

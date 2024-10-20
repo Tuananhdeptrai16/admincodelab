@@ -5,7 +5,7 @@ import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
 import StoreContext from "../../context/context";
 import NProgress from "nprogress";
-import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
+import "nprogress/nprogress.css";
 
 const CourseCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
@@ -14,6 +14,7 @@ const CourseCreation = () => {
   const { setAction, setTargetCourseID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [modelEdit, setModelEdit] = useState(false);
   const [toastError, setToastError] = useState(false);
   const [deleteData, setDeleteData] = useState({
     dataDelete: {
@@ -274,7 +275,7 @@ const CourseCreation = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="courses__border--left">
+                  <th>
                     <div className="checkbox-wrapper-43">
                       <input
                         onChange={handleCheckAllChange}
@@ -295,7 +296,7 @@ const CourseCreation = () => {
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
                   <th>Danh mục</th>
-                  <th className="courses__border--right">Sửa</th>
+                  <th>Sửa</th>
                 </tr>
               </thead>
               <tbody>

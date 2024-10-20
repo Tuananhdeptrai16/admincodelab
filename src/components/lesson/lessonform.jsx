@@ -1,27 +1,28 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./blog.scss";
 import StoreContext from "../../context/context";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-const BlogForm = () => {
-  const { action, targetBlogID } = useContext(StoreContext);
+const LessonForm = () => {
+  const { action, targetLessonID } = useContext(StoreContext);
   const [listTutorials, setListTutorials] = useState([]);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
-  const [blogData, setBlogData] = useState({
-    type: "EMPTY_BLOG",
+  const [lessonData, setLessonData] = useState({
+    courseId: "",
+    type: "EMPTY_LESSON",
     title: "",
-    author: "",
-    urlImage: "",
     description: "",
     duration: "",
-    blogItems: [
+    author: "",
+    urlImage: "",
+    contentLesson: [
       {
         title: "",
         content: [],
       },
     ],
+    comments: [],
     rating: 0,
     studentsEnrolled: 0,
   });
@@ -29,13 +30,14 @@ const BlogForm = () => {
   const getListTutorials = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/blog`
+        `${process.env.REACT_APP_API_BACKEND_URL}/lesson`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
+  console.log("lessonData", lessonData);
   useEffect(() => {
     const renderUpdateUser = async () => {
       if (action === "U") {
@@ -43,21 +45,22 @@ const BlogForm = () => {
           await getListTutorials();
         }
         if (listTutorials.data) {
-          const foundBlog = listTutorials.data.find(
-            (blog) => blog._id === targetBlogID
+          const foundLesson = listTutorials.data.find(
+            (lesson) => lesson._id === targetLessonID
           );
-          if (foundBlog) {
-            console.log(foundBlog.blogItems);
-            setBlogData({
-              id: targetBlogID,
-              title: foundBlog.title,
-              author: foundBlog.author,
-              urlImage: foundBlog.urlImage,
-              description: foundBlog.description,
-              duration: foundBlog.duration,
-              blogItems: foundBlog.blogItems || [],
-              rating: foundBlog.rating,
-              studentsEnrolled: foundBlog.studentsEnrolled || 0,
+          if (foundLesson) {
+            setLessonData({
+              courseId: "",
+              type: "EMPTY_LESSON",
+              title: foundLesson.title,
+              description: foundLesson.description,
+              duration: foundLesson.duration,
+              author: foundLesson.author,
+              urlImage: foundLesson.urlImage,
+              contentLesson: foundLesson.contentLesson,
+              comments: [],
+              rating: 0,
+              studentsEnrolled: 0,
             });
           }
         }
@@ -66,27 +69,30 @@ const BlogForm = () => {
       }
     };
     renderUpdateUser();
-  }, [action, targetBlogID, listTutorials]); // Bỏ listTutorials ra khỏi dependencies
+  }, [action, targetLessonID, listTutorials]);
   const resetForm = () => {
-    setBlogData({
-      type: "EMPTY_BLOG",
+    setLessonData({
+      courseId: "",
+      type: "EMPTY_LESSON",
       title: "",
-      author: "",
-      urlImage: "",
       description: "",
       duration: "",
-      blogItems: [
+      author: "",
+      urlImage: "",
+      contentLesson: [
         {
           title: "",
           content: [],
         },
       ],
+      comments: [],
+      rating: 0,
       studentsEnrolled: 0,
     });
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setBlogData((prevData) => ({
+    setLessonData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -94,22 +100,22 @@ const BlogForm = () => {
 
   const handleLessonTitleChange = (index, e) => {
     const { value } = e.target;
-    setBlogData((prevData) => {
-      const updatedBlog = [...prevData.blogItems]; // Thay đổi ở đây
-      updatedBlog[index].title = value;
+    setLessonData((prevData) => {
+      const updatedLesson = [...prevData.contentLesson]; // Thay đổi ở đây
+      updatedLesson[index].title = value;
       return {
         ...prevData,
-        blogItems: updatedBlog, // Thay đổi ở đây
+        contentLesson: updatedLesson, // Thay đổi ở đây
       };
     });
   };
 
-  const handleAddParagraph = (blogIndex) => {
-    setBlogData((prevData) => {
-      const updatedBlog = [...prevData.blogItems]; // Tạo bản sao của mảng lessons
-      // Kiểm tra xem blogIndex có hợp lệ không
-      if (updatedBlog[blogIndex]) {
-        updatedBlog[blogIndex].content.push({
+  const handleAddParagraph = (lessonIndex) => {
+    setLessonData((prevData) => {
+      const updatedLesson = [...prevData.contentLesson]; // Tạo bản sao của mảng lessons
+      // Kiểm tra xem lessonIndex có hợp lệ không
+      if (updatedLesson[lessonIndex]) {
+        updatedLesson[lessonIndex].content.push({
           // Thêm đoạn văn mới vào nội dung của bài học
           text: "",
           imageUrl: "",
@@ -118,37 +124,37 @@ const BlogForm = () => {
       }
       return {
         ...prevData,
-        blogItems: updatedBlog, // Cập nhật lại mảng lessons
+        contentLesson: updatedLesson, // Cập nhật lại mảng lessons
       };
     });
   };
 
-  const handleParagraphChange = (blogIndex, paragraphIndex, e) => {
+  const handleParagraphChange = (lessonIndex, paragraphIndex, e) => {
     const { name, value } = e.target;
-    setBlogData((prevData) => {
-      const updatedBlog = [...prevData.blogItems];
+    setLessonData((prevData) => {
+      const updatedLesson = [...prevData.contentLesson];
       // Đảm bảo cập nhật đúng thuộc tính trong content
       if (
-        updatedBlog[blogIndex] &&
-        updatedBlog[blogIndex].content[paragraphIndex]
+        updatedLesson[lessonIndex] &&
+        updatedLesson[lessonIndex].content[paragraphIndex]
       ) {
-        updatedBlog[blogIndex].content[paragraphIndex][name] = value; // Cập nhật đúng thuộc tính
+        updatedLesson[lessonIndex].content[paragraphIndex][name] = value; // Cập nhật đúng thuộc tính
       }
       return {
         ...prevData,
-        blogItems: updatedBlog,
+        contentLesson: updatedLesson,
       };
     });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/blog`;
+      const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/lesson`;
       if (action === "C") {
-        await axios.post(apiUrl, { ...blogData });
+        await axios.post(apiUrl, { ...lessonData });
       } else {
         await axios.put(apiUrl, {
-          ...blogData,
+          ...lessonData,
         });
       }
       resetForm();
@@ -213,7 +219,7 @@ const BlogForm = () => {
       ) : (
         ""
       )}
-      <div className="blog-creation">
+      <div className="lesson-creation">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
             <NavLink to="/home" className="breadcrumb__item">
@@ -224,8 +230,8 @@ const BlogForm = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/blog" className="breadcrumb__item">
-              <p className="breadcrumb__name">Blog</p>
+            <NavLink to="/lesson" className="breadcrumb__item">
+              <p className="breadcrumb__name">Quản lý bài học</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
                 alt=""
@@ -233,20 +239,18 @@ const BlogForm = () => {
               />
             </NavLink>
             <NavLink to="#!" className="breadcrumb__item">
-              <p className="breadcrumb__name  breadcrumb__active">
-                Update Blog
-              </p>
+              <p className="breadcrumb__name  breadcrumb__active">Form</p>
             </NavLink>
           </div>
         </div>
-        <h1 className="blog-creation__title">Thông tin Blog</h1>
-        <div className="blog__separate"></div>
-        <form className="blog-creation__form" onSubmit={handleSubmit}>
+        <h1 className="lesson-creation__title">Thông tin lesson</h1>
+        <div className="lesson__separate"></div>
+        <form className="lesson-creation__form" onSubmit={handleSubmit}>
           <div className="row row-cols-2">
             <div className="col g-2">
               <div className="form__group ">
                 <label htmlFor="title" className="control__label">
-                  Tiêu đề blog
+                  Tiêu đề lesson
                 </label>
                 <input
                   type="text"
@@ -254,7 +258,7 @@ const BlogForm = () => {
                   name="title"
                   className="form__control"
                   placeholder="Nhập tiêu đề khóa học"
-                  value={blogData.title || ""}
+                  value={lessonData.title || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -270,7 +274,7 @@ const BlogForm = () => {
                   name="author"
                   className="form__control"
                   placeholder="Nhập tên tác giả"
-                  value={blogData.author || ""}
+                  value={lessonData.author || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -290,7 +294,7 @@ const BlogForm = () => {
                   className="form__control"
                   placeholder="Nhập thời gian"
                   min="0"
-                  value={blogData.duration || ""}
+                  value={lessonData.duration || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -306,7 +310,7 @@ const BlogForm = () => {
                   name="urlImage"
                   className="form__control"
                   placeholder="Nhập link hình ảnh"
-                  value={blogData.urlImage || ""}
+                  value={lessonData.urlImage || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -317,63 +321,67 @@ const BlogForm = () => {
             <div className="col g-2">
               <div className="form__group">
                 <label htmlFor="description" className="control__label">
-                  Mô tả blog
+                  Mô tả lesson
                 </label>
                 <textarea
                   id="description"
                   name="description"
                   className="form__control"
-                  placeholder="Nhập mô tả blog"
-                  value={blogData.description}
+                  placeholder="Nhập mô tả lesson"
+                  value={lessonData.description}
                   onChange={handleChange}
                 ></textarea>
               </div>
             </div>
           </div>
-          <h2 className="blog-creation__subtitle">Chi tiết</h2>
-          <div className="blog__separate"></div>
+          <h2 className="lesson-creation__subtitle">Chi tiết</h2>
+          <div className="lesson__separate"></div>
 
-          <div className="blog-creation__lessons">
-            {blogData.blogItems.map((blogItem, blogIndex) => (
-              <div key={blogIndex} className="blog-creation__lesson">
-                <h3 className="blog-creation__lesson-title">Tiêu đề</h3>
+          <div className="lesson-creation__lessons">
+            {lessonData.contentLesson.map((lessonItem, lessonIndex) => (
+              <div key={lessonIndex} className="lesson-creation__lesson">
+                <h3 className="lesson-creation__lesson-title">Tiêu đề</h3>
                 <div className="form__group ">
                   <label
-                    htmlFor={`lesson-title-${blogIndex}`}
+                    htmlFor={`lesson-title-${lessonIndex}`}
                     className="control__label"
                   >
-                    Tiêu đề blog
+                    Tiêu đề lesson
                   </label>
                   <input
                     type="text"
-                    id={`lesson-title-${blogIndex}`}
+                    id={`lesson-title-${lessonIndex}`}
                     className="form__control"
-                    placeholder="Nhập tiêu đề blog"
-                    value={blogItem.title || ""}
-                    onChange={(e) => handleLessonTitleChange(blogIndex, e)}
+                    placeholder="Nhập tiêu đề lesson"
+                    value={lessonItem.title || ""}
+                    onChange={(e) => handleLessonTitleChange(lessonIndex, e)}
                   />
                 </div>
-                {Array.isArray(blogItem.content) &&
-                  blogItem.content.map((paragraph, paragraphIndex) => (
+                {Array.isArray(lessonItem.content) &&
+                  lessonItem.content.map((paragraph, paragraphIndex) => (
                     <div
                       key={paragraphIndex}
-                      className="blog-creation__paragraph"
+                      className="lesson-creation__paragraph"
                     >
                       <div className="form__group ">
                         <label
-                          htmlFor={`lesson-text-${blogIndex}-${paragraphIndex}`}
+                          htmlFor={`lesson-text-${lessonIndex}-${paragraphIndex}`}
                           className="control__label"
                         >
                           Nội dung đoạn văn {paragraphIndex + 1}
                         </label>
                         <textarea
-                          id={`lesson-text-${blogIndex}-${paragraphIndex}`}
+                          id={`lesson-text-${lessonIndex}-${paragraphIndex}`}
                           className="form__control"
                           placeholder="Nhập nội dung đoạn văn"
                           name="text"
                           value={paragraph.text}
                           onChange={(e) =>
-                            handleParagraphChange(blogIndex, paragraphIndex, e)
+                            handleParagraphChange(
+                              lessonIndex,
+                              paragraphIndex,
+                              e
+                            )
                           }
                         />
                       </div>
@@ -381,21 +389,21 @@ const BlogForm = () => {
                         <div className="col gx-1 ">
                           <div className="form__group ">
                             <label
-                              htmlFor={`lesson-image-${blogIndex}-${paragraphIndex}`}
+                              htmlFor={`lesson-image-${lessonIndex}-${paragraphIndex}`}
                               className="control__label"
                             >
                               Hình {paragraphIndex + 1}
                             </label>
                             <input
                               type="text"
-                              id={`lesson-image-${blogIndex}-${paragraphIndex}`}
+                              id={`lesson-image-${lessonIndex}-${paragraphIndex}`}
                               className="form__control"
                               placeholder="Nhập URL hình ảnh"
                               name="imageUrl"
                               value={paragraph.imageUrl || ""}
                               onChange={(e) =>
                                 handleParagraphChange(
-                                  blogIndex,
+                                  lessonIndex,
                                   paragraphIndex,
                                   e
                                 )
@@ -406,21 +414,21 @@ const BlogForm = () => {
                         <div className="col gx-1">
                           <div className="form__group ">
                             <label
-                              htmlFor={`desc-image-${blogIndex}-${paragraphIndex}`}
+                              htmlFor={`desc-image-${lessonIndex}-${paragraphIndex}`}
                               className="control__label"
                             >
                               Chú thích hình ảnh
                             </label>
                             <input
                               type="text"
-                              id={`desc-image-${blogIndex}-${paragraphIndex}`}
+                              id={`desc-image-${lessonIndex}-${paragraphIndex}`}
                               className="form__control"
                               placeholder="Chú thích hình ảnh"
                               name="descImage"
                               value={paragraph.descImage || ""}
                               onChange={(e) =>
                                 handleParagraphChange(
-                                  blogIndex,
+                                  lessonIndex,
                                   paragraphIndex,
                                   e
                                 )
@@ -433,8 +441,8 @@ const BlogForm = () => {
                   ))}
                 <button
                   type="button"
-                  className="blog-creation__button"
-                  onClick={() => handleAddParagraph(blogIndex)}
+                  className="lesson-creation__button"
+                  onClick={() => handleAddParagraph(lessonIndex)}
                 >
                   Thêm nội dung
                 </button>
@@ -442,12 +450,12 @@ const BlogForm = () => {
             ))}
           </div>
 
-          <div className="blog-creation__submit">
+          <div className="lesson-creation__submit">
             <button
               type="submit"
-              className="  blog-creation__button blog-creation__submit--btn"
+              className="  lesson-creation__button lesson-creation__submit--btn"
             >
-              {action === "C" ? "Tạo" : "Cập nhật"} Blog
+              {action === "C" ? "Tạo" : "Cập nhật"} lesson
             </button>
           </div>
         </form>
@@ -456,4 +464,4 @@ const BlogForm = () => {
   );
 };
 
-export default BlogForm;
+export default LessonForm;

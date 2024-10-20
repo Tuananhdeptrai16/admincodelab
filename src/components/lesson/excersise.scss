@@ -1,10 +1,12 @@
-.Lesson {
+.exercise {
+  //
   &__desc {
     margin-top: 20px;
     font-size: 1.6rem;
     font-weight: 600;
     color: #7e7e82;
   }
+  //
   &__separate {
     width: 100%;
     margin: 10px 0 40px 0;
@@ -19,6 +21,7 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.35);
   }
+  //
   &__delete {
     position: fixed;
     top: 50%;
@@ -31,11 +34,13 @@
     padding: 20px;
     background-color: #fff;
     z-index: 999;
+    //
     &--notification {
       font-size: 1.6rem;
       color: #333;
       font-weight: 700;
     }
+    //
     &--action {
       margin-top: 20px;
       display: flex;
@@ -63,12 +68,7 @@
       border-radius: 10px;
     }
   }
-  &__border--left {
-    border-radius: 10px 0 0 0;
-  }
-  &__border--right {
-    border-radius: 0 10px 0 0;
-  }
+
   &__adding {
     background: #99ecc7;
     padding: 10px;
@@ -90,111 +90,8 @@
       height: 30px;
     }
   }
-  &__search {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    &--input {
-      background: #f5f5f5;
-      border-radius: 10px;
-      color: #292e39;
-      font-size: 1.6rem;
-      font-weight: 600;
-      width: 100%;
-      height: 100%;
-      line-height: 100%;
-      padding: 15px;
-    }
-    &--btn {
-      border-radius: 10px;
-      width: 100px;
-      padding: 12px;
-      background: #f5f5f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      &:hover {
-        scale: 1.05;
-      }
-    }
-  }
-  &__item {
-    width: 100%;
-    margin: 20px auto;
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 16px;
-      thead {
-        tr {
-          th {
-            font-weight: 700;
-            font-size: 1.6rem;
-            background-color: #f4f4f4; /* Màu nền cho phần tiêu đề */
-            color: #333;
-            text-align: left;
-            padding: 10px 15px;
-            border-bottom: 2px solid #ccc; /* Đường viền dưới tiêu đề */
-          }
-        }
-      }
 
-      tbody {
-        tr {
-          &:nth-child(odd) {
-            background-color: #f9f9f9; /* Màu nền cho các dòng lẻ */
-          }
-
-          &:nth-child(even) {
-            background-color: #e6e6e6; /* Màu nền cho các dòng chẵn */
-          }
-
-          &:hover {
-            background-color: #d1e7dd; /* Đổi màu nền khi hover */
-            cursor: pointer;
-          }
-
-          td {
-            vertical-align: middle;
-            padding: 10px 15px;
-            overflow: hidden;
-          }
-
-          /* Style cho các button */
-          .btn {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 14px;
-            width: 80px;
-            height: 40px;
-            transition: all 0.2s ease;
-            &.btn-warning {
-              padding: 10px;
-              background-color: #f0ad4e;
-              &:hover {
-                background-color: #ec971f;
-                scale: 1.1;
-              }
-            }
-
-            &.btn-danger {
-              padding: 10px;
-              margin-left: 10px;
-              background-color: #d9534f;
-              &:hover {
-                background-color: #c9302c;
-                scale: 1.1;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  //
   &__heading {
     line-height: 148%;
     font-weight: 700;
@@ -202,20 +99,8 @@
     color: #333;
     user-select: none;
   }
-  &__avatar {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  &__name {
-    font-weight: 700;
-  }
-  &__img {
-    border-radius: 10px;
-    width: 100px;
-    height: 70px;
-    object-fit: cover;
-  }
+
+  //
   &__add {
     margin-top: 40px;
     width: 100%;
@@ -229,7 +114,7 @@
     transition: all 0.2s ease;
     font-weight: 500;
     &:hover {
-      scale: 1.01;
+      scale: 1.02;
     }
     &--icon {
       width: 40px;
@@ -252,6 +137,7 @@
       text-decoration: underline;
     }
   }
+  //
   &__input {
     margin: 10px 0;
     padding: 15px 10px;
@@ -259,6 +145,7 @@
     border: 1px solid #b0b0b6;
     border-radius: 10px;
   }
+  //
   &__title {
     margin-top: 15px;
     display: block;
@@ -271,23 +158,48 @@
       color: #7e7e82;
     }
     &--new {
+      margin-top: 30px;
       font-size: 2rem;
       font-weight: 500;
       color: #7e7e82;
     }
   }
-  &__wrap {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #b0b0b6;
-  }
+
+  //
   &__action-btn {
     margin-top: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
+  }
+
+  //
+  &__action--cancel {
+    background: #fff;
+    border: 1px solid #292e39;
+    color: #333;
+    &:hover {
+      background: #d9534f;
+      color: #fff;
+    }
+  }
+  &__add-optionsSelect {
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    &:hover {
+      scale: 1.1;
+    }
+  }
+  &__add--icon-optionsSelect {
+    width: 30px;
+    height: 30px;
   }
   &__btn {
     width: 100px;

@@ -1,0 +1,262 @@
+// The code was written by programmer Truong Tuan Anh
+// Thanks for watching and sharing
+
+.detail {
+  &__main {
+    margin-top: 40px;
+  }
+  &__heading {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 123.81%;
+  }
+  &__desc {
+    margin-top: 20px;
+    font-weight: 500;
+    line-height: 148%;
+  }
+  &__reward {
+    margin-top: 30px;
+
+    &--list {
+      margin-top: 30px;
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        margin-top: 8px;
+        font-weight: 500;
+        line-height: 150%;
+        height: 40px;
+        font-size: 1.6rem;
+      }
+    }
+  }
+  &__icon,
+  &__check--icon {
+    width: 20px;
+    height: 20px;
+  }
+  &__background {
+    width: 90%;
+  }
+  &__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 40px 10px;
+    border-radius: 20px;
+  }
+  &__img {
+    width: 100%;
+    border-radius: 20px;
+    height: 200px;
+  }
+  &__price {
+    color: var(--main-color);
+    margin-top: 25px;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+  &__register {
+    margin-top: 20px;
+    width: 80%;
+    background: var(--main-color);
+    transition: all 0.2s ease;
+    a {
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    &:hover {
+      transform: scale(1.01);
+    }
+  }
+  &__register-lg {
+    width: 100%;
+  }
+  &__includes {
+    margin-top: 20px;
+    margin-left: 30px;
+    align-self: flex-start;
+    &--heading {
+      color: var(--text-color-main-light);
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+  }
+  &__item {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  &__text {
+    color: var(--color-text-2);
+    line-height: 128%;
+    font-weight: 500;
+  }
+  &__content {
+    margin-top: 30px;
+  }
+  &__info {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &--left {
+      align-items: center;
+      display: flex;
+      gap: 20px;
+    }
+  }
+  &__extend--button {
+    font-size: 1.6rem;
+    color: #63b3f5;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  &__edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    &:hover {
+      scale: 1.01;
+    }
+  }
+  &__list {
+    margin-top: 30px;
+  }
+  &__item--info {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background: #f6f6f6;
+    padding: 20px 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+  }
+  &__item--wrap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  &__item-text {
+    color: var(--text-color-main-light);
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 128%;
+  }
+  &__item--desc {
+    color: var(--color-text-2);
+    line-height: 128%;
+    font-weight: 500;
+    font-size: 1.6rem;
+  }
+  &__lecture {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  &__edit {
+    transition: all 0.2s ease;
+    &:hover {
+      scale: 1.02;
+      text-decoration: underline;
+    }
+  }
+  &__delete,
+  &__add {
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    border: 1px dotted #ccc;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.8rem;
+    transition: all 0.2s ease;
+    &:hover {
+      scale: 1.02;
+    }
+  }
+  &__delete {
+    margin-top: 20px;
+    border: 1px dotted #e47f7f;
+    color: #e76666;
+    margin-bottom: 20px;
+  }
+}
+.lesson-creation {
+  &__submit {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    &--btn {
+      background: #f0ad4e !important;
+      color: #ffff !important;
+      transition: all 0.2s ease;
+      &:hover {
+        scale: 1.1;
+      }
+    }
+  }
+  &__title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+  &__select {
+    font-size: 16px;
+    padding: 15px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    appearance: none; // Ẩn mũi tên mặc định
+    position: relative;
+    cursor: pointer;
+    &::placeholder {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 128%;
+    }
+  }
+  &__subtitle {
+    margin-top: 30px;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  &__lesson-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  &__button {
+    margin-top: 30px;
+    width: 200px;
+    padding: 15px;
+    font-weight: 700;
+    background: #d1e7dd;
+    color: #333;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    font-size: 1.8rem;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

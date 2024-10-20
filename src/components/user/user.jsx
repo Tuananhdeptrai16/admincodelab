@@ -185,12 +185,14 @@ const Users = () => {
               />
             </NavLink>
             <NavLink to="/user" className="breadcrumb__item">
-              <p className="breadcrumb__name  breadcrumb__active"> Admin</p>
+              <p className="breadcrumb__name  breadcrumb__active">
+                Quản lý nội bộ
+              </p>
             </NavLink>
           </div>
         </div>
         <div className="user__wrap">
-          <h1 className="user__heading">Admin</h1>
+          <h1 className="user__heading">Quản lý nội bộ</h1>
         </div>
         <div className="user__separate"></div>
         <div className="user__search">
@@ -266,7 +268,7 @@ const Users = () => {
             <table>
               <thead>
                 <tr>
-                  <th className="user__border--left">
+                  <th>
                     <div className="checkbox-wrapper-43">
                       <input
                         onChange={handleCheckAllChange}
@@ -287,7 +289,7 @@ const Users = () => {
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
                   <th>Trạng thái</th>
-                  <th className="user__border--right">Chỉnh sửa</th>
+                  <th>Chỉnh sửa</th>
                 </tr>
               </thead>
               <tbody>

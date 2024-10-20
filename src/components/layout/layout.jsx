@@ -57,23 +57,21 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/dashboard">Dashboard</NavLink>,
+                  label: <NavLink to="/dashboard">Trang chủ</NavLink>,
                 },
-
                 {
                   key: "2",
                   icon: (
-                    <NavLink to="/exercise">
+                    <NavLink to="/course">
                       <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
+                        src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
                         alt="svg"
                         className="nav__icon icon"
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/exercise">Exercise</NavLink>,
+                  label: <NavLink to="/course">Khóa học</NavLink>,
                 },
-
                 {
                   key: "3",
                   icon: (
@@ -85,7 +83,7 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/lesson">Lesson</NavLink>,
+                  label: <NavLink to="/lesson">Bài học</NavLink>,
                 },
 
                 {
@@ -99,22 +97,9 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/user">Admin</NavLink>,
+                  label: <NavLink to="/user">Nội bộ</NavLink>,
                 },
 
-                {
-                  key: "5",
-                  icon: (
-                    <NavLink to="/course">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
-                        alt="svg"
-                        className="nav__icon icon"
-                      />
-                    </NavLink>
-                  ),
-                  label: <NavLink to="/course">Courses</NavLink>,
-                },
                 {
                   key: "6",
                   icon: (
@@ -139,7 +124,7 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/comment">Comment</NavLink>,
+                  label: <NavLink to="/comment">Bình luận</NavLink>,
                 },
                 {
                   key: "8",
@@ -152,7 +137,7 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/calendar">Calendar</NavLink>,
+                  label: <NavLink to="/calendar">Lịch</NavLink>,
                 },
                 {
                   key: "9",
@@ -165,7 +150,7 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/tools">Tools</NavLink>,
+                  label: <NavLink to="/tools">Công cụ</NavLink>,
                 },
                 {
                   key: "10",
@@ -178,7 +163,7 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/help">Help</NavLink>,
+                  label: <NavLink to="/help">Giúp đỡ</NavLink>,
                 },
               ]}
             />

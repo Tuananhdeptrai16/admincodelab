@@ -1,0 +1,62 @@
+.lesson {
+  &__list {
+    margin-top: 40px;
+  }
+  &__img {
+    height: 200px;
+  }
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+  &__item {
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+  &__content {
+    padding: 10px;
+  }
+  &__courses {
+    color: #171c28;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 120%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      color: #7fa1f0;
+    }
+  }
+  &__desc {
+    margin-top: 10px;
+  }
+  &__heading {
+    line-height: 148%;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #333;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  &__desc {
+    line-height: 148%;
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: #333;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  &__separate {
+    width: 100%;
+    margin: 10px 0 40px 0;
+    height: 1px;
+    background-color: #dadcd6;
+  }
+}

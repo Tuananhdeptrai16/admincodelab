@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import "./lesson.scss";
+import "./excersise.scss";
 import { NavLink } from "react-router-dom";
 import { ToastSuccess } from "../toast/toastsuccess";
 import StoreContext from "../../context/context";
-export const AddExercise = () => {
+export const ExerciseForm = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
-  const [getLessonId] = useState("");
-  const { targetLessonID } = useContext(StoreContext);
+  const [getExerciseId] = useState("");
+  const { targetExerciseId } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [questionData, setQuestionData] = useState({
-    coursesId: targetLessonID,
+    coursesId: targetExerciseId,
     questions: [
       {
-        title: "",
+        questionName: "",
         correctAnswer: "",
-        options: [], // Đảm bảo content là một mảng
+        optionsSelect: [], // Đảm bảo content là một mảng
+        answersCorrect: "",
       },
     ],
   });
@@ -26,9 +27,10 @@ export const AddExercise = () => {
       questions: [
         ...prevData.questions,
         {
-          title: "",
+          questionName: "",
           correctAnswer: "",
-          options: [],
+          optionsSelect: [],
+          answersCorrect: "",
         },
       ],
     }));
@@ -37,18 +39,18 @@ export const AddExercise = () => {
   const getListTutorials = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/exercise`
+        `${process.env.REACT_APP_API_BACKEND_URL}/quiz`
       );
       setListTutorials(res.data);
     } catch (error) {
       console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
     }
   };
-  const deleteLesson = async () => {
+  const deleteExercise = async () => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_BACKEND_URL}/Lesson`,
-        { data: { _id: getLessonId } } // Truyền ID khóa học trong body
+        `${process.env.REACT_APP_API_BACKEND_URL}/quiz`,
+        { data: { _id: getExerciseId } } // Truyền ID khóa học trong body
       );
       getListTutorials(); // Cập nhật lại danh sách sau khi xóa
       setShowModel(false);
@@ -65,7 +67,7 @@ export const AddExercise = () => {
   const handleAddOption = (questionIndex) => {
     setQuestionData((prevData) => {
       const updatedQuestions = [...prevData.questions];
-      updatedQuestions[questionIndex].options.push({
+      updatedQuestions[questionIndex].optionsSelect.push({
         option: "",
       });
       return {
@@ -83,10 +85,12 @@ export const AddExercise = () => {
     });
   };
   const handleOptionChange = (e, questionIndex, optionIndex) => {
-    const updatedOptions = [...questionData.questions[questionIndex].options];
-    updatedOptions[optionIndex].option = e.target.value;
+    const updatedOptionsSelect = [
+      ...questionData.questions[questionIndex].optionsSelect,
+    ];
+    updatedOptionsSelect[optionIndex].option = e.target.value;
     const updatedQuestions = [...questionData.questions];
-    updatedQuestions[questionIndex].options = updatedOptions;
+    updatedQuestions[questionIndex].optionsSelect = updatedOptionsSelect;
     setQuestionData({
       ...questionData,
       questions: updatedQuestions,
@@ -132,7 +136,7 @@ export const AddExercise = () => {
   return (
     <>
       {toastSuccess === true ? <ToastSuccess></ToastSuccess> : ""}
-      <div className="Lesson">
+      <div className="exercise">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
             <NavLink to="/home" className="breadcrumb__item">
@@ -143,7 +147,7 @@ export const AddExercise = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/exercise" className="breadcrumb__item">
+            <NavLink to="/lesson" className="breadcrumb__item">
               <p className="breadcrumb__name  ">Bài tập</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -153,31 +157,31 @@ export const AddExercise = () => {
             </NavLink>
             <NavLink to="#!" className="breadcrumb__item">
               <p className="breadcrumb__name  breadcrumb__active">
-                Thêm câu hỏi{" "}
+                Thêm câu hỏi
               </p>
             </NavLink>
           </div>
         </div>
-        <h1 className="Lesson__heading">Thêm bài tập</h1>
-        <p className="Lesson__desc">Hãy thêm bài tập mới của bạn ! ❤️👌</p>
-        <div className="Lesson__separate"></div>
+        <h1 className="exercise__heading">Thêm bài tập</h1>
+        <p className="exercise__desc">Hãy thêm bài tập mới của bạn ! ❤️👌</p>
+        <div className="exercise__separate"></div>
 
         {showModel && (
           <>
-            <div className="Lesson__delete">
-              <h1 className="Lesson__delete--notification">
+            <div className="exercise__delete">
+              <h1 className="exercise__delete--notification">
                 Bạn muốn xóa khóa học ?
               </h1>
-              <div className="Lesson__delete--action">
+              <div className="exercise__delete--action">
                 <button
                   onClick={() => setShowModel(!showModel)}
-                  className=" Lesson__delete--btn Lesson__delete--cancel"
+                  className=" exercise__delete--btn exercise__delete--cancel"
                 >
                   Hủy
                 </button>
                 <button
-                  onClick={() => deleteLesson()}
-                  className="Lesson__delete--btn Lesson__delete--sure"
+                  onClick={() => deleteExercise()}
+                  className="exercise__delete--btn exercise__delete--sure"
                 >
                   Xóa
                 </button>
@@ -185,25 +189,25 @@ export const AddExercise = () => {
             </div>
             <div
               onClick={() => setShowModel(!showModel)}
-              className="Lesson__overlay"
+              className="exercise__overlay"
             ></div>
           </>
         )}
-        <button onClick={handleAddQuestion} className="Lesson__add">
+        <button onClick={handleAddQuestion} className="exercise__add">
           <img
             src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
             alt=""
-            className="Lesson__add--icon"
+            className="exercise__add--icon"
           />
           Thêm câu hỏi mới
         </button>
         {questionData.questions.map((question, questionIndex) => (
-          <div key={`question-${questionIndex}`} className="Lesson__wrap">
-            <h2 className="Lesson__title--new">Câu hỏi mới</h2>
-            <div key={questionIndex} className="Lesson__question">
+          <div key={`question-${questionIndex}`} className="exercise__wrap">
+            <h2 className="exercise__title--new">Câu hỏi mới</h2>
+            <div key={questionIndex} className="exercise__question">
               <label
                 htmlFor={`question-${questionIndex}`}
-                className="Lesson__title"
+                className="exercise__title"
               >
                 Nhập câu hỏi {questionIndex + 1} :
               </label>
@@ -214,17 +218,17 @@ export const AddExercise = () => {
                 placeholder="Nhập câu hỏi"
                 value={question.title}
                 onChange={(e) => handleQuestionChange(e, questionIndex)}
-                className="Lesson__input"
+                className="exercise__input"
               />
-              {question.options.map((option, optionIndex) => (
-                <div key={optionIndex} className="Lesson__option">
+              {question.optionsSelect.map((option, optionIndex) => (
+                <div key={optionIndex} className="exercise__option">
                   <label
                     htmlFor="answer"
-                    className="Lesson__title--options"
+                    className="exercise__title--optionsSelect"
                   >{`Nhập đáp án ${optionIndex + 1}`}</label>
                   <input
                     type="text"
-                    className="Lesson__input"
+                    className="exercise__input"
                     name="answer"
                     id="answer"
                     placeholder={`Nhập đáp án ${optionIndex + 1}`}
@@ -237,18 +241,18 @@ export const AddExercise = () => {
               ))}
               <button
                 onClick={() => handleAddOption(questionIndex)}
-                className="Lesson__add-options"
+                className="exercise__add-optionsSelect"
               >
                 <img
                   src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
                   alt=""
-                  className="Lesson__add--icon-options"
+                  className="exercise__add--icon-optionsSelect"
                 />
                 Thêm lựa trọn
               </button>
               <label
                 htmlFor={`correct__answer-${questionIndex}`}
-                className="Lesson__title"
+                className="exercise__title"
               >
                 Đáp án đúng là ?
               </label>
@@ -259,19 +263,21 @@ export const AddExercise = () => {
                 placeholder="Nhập câu trả lời"
                 value={question.correctAnswer}
                 onChange={(e) => handleCorrectAnswerChange(e, questionIndex)}
-                className="Lesson__input"
+                className="exercise__input"
               />
             </div>
           </div>
         ))}
-        <div className="Lesson__action-btn">
+        <div className="exercise__action-btn">
           <button
             onClick={(e) => handleSubmit(e)}
-            className="Lesson__btn Lesson__action--save"
+            className="exercise__btn exercise__action--save"
           >
             Save
           </button>
-          <button className="Lesson__btn Lesson__action--cancel">Cancel</button>
+          <button className="exercise__btn exercise__action--cancel">
+            Cancel
+          </button>
         </div>
       </div>
     </>
