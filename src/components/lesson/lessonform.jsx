@@ -3,14 +3,14 @@ import StoreContext from "../../context/context";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 const LessonForm = () => {
-  const { action, targetLessonID } = useContext(StoreContext);
+  const { action, targetLessonID, targetCourseID } = useContext(StoreContext);
   const [listTutorials, setListTutorials] = useState([]);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
   const [lessonData, setLessonData] = useState({
-    courseId: "",
     type: "EMPTY_LESSON",
+    courseId: targetCourseID,
     title: "",
     description: "",
     duration: "",
@@ -26,7 +26,6 @@ const LessonForm = () => {
     rating: 0,
     studentsEnrolled: 0,
   });
-
   const getListTutorials = async () => {
     try {
       const res = await axios.get(
@@ -37,7 +36,6 @@ const LessonForm = () => {
       console.error("Error fetching data: ", error);
     }
   };
-  console.log("lessonData", lessonData);
   useEffect(() => {
     const renderUpdateUser = async () => {
       if (action === "U") {
@@ -50,7 +48,7 @@ const LessonForm = () => {
           );
           if (foundLesson) {
             setLessonData({
-              courseId: "",
+              lessonId: foundLesson._id,
               type: "EMPTY_LESSON",
               title: foundLesson.title,
               description: foundLesson.description,
@@ -65,31 +63,32 @@ const LessonForm = () => {
           }
         }
       } else {
+        const resetForm = () => {
+          setLessonData({
+            courseId: targetCourseID,
+            type: "EMPTY_LESSON",
+            title: "",
+            description: "",
+            duration: "",
+            author: "",
+            urlImage: "",
+            contentLesson: [
+              {
+                title: "",
+                content: [],
+              },
+            ],
+            comments: [],
+            rating: 0,
+            studentsEnrolled: 0,
+          });
+        };
         resetForm();
       }
     };
     renderUpdateUser();
-  }, [action, targetLessonID, listTutorials]);
-  const resetForm = () => {
-    setLessonData({
-      courseId: "",
-      type: "EMPTY_LESSON",
-      title: "",
-      description: "",
-      duration: "",
-      author: "",
-      urlImage: "",
-      contentLesson: [
-        {
-          title: "",
-          content: [],
-        },
-      ],
-      comments: [],
-      rating: 0,
-      studentsEnrolled: 0,
-    });
-  };
+  }, [action, targetLessonID, listTutorials, targetCourseID]);
+  console.log("targetLessonID", targetLessonID);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLessonData((prevData) => ({
@@ -116,7 +115,6 @@ const LessonForm = () => {
       // Kiểm tra xem lessonIndex có hợp lệ không
       if (updatedLesson[lessonIndex]) {
         updatedLesson[lessonIndex].content.push({
-          // Thêm đoạn văn mới vào nội dung của bài học
           text: "",
           imageUrl: "",
           descImage: "",
@@ -125,6 +123,19 @@ const LessonForm = () => {
       return {
         ...prevData,
         contentLesson: updatedLesson, // Cập nhật lại mảng lessons
+      };
+    });
+  };
+  const handleAddSection = () => {
+    setLessonData((prevData) => {
+      const updatedLesson = [...prevData.contentLesson]; // Tạo bản sao của mảng lessons
+      updatedLesson.push({
+        title: "", // Khởi tạo title trống cho phần mới
+        content: [], // Khởi tạo mảng content trống cho phần mới
+      });
+      return {
+        ...prevData,
+        contentLesson: updatedLesson, // Cập nhật lại mảng contentLesson
       };
     });
   };
@@ -157,6 +168,26 @@ const LessonForm = () => {
           ...lessonData,
         });
       }
+      const resetForm = () => {
+        setLessonData({
+          courseId: targetCourseID,
+          type: "EMPTY_LESSON",
+          title: "",
+          description: "",
+          duration: "",
+          author: "",
+          urlImage: "",
+          contentLesson: [
+            {
+              title: "",
+              content: [],
+            },
+          ],
+          comments: [],
+          rating: 0,
+          studentsEnrolled: 0,
+        });
+      };
       resetForm();
       setToastSuccess(true);
       setTimeout(() => {
@@ -451,6 +482,13 @@ const LessonForm = () => {
           </div>
 
           <div className="lesson-creation__submit">
+            <button
+              type="button"
+              className="lesson-creation__button"
+              onClick={() => handleAddSection()}
+            >
+              Thêm phần mới
+            </button>
             <button
               type="submit"
               className="  lesson-creation__button lesson-creation__submit--btn"

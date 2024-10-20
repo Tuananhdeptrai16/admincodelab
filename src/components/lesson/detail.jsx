@@ -5,11 +5,17 @@ import { useContext } from "react";
 import "./details.scss";
 import axios from "axios";
 import StoreContext from "../../context/context";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 export const DetailsCourse = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [toggle, setToggle] = useState(false);
-  const { targetCourseID } = useContext(StoreContext);
+  const { setAction, targetCourseID, setTargetLessonID } =
+    useContext(StoreContext);
   const [activeSection, setActiveSection] = useState(null);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [toastError, setToastError] = useState(false);
   const handleToggle = (section) => {
     if (activeSection === section) {
       setActiveSection(null); // Ẩn nếu đã hiển thị
@@ -17,8 +23,8 @@ export const DetailsCourse = () => {
       setActiveSection(section); // Hiển thị phần tử được chọn
     }
   };
-  console.log("active", activeSection);
   useEffect(() => {
+    NProgress.start();
     const getListTutorials = async () => {
       try {
         const res = await axios.get(
@@ -33,10 +39,92 @@ export const DetailsCourse = () => {
       }
     };
     getListTutorials();
+    NProgress.done();
   }, [targetCourseID]);
-  console.log(">>listTutorials", listTutorials[0]);
+  const deleteLesson = async (courseId, lessonId) => {
+    NProgress.start();
+    try {
+      const dataDelete = {
+        lessonId: lessonId,
+        courseId: courseId,
+      };
+
+      await axios.delete(`${process.env.REACT_APP_API_BACKEND_URL}/lesson`, {
+        data: dataDelete,
+      });
+      const getListTutorials = async () => {
+        try {
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_BACKEND_URL}/courses?populate=lessonInfo`
+          );
+          const foundCourse = res.data.data.filter(
+            (item) => item._id === targetCourseID
+          );
+          setListTutorials(foundCourse);
+        } catch (error) {
+          console.error("Error fetching data: ", error);
+        }
+      };
+      getListTutorials();
+      setToastSuccess(true);
+      setTimeout(() => {
+        setToastSuccess(false);
+      }, 2000);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
+        setError(errorMessage);
+      } else {
+        setError("Có lỗi không xác định");
+      }
+      setToastError(true);
+      setTimeout(() => {
+        setToastError(false);
+      });
+    }
+    NProgress.done();
+  };
   return (
     <div>
+      {toastSuccess === true ? (
+        <div id="toast" className="toast toast--success">
+          <div className="toast__icon">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/like.svg`}
+              alt=""
+              className="toast__icon-svg"
+            />
+          </div>
+          <div className="toast__body">
+            <h3 className="toast__title">Thành Công</h3>
+            <p className="toast__msg">Bạn vui lòng đợi kết quả ...</p>
+          </div>
+          <div className="toast__close">
+            <i className="fas fa-times"></i>
+          </div>
+        </div>
+      ) : toastError === true ? (
+        <div>
+          <div id="toast" className="toast toast--error">
+            <div className="toast__icon">
+              <img
+                src={`${process.env.PUBLIC_URL}/images/icon/error.svg`}
+                alt=""
+                className="toast__icon-svg"
+              />
+            </div>
+            <div className="toast__body">
+              <h3 className="toast__title">Thông báo lỗi</h3>
+              <p className="toast__msg">{error}</p>
+            </div>
+            <div className="toast__close">
+              <i className="fas fa-times"></i>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="container">
         <div className="detail">
           <div className="breadcrumb">
@@ -121,7 +209,13 @@ export const DetailsCourse = () => {
                                 </p>
                               </div>
                               <NavLink to="/lesson/form">
-                                <button className="detail__edit">
+                                <button
+                                  onClick={() => {
+                                    setAction("U");
+                                    setTargetLessonID(item._id);
+                                  }}
+                                  className="detail__edit"
+                                >
                                   <img
                                     src={`${process.env.PUBLIC_URL}/images/icon/edit1.svg`}
                                     alt=""
@@ -163,21 +257,51 @@ export const DetailsCourse = () => {
                                     className="detail__icon icon"
                                   />
                                   <p className="detail__text">
-                                    3. Cài đặt VS Code, Page Ruler extension
+                                    Bài tập có liên quan
                                   </p>
                                 </div>
-                                <NavLink to="/lesson/formEx">
-                                  <button className="detail__add">
-                                    <img
-                                      src={`${process.env.PUBLIC_URL}/images/icon/pen1.svg`}
-                                      alt=""
-                                      srcSet=""
-                                      className="detail__icon icon"
-                                    />
-                                    Thêm bài tập
-                                  </button>
-                                </NavLink>
-                                <button className="detail__delete">
+                                <div className="detail__action">
+                                  <NavLink to="/lesson/formEx">
+                                    <button
+                                      onClick={() => {
+                                        setTargetLessonID(item._id);
+                                        setAction("C");
+                                      }}
+                                      className="detail__add"
+                                    >
+                                      <img
+                                        src={`${process.env.PUBLIC_URL}/images/icon/plus.svg`}
+                                        alt=""
+                                        srcSet=""
+                                        className="detail__icon icon"
+                                      />
+                                      Thêm bài tập
+                                    </button>
+                                  </NavLink>
+                                  <NavLink to="/lesson/formEx">
+                                    <button
+                                      onClick={() => {
+                                        setTargetLessonID(item._id);
+                                        setAction("U");
+                                      }}
+                                      className="detail__add"
+                                    >
+                                      <img
+                                        src={`${process.env.PUBLIC_URL}/images/icon/pen1.svg`}
+                                        alt=""
+                                        srcSet=""
+                                        className="detail__icon icon"
+                                      />
+                                      Sửa bài tập
+                                    </button>
+                                  </NavLink>
+                                </div>
+                                <button
+                                  onClick={async () => {
+                                    deleteLesson(targetCourseID, item._id);
+                                  }}
+                                  className="detail__delete"
+                                >
                                   <img
                                     src={`${process.env.PUBLIC_URL}/images/icon/trash1.svg`}
                                     alt=""
@@ -195,7 +319,10 @@ export const DetailsCourse = () => {
                       })
                     : ""}
                   <NavLink to="/lesson/form">
-                    <button className="detail__add">
+                    <button
+                      onClick={() => setAction("C")}
+                      className="detail__add"
+                    >
                       <img
                         src={`${process.env.PUBLIC_URL}/images/icon/plus.svg`}
                         alt=""

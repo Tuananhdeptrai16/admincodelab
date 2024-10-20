@@ -158,7 +158,6 @@
       color: #7e7e82;
     }
     &--new {
-      margin-top: 30px;
       font-size: 2rem;
       font-weight: 500;
       color: #7e7e82;
@@ -223,6 +222,42 @@
       background: #d9534f;
       color: #fff;
     }
+  }
+  &__wrap {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #444947;
+  }
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  &__button {
+    width: 80px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    color: #fff;
+    transition: all 0.1s ease;
+    &--delete {
+      border: 1px solid #d9534f;
+    }
+    &--edit {
+      border: 1px solid #99ecc7;
+    }
+    &:hover {
+      scale: 1.01;
+    }
+  }
+  &__icon {
+    width: 20px;
+    height: 20px;
   }
 }
 

@@ -30,7 +30,7 @@ function App() {
       }}
     >
       <Router>
-        <AppRoutes /> {/* Thêm AppRoutes ở đây để quản lý các routes */}
+        <AppRoutes />
       </Router>
     </StoreContext.Provider>
   );

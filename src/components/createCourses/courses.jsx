@@ -14,7 +14,6 @@ const CourseCreation = () => {
   const { setAction, setTargetCourseID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
-  const [modelEdit, setModelEdit] = useState(false);
   const [toastError, setToastError] = useState(false);
   const [deleteData, setDeleteData] = useState({
     dataDelete: {
@@ -50,12 +49,10 @@ const CourseCreation = () => {
           },
         },
       });
+      setToastSuccess(true);
       setTimeout(() => {
-        setToastSuccess(true);
-        setTimeout(() => {
-          setToastSuccess(false);
-        }, 2000);
-      }, 1000);
+        setToastSuccess(false);
+      }, 2000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage = error.response?.data?.message || "Có lỗi xảy ra";
@@ -64,8 +61,6 @@ const CourseCreation = () => {
         setError("Có lỗi không xác định");
       }
       setToastError(true); // Hiển thị thông báo lỗi
-
-      // Tự động ẩn thông báo sau 3 giây
       setTimeout(() => {
         setToastError(false); // Ẩn thông báo sau 3 giây
       }, 3000);

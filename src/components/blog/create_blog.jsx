@@ -122,6 +122,20 @@ const BlogForm = () => {
       };
     });
   };
+  const handleAddSection = () => {
+    setBlogData((prevData) => {
+      const updatedBlog = [...prevData.blogItems]; // Tạo bản sao của mảng blogItems
+      updatedBlog.push({
+        // Thêm phần mới
+        title: "", // Khởi tạo title trống cho phần mới
+        content: [], // Khởi tạo mảng content trống cho phần mới
+      });
+      return {
+        ...prevData,
+        blogItems: updatedBlog, // Cập nhật lại mảng blogItems
+      };
+    });
+  };
 
   const handleParagraphChange = (blogIndex, paragraphIndex, e) => {
     const { name, value } = e.target;
@@ -443,6 +457,13 @@ const BlogForm = () => {
           </div>
 
           <div className="blog-creation__submit">
+            <button
+              type="button"
+              className="blog-creation__button"
+              onClick={() => handleAddSection()}
+            >
+              Thêm phần mới
+            </button>
             <button
               type="submit"
               className="  blog-creation__button blog-creation__submit--btn"

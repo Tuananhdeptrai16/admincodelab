@@ -230,12 +230,37 @@ export const FormAddUser = () => {
               </h3>
               <div className="title__body">
                 <form className="row" onSubmit={handleSubmit}>
+                  <div className="form__group col-4  g-2  ">
+                    <label className="control__label">Username tài khoản</label>
+                    <input
+                      className="form__control"
+                      type="text"
+                      name="username"
+                      placeholder="username"
+                      value={user.username || ""}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form__group col-4 g-2">
+                    <label className="control__label">Mật khẩu</label>
+                    <input
+                      className="form__control"
+                      type="password"
+                      name="password"
+                      placeholder="password"
+                      value={user.password || ""}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                   <div className="form__group col-4  g-2 ">
                     <label className="control__label">Họ và tên</label>
                     <input
                       className="form__control"
                       type="text"
                       name="fullname"
+                      placeholder="fullname"
                       value={user.fullname || ""}
                       onChange={handleChange}
                       required
@@ -247,6 +272,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="email"
                       name="email"
+                      placeholder="email"
                       value={user.email || ""}
                       onChange={handleChange}
                       required
@@ -258,6 +284,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="address"
+                      placeholder="address"
                       value={user.address || ""}
                       onChange={handleChange}
                       required
@@ -269,6 +296,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="tel"
                       name="phone"
+                      placeholder="phone number"
                       value={user.phone || ""}
                       onChange={handleChange}
                       required
@@ -291,6 +319,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="placeOfBirth"
+                      placeholder="placeOfBirth"
                       value={user.placeOfBirth || ""}
                       onChange={handleChange}
                       required
@@ -302,6 +331,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="number"
                       name="idNumber"
+                      placeholder="idNumber"
                       value={user.idNumber || ""}
                       onChange={handleChange}
                       required
@@ -313,6 +343,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="date"
                       name="idDate"
+                      placeholder="idDate"
                       value={user.idDate || ""}
                       onChange={handleChange}
                       required
@@ -324,6 +355,7 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="idPlace"
+                      placeholder="idPlace"
                       value={user.idPlace || ""}
                       onChange={handleChange}
                       required
@@ -362,29 +394,8 @@ export const FormAddUser = () => {
                       className="form__control"
                       type="text"
                       name="image"
+                      placeholder="url.."
                       value={user.image || ""}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="form__group col-4  g-2  ">
-                    <label className="control__label">Username tài khoản</label>
-                    <input
-                      className="form__control"
-                      type="text"
-                      name="username"
-                      value={user.username || ""}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="form__group col-4 g-2">
-                    <label className="control__label">Mật khẩu</label>
-                    <input
-                      className="form__control"
-                      type="password"
-                      name="password"
-                      value={user.password || ""}
                       onChange={handleChange}
                       required
                     />

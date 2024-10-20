@@ -4,55 +4,56 @@ import "./excersise.scss";
 import { NavLink } from "react-router-dom";
 import { ToastSuccess } from "../toast/toastsuccess";
 import StoreContext from "../../context/context";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 export const ExerciseForm = () => {
-  const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
-  const [getExerciseId] = useState("");
-  const { targetExerciseId } = useContext(StoreContext);
+  const { targetLessonID, action } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
+  const [targetQuiz, setTargetQuiz] = useState("");
   const [questionData, setQuestionData] = useState({
-    coursesId: targetExerciseId,
+    lessonId: targetLessonID,
     questions: [
       {
         questionName: "",
-        correctAnswer: "",
         optionsSelect: [], // Đảm bảo content là một mảng
         answersCorrect: "",
       },
     ],
   });
   const handleAddQuestion = () => {
+    NProgress.start();
     setQuestionData((prevData) => ({
       ...prevData,
       questions: [
         ...prevData.questions,
         {
           questionName: "",
-          correctAnswer: "",
           optionsSelect: [],
           answersCorrect: "",
         },
       ],
     }));
+    NProgress.done();
   };
 
-  const getListTutorials = async () => {
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/quiz`
-      );
-      setListTutorials(res.data);
-    } catch (error) {
-      console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
-    }
-  };
   const deleteExercise = async () => {
+    NProgress.start();
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_BACKEND_URL}/quiz`,
-        { data: { _id: getExerciseId } } // Truyền ID khóa học trong body
+      const dataDelete = {
+        quizId: targetQuiz,
+        lessonId: targetLessonID,
+      };
+      await axios.delete(`${process.env.REACT_APP_API_BACKEND_URL}/quiz`, {
+        data: dataDelete,
+      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BACKEND_URL}/lesson?populate=quizInfo`
       );
-      getListTutorials(); // Cập nhật lại danh sách sau khi xóa
+      const foundLesson = res.data.data.filter(
+        (item) => item._id === targetLessonID
+      );
+      setQuestionData(foundLesson[0].quizInfo);
       setShowModel(false);
       setTimeout(() => {
         setToastSuccess(true);
@@ -63,8 +64,10 @@ export const ExerciseForm = () => {
     } catch (error) {
       console.error("Error deleting course: ", error); // Bắt lỗi nếu xảy ra
     }
+    NProgress.done();
   };
   const handleAddOption = (questionIndex) => {
+    NProgress.start();
     setQuestionData((prevData) => {
       const updatedQuestions = [...prevData.questions];
       updatedQuestions[questionIndex].optionsSelect.push({
@@ -75,16 +78,20 @@ export const ExerciseForm = () => {
         questions: updatedQuestions,
       };
     });
+    NProgress.done();
   };
   const handleQuestionChange = (e, questionIndex) => {
+    NProgress.start();
     const updatedQuestions = [...questionData.questions];
-    updatedQuestions[questionIndex].title = e.target.value;
+    updatedQuestions[questionIndex].questionName = e.target.value;
     setQuestionData({
       ...questionData,
       questions: updatedQuestions,
     });
+    NProgress.done();
   };
   const handleOptionChange = (e, questionIndex, optionIndex) => {
+    NProgress.start();
     const updatedOptionsSelect = [
       ...questionData.questions[questionIndex].optionsSelect,
     ];
@@ -95,42 +102,64 @@ export const ExerciseForm = () => {
       ...questionData,
       questions: updatedQuestions,
     });
+    NProgress.done();
   };
   const handleCorrectAnswerChange = (e, questionIndex) => {
+    NProgress.start();
     const updatedQuestions = [...questionData.questions];
-    updatedQuestions[questionIndex].correctAnswer = e.target.value;
+    updatedQuestions[questionIndex].answersCorrect = e.target.value;
     setQuestionData({
       ...questionData,
       questions: updatedQuestions,
     });
+    NProgress.done();
   };
-
   useEffect(() => {
-    getListTutorials();
-  }, []);
-
-  if (!listTutorials || !listTutorials.data) {
-    return (
-      <div className="loader__wrap">
-        <div className="loader"></div>
-        <h1 className="loader__text">Loading....</h1>
-      </div>
-    );
-  }
+    NProgress.start();
+    if (action === "U") {
+      const getListTutorials = async () => {
+        try {
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_BACKEND_URL}/lesson?populate=quizInfo`
+          );
+          const foundLesson = res.data.data.filter(
+            (item) => item._id === targetLessonID
+          );
+          setQuestionData(foundLesson[0].quizInfo);
+        } catch (error) {
+          console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
+        }
+      };
+      getListTutorials();
+    }
+    NProgress.done();
+  }, [targetLessonID, action]);
   const handleSubmit = async (e) => {
+    NProgress.start();
     e.preventDefault();
-    const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/exercise`;
+    const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/quiz`;
     try {
-      await axios.post(`${apiUrl}`, questionData);
-      setTimeout(() => {
-        setToastSuccess(true);
+      if (action === "C") {
+        await axios.post(`${apiUrl}`, questionData);
         setTimeout(() => {
-          window.location.href = "/exercise"; // Chuyển hướng sau khi toast thành công
-        }, 1000); // Đợi 1 giây sau khi toast thành công
-      }, 1000); // Thời gian hiển thị toast
+          setToastSuccess(true);
+        }, 1000); // Thời gian hiển thị toast
+      }
+      if (action === "U") {
+        const updateData = {
+          ...questionData,
+          id: questionData._id,
+        };
+        console.log("updateData", updateData);
+        await axios.put(`${apiUrl}`, updateData);
+        setTimeout(() => {
+          setToastSuccess(true);
+        }, 1000); // Thời gian hiển thị toast
+      }
     } catch (error) {
       console.error("Error submitting data: ", error); // Bắt lỗi khi gửi dữ liệu
     }
+    NProgress.done();
   };
 
   return (
@@ -170,7 +199,7 @@ export const ExerciseForm = () => {
           <>
             <div className="exercise__delete">
               <h1 className="exercise__delete--notification">
-                Bạn muốn xóa khóa học ?
+                Bạn muốn xóa câu hỏi này ?
               </h1>
               <div className="exercise__delete--action">
                 <button
@@ -193,81 +222,120 @@ export const ExerciseForm = () => {
             ></div>
           </>
         )}
-        <button onClick={handleAddQuestion} className="exercise__add">
-          <img
-            src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
-            alt=""
-            className="exercise__add--icon"
-          />
-          Thêm câu hỏi mới
-        </button>
-        {questionData.questions.map((question, questionIndex) => (
-          <div key={`question-${questionIndex}`} className="exercise__wrap">
-            <h2 className="exercise__title--new">Câu hỏi mới</h2>
-            <div key={questionIndex} className="exercise__question">
-              <label
-                htmlFor={`question-${questionIndex}`}
-                className="exercise__title"
-              >
-                Nhập câu hỏi {questionIndex + 1} :
-              </label>
-              <input
-                type="text"
-                name={`question-${questionIndex}`}
-                id={`question-${questionIndex}`}
-                placeholder="Nhập câu hỏi"
-                value={question.title}
-                onChange={(e) => handleQuestionChange(e, questionIndex)}
-                className="exercise__input"
-              />
-              {question.optionsSelect.map((option, optionIndex) => (
-                <div key={optionIndex} className="exercise__option">
+        {action === "C" && (
+          <button onClick={handleAddQuestion} className="exercise__add">
+            <img
+              src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
+              alt=""
+              className="exercise__add--icon"
+            />
+            Thêm câu hỏi mới
+          </button>
+        )}
+        {action === "C"
+          ? questionData.questions.map((question, questionIndex) => (
+              <div key={`question-${questionIndex}`} className="exercise__wrap">
+                <h2 className="exercise__title--new">Câu hỏi mới</h2>
+                <div key={questionIndex} className="exercise__question">
                   <label
-                    htmlFor="answer"
-                    className="exercise__title--optionsSelect"
-                  >{`Nhập đáp án ${optionIndex + 1}`}</label>
+                    htmlFor={`question-${questionIndex}`}
+                    className="exercise__title"
+                  >
+                    Nhập câu hỏi {questionIndex + 1} :
+                  </label>
                   <input
                     type="text"
+                    name={`question-${questionIndex}`}
+                    id={`question-${questionIndex}`}
+                    placeholder="Nhập câu hỏi"
+                    value={question.questionName}
+                    onChange={(e) => handleQuestionChange(e, questionIndex)}
                     className="exercise__input"
-                    name="answer"
-                    id="answer"
-                    placeholder={`Nhập đáp án ${optionIndex + 1}`}
-                    value={option.option}
-                    onChange={(e) => {
-                      handleOptionChange(e, questionIndex, optionIndex);
-                    }}
+                  />
+                  {question.optionsSelect.map((option, optionIndex) => (
+                    <div key={optionIndex} className="exercise__option">
+                      <label
+                        htmlFor="answer"
+                        className="exercise__title--optionsSelect"
+                      >{`Nhập đáp án ${optionIndex + 1}`}</label>
+                      <input
+                        type="text"
+                        className="exercise__input"
+                        name="answer"
+                        id="answer"
+                        placeholder={`Nhập đáp án ${optionIndex + 1}`}
+                        value={option.option}
+                        onChange={(e) => {
+                          handleOptionChange(e, questionIndex, optionIndex);
+                        }}
+                      />
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => handleAddOption(questionIndex)}
+                    className="exercise__add-optionsSelect"
+                  >
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
+                      alt=""
+                      className="exercise__add--icon-optionsSelect"
+                    />
+                    Thêm lựa trọn
+                  </button>
+                  <label
+                    htmlFor={`correct__answer-${questionIndex}`}
+                    className="exercise__title"
+                  >
+                    Đáp án đúng là ?
+                  </label>
+                  <input
+                    type="text"
+                    name={`correct__answer-${questionIndex}`}
+                    id={`correct__answer-${questionIndex}`}
+                    placeholder="Nhập câu trả lời"
+                    value={question.answersCorrect}
+                    onChange={(e) =>
+                      handleCorrectAnswerChange(e, questionIndex)
+                    }
+                    className="exercise__input"
                   />
                 </div>
-              ))}
-              <button
-                onClick={() => handleAddOption(questionIndex)}
-                className="exercise__add-optionsSelect"
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
-                  alt=""
-                  className="exercise__add--icon-optionsSelect"
-                />
-                Thêm lựa trọn
-              </button>
-              <label
-                htmlFor={`correct__answer-${questionIndex}`}
-                className="exercise__title"
-              >
-                Đáp án đúng là ?
-              </label>
-              <input
-                type="text"
-                name={`correct__answer-${questionIndex}`}
-                id={`correct__answer-${questionIndex}`}
-                placeholder="Nhập câu trả lời"
-                value={question.correctAnswer}
-                onChange={(e) => handleCorrectAnswerChange(e, questionIndex)}
-                className="exercise__input"
-              />
-            </div>
-          </div>
-        ))}
+              </div>
+            ))
+          : action === "U" && questionData.length > 0
+          ? questionData.map((item) => {
+              return item.questions.map((question, questionIndex) => (
+                <div
+                  key={`question-${questionIndex}`}
+                  className="exercise__wrap"
+                >
+                  <div key={questionIndex} className="exercise__question">
+                    <label
+                      htmlFor={`question-${questionIndex}`}
+                      className="exercise__title"
+                    >
+                      Câu hỏi : {question.questionName}
+                    </label>
+                    <div className="exercise__action">
+                      <button
+                        onClick={() => {
+                          setTargetQuiz(item._id);
+                          setShowModel(true);
+                        }}
+                        className="exercise__button exercise__button--delete"
+                      >
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/trash1.svg`}
+                          alt=""
+                          class="exercise__icon "
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ));
+            })
+          : "loading"}
         <div className="exercise__action-btn">
           <button
             onClick={(e) => handleSubmit(e)}

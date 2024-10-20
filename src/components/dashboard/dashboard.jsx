@@ -12,7 +12,24 @@ import StoreContext from "../../context/context";
 export const Dashboard = () => {
   const percentage = 50;
   const [listTutorials, setListTutorials] = useState([]);
+  const [courses, setCourses] = useState(null);
+  const [Lesson, setLesson] = useState(null);
+  const [blog, setBlog] = useState(null);
+  const [Admin, setAdmin] = useState(null);
+
   const { userLogin } = useContext(StoreContext);
+  useEffect(() => {
+    try {
+      const getLesson = async () => {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BACKEND_URL}/lesson`
+        );
+        setLesson(res.data);
+      };
+      getLesson();
+    } catch (error) {}
+  }, [userLogin]);
+  console.log("Lesson", Lesson);
   useEffect(() => {
     try {
       const getUserAdmin = async () => {
@@ -22,11 +39,35 @@ export const Dashboard = () => {
         const foundAdmin = res.data.filter((item) => {
           return item._id === userLogin;
         });
+        setAdmin(res.data);
         setListTutorials(foundAdmin);
       };
       getUserAdmin();
     } catch (error) {}
   }, [userLogin]);
+  useEffect(() => {
+    try {
+      const getCourses = async () => {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BACKEND_URL}/courses`
+        );
+        setCourses(res.data);
+      };
+      getCourses();
+    } catch (error) {}
+  }, [userLogin]);
+  useEffect(() => {
+    try {
+      const getBlog = async () => {
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BACKEND_URL}/blog`
+        );
+        setBlog(res.data);
+      };
+      getBlog();
+    } catch (error) {}
+  }, [userLogin]);
+  console.log(blog);
   return (
     <div className="dashboard">
       <div className="breadcrumb">
@@ -94,7 +135,11 @@ export const Dashboard = () => {
                     <div className="dashboard__item--content">
                       <p className="dashboard__desc">khóa học đã tạo</p>
                       <span className="dashboard__number">
-                        01 <span className="dashboard__number--desc">khóa</span>
+                        {courses
+                          ? courses.data.length < 10 &&
+                            `0${courses.data.length}`
+                          : "loading"}{" "}
+                        <span className="dashboard__number--desc">khóa</span>
                       </span>
                     </div>
                   </div>
@@ -109,9 +154,14 @@ export const Dashboard = () => {
                       />
                     </div>
                     <div className="dashboard__item--content">
-                      <p className="dashboard__desc">khóa học đã tạo</p>
+                      <p className="dashboard__desc">Bài giảng đã tạo</p>
                       <span className="dashboard__number">
-                        01 <span className="dashboard__number--desc">khóa</span>
+                        {Lesson
+                          ? Lesson.data.length < 10 && `0${Lesson.data.length}`
+                          : "loading"}{" "}
+                        <span className="dashboard__number--desc">
+                          bài giảng
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -126,9 +176,12 @@ export const Dashboard = () => {
                       />
                     </div>
                     <div className="dashboard__item--content">
-                      <p className="dashboard__desc">khóa học đã tạo</p>
+                      <p className="dashboard__desc">Blog đã tạo</p>
                       <span className="dashboard__number">
-                        01 <span className="dashboard__number--desc">khóa</span>
+                        {blog
+                          ? blog.data.length < 10 && `0${blog.data.length}`
+                          : "loading"}{" "}
+                        <span className="dashboard__number--desc">trang</span>
                       </span>
                     </div>
                   </div>
@@ -143,9 +196,12 @@ export const Dashboard = () => {
                       />
                     </div>
                     <div className="dashboard__item--content">
-                      <p className="dashboard__desc">khóa học đã tạo</p>
+                      <p className="dashboard__desc">Số comment</p>
                       <span className="dashboard__number">
-                        01 <span className="dashboard__number--desc">khóa</span>
+                        10{" "}
+                        <span className="dashboard__number--desc">
+                          comments
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -160,9 +216,10 @@ export const Dashboard = () => {
                       />
                     </div>
                     <div className="dashboard__item--content">
-                      <p className="dashboard__desc">khóa học đã tạo</p>
+                      <p className="dashboard__desc">Số người dùng</p>
                       <span className="dashboard__number">
-                        01 <span className="dashboard__number--desc">khóa</span>
+                        10{" "}
+                        <span className="dashboard__number--desc">người</span>
                       </span>
                     </div>
                   </div>
@@ -177,9 +234,12 @@ export const Dashboard = () => {
                       />
                     </div>
                     <div className="dashboard__item--content">
-                      <p className="dashboard__desc">khóa học đã tạo</p>
+                      <p className="dashboard__desc">Nhân viên nội bộ</p>
                       <span className="dashboard__number">
-                        01 <span className="dashboard__number--desc">khóa</span>
+                        {Admin
+                          ? Admin.length < 10 && `0${Admin.length}`
+                          : "loading"}{" "}
+                        <span className="dashboard__number--desc">Admins</span>
                       </span>
                     </div>
                   </div>
