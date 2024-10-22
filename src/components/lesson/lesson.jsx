@@ -25,7 +25,7 @@ export const Lesson = () => {
     return (
       <div className="loader__wrap">
         <div className="loader"></div>
-        <h1 className="loader__text">Loading....</h1>
+        <div className="loader-text-1"></div>
       </div>
     );
   }

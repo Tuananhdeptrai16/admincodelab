@@ -148,7 +148,7 @@ const CourseCreation = () => {
     return (
       <div className="loader__wrap">
         <div className="loader"></div>
-        <h1 className="loader__text">Loading....</h1>
+        <div className="loader-text-1"></div>
       </div>
     );
   }
@@ -439,7 +439,9 @@ const CourseCreation = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="7">No courses found</td>
+                    <td colSpan="7" className="loader-text">
+                      Không tìm thấy khóa học
+                    </td>
                   </tr>
                 )}
               </tbody>

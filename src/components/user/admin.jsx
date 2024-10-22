@@ -7,7 +7,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 import { useContext } from "react";
 import StoreContext from "../../context/context";
-const Users = () => {
+const Admins = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const { setTargetIdEdit, setAction } = useContext(StoreContext);
@@ -27,7 +27,7 @@ const Users = () => {
     NProgress.start();
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/users?limit=5&page=${page}`
+        `${process.env.REACT_APP_API_BACKEND_URL}/admins?limit=5&page=${page}`
       );
       setListTutorials(res.data);
     } catch (error) {
@@ -35,12 +35,12 @@ const Users = () => {
     }
     NProgress.done();
   };
-  console.log(">>ListTutorials", listTutorials);
+
   const deleteManyAdmin = async () => {
     NProgress.start();
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_BACKEND_URL}/many_users`,
+        `${process.env.REACT_APP_API_BACKEND_URL}/many_admin`,
         { data: deleteData }
       );
       handlePageChange();
@@ -131,6 +131,7 @@ const Users = () => {
       </div>
     );
   }
+
   return (
     <>
       {toastSuccess === true ? (
@@ -185,13 +186,13 @@ const Users = () => {
             </NavLink>
             <NavLink to="/user" className="breadcrumb__item">
               <p className="breadcrumb__name  breadcrumb__active">
-                Quản lý người dùng
+                Quản lý nội bộ
               </p>
             </NavLink>
           </div>
         </div>
         <div className="user__wrap">
-          <h1 className="user__heading">Quản lý người dùng</h1>
+          <h1 className="user__heading">Quản lý nội bộ</h1>
         </div>
         <div className="user__separate"></div>
         <div className="user__search">
@@ -239,7 +240,7 @@ const Users = () => {
           <>
             <div className="user__delete">
               <h1 className="user__delete--notification">
-                Bạn muốn xóa người dùng này ?
+                Bạn muốn xóa quản trị viên này ?
               </h1>
               <div className="user__delete--action">
                 <button
@@ -292,10 +293,8 @@ const Users = () => {
                 </tr>
               </thead>
               <tbody>
-                {listTutorials &&
-                listTutorials.data &&
-                listTutorials.data.length > 0 ? (
-                  listTutorials.data.map((item, index) => {
+                {listTutorials.length > 0 ? (
+                  listTutorials.map((item, index) => {
                     return (
                       <tr key={`${index}-tutorials`}>
                         <td>
@@ -325,17 +324,15 @@ const Users = () => {
                           <div className="user__avatar">
                             <img
                               src={
-                                item.data.photoURL
-                                  ? `${item.data.photoURL}`
+                                item.image
+                                  ? `${item.image}`
                                   : `${process.env.PUBLIC_URL}/images/avataruser.jpg`
                               }
                               alt=""
                               className="user__img"
                             />
                             <p className="user__name">
-                              {item.data.displayName
-                                ? item.data.displayName
-                                : item.data.email}
+                              {item.username ? item.username : "User"}
                             </p>
                           </div>
                         </td>
@@ -346,7 +343,7 @@ const Users = () => {
                               className="user__icon-search"
                               alt=""
                             />
-                            {item.data.email}
+                            {item.email}
                           </div>
                         </td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
@@ -378,7 +375,7 @@ const Users = () => {
                 ) : (
                   <tr>
                     <td colSpan="7" className="loader-text">
-                      Loading
+                      Loading...
                     </td>
                   </tr>
                 )}
@@ -402,7 +399,7 @@ const Users = () => {
             />
             Xóa
           </button>
-          {/* <div className="user__create">
+          <div className="user__create">
             <NavLink to="/user/add_user" className={"user__create--link"}>
               <button
                 onClick={() => setAction("C")}
@@ -416,7 +413,7 @@ const Users = () => {
                 Thêm Admin
               </button>
             </NavLink>
-          </div> */}
+          </div>
         </div>
         <Pagination
           align="center"
@@ -429,4 +426,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Admins;

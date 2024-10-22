@@ -9,8 +9,6 @@ const CourseForm = () => {
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
-  console.log(targetCourseID);
-  console.log(">>>error", error);
   const [courseData, setCourseData] = useState({
     type: "EMPTY_COURSES",
     title: "",

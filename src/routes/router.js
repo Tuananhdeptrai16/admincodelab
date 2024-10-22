@@ -15,6 +15,7 @@ import { Lesson } from "../components/lesson/lesson";
 import { DetailsCourse } from "../components/lesson/detail";
 import LessonForm from "../components/lesson/lessonform";
 import { ExerciseForm } from "../components/lesson/exerciseform";
+import Admins from "../components/user/admin";
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/lesson/formEx" element={<ExerciseForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/admin" element={<Admins />} />
         <Route path="/user" element={<Users />} />
         <Route path="/user/add_user" element={<FormAddUser />} />
         <Route path="/course" element={<CourseCreation />} />

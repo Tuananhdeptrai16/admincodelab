@@ -11,7 +11,7 @@ const BlogCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showManyDelete, setShowManyDelete] = useState(false);
-  const { setAction, setTargetBlogID, targetBlogID } = useContext(StoreContext);
+  const { setAction, setTargetBlogID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
@@ -151,7 +151,7 @@ const BlogCreation = () => {
     return (
       <div className="loader__wrap">
         <div className="loader"></div>
-        <h1 className="loader__text">Loading....</h1>
+        <div className="loader-text">Loading...</div>
       </div>
     );
   }

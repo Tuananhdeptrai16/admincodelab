@@ -6,6 +6,7 @@ import "./layout.scss";
 import "./base.scss";
 import "./breadcrumbs.scss";
 import "./checkbox.scss";
+import "./keyframe.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import Logo from "../logo/logo";
@@ -22,6 +23,7 @@ const LayoutAdmin = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const [listTutorials, setListTutorials] = useState([]);
+  console.log(process.env.REACT_APP_API_BACKEND_URL);
   useEffect(() => {
     try {
       const getUserAdmin = async () => {
@@ -85,11 +87,24 @@ const LayoutAdmin = () => {
                   ),
                   label: <NavLink to="/lesson">Bài học</NavLink>,
                 },
-
                 {
                   key: "4",
                   icon: (
-                    <NavLink to="/user">
+                    <NavLink to="/users">
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/icon/users.svg`}
+                        alt="svg"
+                        className="nav__icon icon"
+                      />
+                    </NavLink>
+                  ),
+                  label: <NavLink to="/user">Người dùng</NavLink>,
+                },
+
+                {
+                  key: "5",
+                  icon: (
+                    <NavLink to="/admin">
                       <img
                         src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
                         alt="svg"
@@ -97,7 +112,7 @@ const LayoutAdmin = () => {
                       />
                     </NavLink>
                   ),
-                  label: <NavLink to="/user">Nội bộ</NavLink>,
+                  label: <NavLink to="/admin">Nội bộ</NavLink>,
                 },
 
                 {
