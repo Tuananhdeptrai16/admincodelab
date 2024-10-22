@@ -88,7 +88,6 @@ const LessonForm = () => {
     };
     renderUpdateUser();
   }, [action, targetLessonID, listTutorials, targetCourseID]);
-  console.log("targetLessonID", targetLessonID);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLessonData((prevData) => ({

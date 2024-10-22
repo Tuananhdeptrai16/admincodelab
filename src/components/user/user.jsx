@@ -5,12 +5,12 @@ import { NavLink } from "react-router-dom";
 import { Pagination } from "antd";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
-import { useContext } from "react";
-import StoreContext from "../../context/context";
+// import { useContext } from "react";
+// import StoreContext from "../../context/context";
 const Users = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
-  const { setTargetIdEdit, setAction } = useContext(StoreContext);
+  // const { setTargetIdEdit, setAction } = useContext(StoreContext);
   const [showModelDelete, setShowModelDelete] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
@@ -35,7 +35,6 @@ const Users = () => {
     }
     NProgress.done();
   };
-  console.log(">>ListTutorials", listTutorials);
   const deleteManyAdmin = async () => {
     NProgress.start();
     try {
@@ -288,7 +287,6 @@ const Users = () => {
                   <th>Ngày tạo</th>
                   <th>Ngày sửa</th>
                   <th>Trạng thái</th>
-                  <th>Chỉnh sửa</th>
                 </tr>
               </thead>
               <tbody>
@@ -355,7 +353,7 @@ const Users = () => {
                         <td>
                           <p className="user__user">status</p>
                         </td>
-                        <td className="user__action">
+                        {/* <td className="user__action">
                           <NavLink to="/user/add_user">
                             <button
                               onClick={() => {
@@ -371,7 +369,7 @@ const Users = () => {
                               />
                             </button>
                           </NavLink>
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   })
