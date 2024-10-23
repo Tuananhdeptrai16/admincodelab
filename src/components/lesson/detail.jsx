@@ -231,35 +231,6 @@ export const DetailsCourse = () => {
 
                             {activeSection === item._id || toggle === true ? (
                               <div className="detail__lecture--wrap">
-                                {item.contentLesson.map((content) => {
-                                  return (
-                                    <div
-                                      key={content._id}
-                                      className="detail__lecture"
-                                    >
-                                      <img
-                                        src={`${process.env.PUBLIC_URL}/images/icon/file1.svg`}
-                                        alt=""
-                                        srcSet=""
-                                        className="detail__icon icon"
-                                      />
-                                      <p className="detail__text">
-                                        {content.title}
-                                      </p>
-                                    </div>
-                                  );
-                                })}
-                                <div className="detail__lecture">
-                                  <img
-                                    src={`${process.env.PUBLIC_URL}/images/icon/pen.svg`}
-                                    alt=""
-                                    srcSet=""
-                                    className="detail__icon icon"
-                                  />
-                                  <p className="detail__text">
-                                    Bài tập có liên quan
-                                  </p>
-                                </div>
                                 <div className="detail__action">
                                   <NavLink to="/lesson/formEx">
                                     <button

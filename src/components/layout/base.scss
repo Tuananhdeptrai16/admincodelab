@@ -122,3 +122,81 @@ body::-webkit-scrollbar-thumb {
   transform: rotate(3deg) translate(0px, -4px);
   box-shadow: 0 0 10px rgba(255, 105, 135, 0.8), 0 0 5px rgba(255, 152, 0, 0.6); /* Bóng mờ chạy theo */
 }
+/* Tăng chiều rộng và căn giữa editor */
+.ql-container {
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+/* Thay đổi giao diện khung chứa editor */
+.ql-editor {
+  min-height: 300px;
+  padding: 20px;
+  font-size: 16px;
+  font-family: "Arial", sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Điều chỉnh giao diện thanh công cụ */
+.ql-toolbar {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* Thay đổi màu sắc các nút trong thanh công cụ */
+.ql-toolbar button {
+  border-radius: 5px;
+  margin: 0 5px;
+  padding: 5px;
+}
+
+.ql-toolbar button:hover {
+  background-color: #eeee;
+}
+
+/* Các nút trong toolbar khi active */
+.ql-toolbar button.ql-active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Thêm hiệu ứng cho blockquote */
+.ql-editor blockquote {
+  border-left: 4px solid #007bff;
+  margin: 20px 0;
+  padding-left: 15px;
+  color: #555;
+  font-style: italic;
+}
+
+/* Hiển thị danh sách đẹp hơn */
+.ql-editor ol,
+.ql-editor ul {
+  padding-left: 40px;
+}
+
+.ql-editor li {
+  margin-bottom: 10px;
+}
+
+/* Tuỳ chỉnh màu chữ cho các liên kết */
+.ql-editor a {
+  color: #007bff;
+  text-decoration: underline;
+}
+.ql-picker-options {
+  padding: 20px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.ql-snow .ql-tooltip {
+  border-radius: 10px;
+  padding: 20px;
+}

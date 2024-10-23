@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import StoreContext from "../../context/context";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const LessonForm = () => {
   const { action, targetLessonID, targetCourseID } = useContext(StoreContext);
   const [listTutorials, setListTutorials] = useState([]);
@@ -16,12 +18,7 @@ const LessonForm = () => {
     duration: "",
     author: "",
     urlImage: "",
-    contentLesson: [
-      {
-        title: "",
-        content: [],
-      },
-    ],
+    content: " ",
     comments: [],
     rating: 0,
     studentsEnrolled: 0,
@@ -55,7 +52,7 @@ const LessonForm = () => {
               duration: foundLesson.duration,
               author: foundLesson.author,
               urlImage: foundLesson.urlImage,
-              contentLesson: foundLesson.contentLesson,
+              content: foundLesson.content,
               comments: [],
               rating: 0,
               studentsEnrolled: 0,
@@ -72,12 +69,7 @@ const LessonForm = () => {
             duration: "",
             author: "",
             urlImage: "",
-            contentLesson: [
-              {
-                title: "",
-                content: [],
-              },
-            ],
+            content: "",
             comments: [],
             rating: 0,
             studentsEnrolled: 0,
@@ -95,67 +87,13 @@ const LessonForm = () => {
       [name]: value,
     }));
   };
-
-  const handleLessonTitleChange = (index, e) => {
-    const { value } = e.target;
-    setLessonData((prevData) => {
-      const updatedLesson = [...prevData.contentLesson]; // Thay đổi ở đây
-      updatedLesson[index].title = value;
-      return {
-        ...prevData,
-        contentLesson: updatedLesson, // Thay đổi ở đây
-      };
-    });
+  const handleContentChange = (value) => {
+    setLessonData((prevData) => ({
+      ...prevData,
+      content: value,
+    }));
   };
-
-  const handleAddParagraph = (lessonIndex) => {
-    setLessonData((prevData) => {
-      const updatedLesson = [...prevData.contentLesson]; // Tạo bản sao của mảng lessons
-      // Kiểm tra xem lessonIndex có hợp lệ không
-      if (updatedLesson[lessonIndex]) {
-        updatedLesson[lessonIndex].content.push({
-          text: "",
-          imageUrl: "",
-          descImage: "",
-        });
-      }
-      return {
-        ...prevData,
-        contentLesson: updatedLesson, // Cập nhật lại mảng lessons
-      };
-    });
-  };
-  const handleAddSection = () => {
-    setLessonData((prevData) => {
-      const updatedLesson = [...prevData.contentLesson]; // Tạo bản sao của mảng lessons
-      updatedLesson.push({
-        title: "", // Khởi tạo title trống cho phần mới
-        content: [], // Khởi tạo mảng content trống cho phần mới
-      });
-      return {
-        ...prevData,
-        contentLesson: updatedLesson, // Cập nhật lại mảng contentLesson
-      };
-    });
-  };
-
-  const handleParagraphChange = (lessonIndex, paragraphIndex, e) => {
-    const { name, value } = e.target;
-    setLessonData((prevData) => {
-      const updatedLesson = [...prevData.contentLesson];
-      // Đảm bảo cập nhật đúng thuộc tính trong content
-      if (
-        updatedLesson[lessonIndex] &&
-        updatedLesson[lessonIndex].content[paragraphIndex]
-      ) {
-        updatedLesson[lessonIndex].content[paragraphIndex][name] = value; // Cập nhật đúng thuộc tính
-      }
-      return {
-        ...prevData,
-        contentLesson: updatedLesson,
-      };
-    });
-  };
+  console.log("lessonData", lessonData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -176,12 +114,7 @@ const LessonForm = () => {
           duration: "",
           author: "",
           urlImage: "",
-          contentLesson: [
-            {
-              title: "",
-              content: [],
-            },
-          ],
+          content: "",
           comments: [],
           rating: 0,
           studentsEnrolled: 0,
@@ -367,127 +300,13 @@ const LessonForm = () => {
           <h2 className="lesson-creation__subtitle">Chi tiết</h2>
           <div className="lesson__separate"></div>
 
-          <div className="lesson-creation__lessons">
-            {lessonData.contentLesson.map((lessonItem, lessonIndex) => (
-              <div key={lessonIndex} className="lesson-creation__lesson">
-                <h3 className="lesson-creation__lesson-title">Tiêu đề</h3>
-                <div className="form__group ">
-                  <label
-                    htmlFor={`lesson-title-${lessonIndex}`}
-                    className="control__label"
-                  >
-                    Tiêu đề lesson
-                  </label>
-                  <input
-                    type="text"
-                    id={`lesson-title-${lessonIndex}`}
-                    className="form__control"
-                    placeholder="Nhập tiêu đề lesson"
-                    value={lessonItem.title || ""}
-                    onChange={(e) => handleLessonTitleChange(lessonIndex, e)}
-                  />
-                </div>
-                {Array.isArray(lessonItem.content) &&
-                  lessonItem.content.map((paragraph, paragraphIndex) => (
-                    <div
-                      key={paragraphIndex}
-                      className="lesson-creation__paragraph"
-                    >
-                      <div className="form__group ">
-                        <label
-                          htmlFor={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                          className="control__label"
-                        >
-                          Nội dung đoạn văn {paragraphIndex + 1}
-                        </label>
-                        <textarea
-                          id={`lesson-text-${lessonIndex}-${paragraphIndex}`}
-                          className="form__control"
-                          placeholder="Nhập nội dung đoạn văn"
-                          name="text"
-                          value={paragraph.text}
-                          onChange={(e) =>
-                            handleParagraphChange(
-                              lessonIndex,
-                              paragraphIndex,
-                              e
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="row row-cols-2">
-                        <div className="col gx-1 ">
-                          <div className="form__group ">
-                            <label
-                              htmlFor={`lesson-image-${lessonIndex}-${paragraphIndex}`}
-                              className="control__label"
-                            >
-                              Hình {paragraphIndex + 1}
-                            </label>
-                            <input
-                              type="text"
-                              id={`lesson-image-${lessonIndex}-${paragraphIndex}`}
-                              className="form__control"
-                              placeholder="Nhập URL hình ảnh"
-                              name="imageUrl"
-                              value={paragraph.imageUrl || ""}
-                              onChange={(e) =>
-                                handleParagraphChange(
-                                  lessonIndex,
-                                  paragraphIndex,
-                                  e
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                        <div className="col gx-1">
-                          <div className="form__group ">
-                            <label
-                              htmlFor={`desc-image-${lessonIndex}-${paragraphIndex}`}
-                              className="control__label"
-                            >
-                              Chú thích hình ảnh
-                            </label>
-                            <input
-                              type="text"
-                              id={`desc-image-${lessonIndex}-${paragraphIndex}`}
-                              className="form__control"
-                              placeholder="Chú thích hình ảnh"
-                              name="descImage"
-                              value={paragraph.descImage || ""}
-                              onChange={(e) =>
-                                handleParagraphChange(
-                                  lessonIndex,
-                                  paragraphIndex,
-                                  e
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                <button
-                  type="button"
-                  className="lesson-creation__button"
-                  onClick={() => handleAddParagraph(lessonIndex)}
-                >
-                  Thêm nội dung
-                </button>
-              </div>
-            ))}
-          </div>
+          <ReactQuill
+            name="content"
+            value={lessonData.content}
+            onChange={handleContentChange}
+          />
 
           <div className="lesson-creation__submit">
-            <button
-              type="button"
-              className="lesson-creation__button"
-              onClick={() => handleAddSection()}
-            >
-              Thêm phần mới
-            </button>
             <button
               type="submit"
               className="  lesson-creation__button lesson-creation__submit--btn"

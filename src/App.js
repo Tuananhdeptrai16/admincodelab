@@ -2,7 +2,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes/router"; // Nhớ import AppRoutes
 import StoreContext from "./context/context";
 import { useState } from "react";
-import { faIR } from "rsuite/esm/locales";
 function App() {
   const [action, setAction] = useState("C");
   const [targetCourseID, setTargetCourseID] = useState("");
@@ -10,7 +9,7 @@ function App() {
   const [targetLessonID, setTargetLessonID] = useState("");
   const [targetIdEdit, setTargetIdEdit] = useState("");
   const [userLogin, setUserLogin] = useState("");
-  const [Logined, setLogined] = useState(false);
+  const [Logined, setLogined] = useState(true);
   return (
     <StoreContext.Provider
       value={{
