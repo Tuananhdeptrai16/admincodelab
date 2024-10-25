@@ -20,6 +20,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
+    "react-select": "^5.8.1",
     "resolve-url-loader": "^5.0.0",
     "rsuite": "^5.71.0",
     "sass": "^1.79.4",

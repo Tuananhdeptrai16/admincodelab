@@ -6,13 +6,16 @@ function App() {
   const [action, setAction] = useState("C");
   const [targetCourseID, setTargetCourseID] = useState("");
   const [targetBlogID, setTargetBlogID] = useState("");
+  const [targetProductID, setTargetProductID] = useState("");
   const [targetLessonID, setTargetLessonID] = useState("");
   const [targetIdEdit, setTargetIdEdit] = useState("");
   const [userLogin, setUserLogin] = useState("");
-  const [Logined, setLogined] = useState(true);
+  const [Logined, setLogined] = useState(false);
   return (
     <StoreContext.Provider
       value={{
+        targetProductID,
+        setTargetProductID,
         action,
         setAction,
         targetCourseID,

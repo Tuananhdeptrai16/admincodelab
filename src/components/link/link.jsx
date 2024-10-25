@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import "./blog.scss";
+import "./link.scss";
 import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
 import StoreContext from "../../context/context";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 
-const BlogCreation = () => {
+const ProductCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showManyDelete, setShowManyDelete] = useState(false);
-  const { setAction, setTargetBlogID } = useContext(StoreContext);
+  const { setAction, setTargetProductID } = useContext(StoreContext);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
   const [toastError, setToastError] = useState(false);
@@ -25,7 +25,7 @@ const BlogCreation = () => {
   const handlePageChange = async (page) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/blog?limit=5&page=${page}`
+        `${process.env.REACT_APP_API_BACKEND_URL}/product?limit=5&page=${page}`
       );
       setListTutorials(res.data);
     } catch (error) {
@@ -33,12 +33,15 @@ const BlogCreation = () => {
     }
   };
 
-  const deleteManyblog = async () => {
+  const deleteManyProduct = async () => {
     NProgress.start();
     try {
-      await axios.delete(`${process.env.REACT_APP_API_BACKEND_URL}/manyblog`, {
-        data: deleteData,
-      });
+      await axios.delete(
+        `${process.env.REACT_APP_API_BACKEND_URL}/manyproduct`,
+        {
+          data: deleteData,
+        }
+      );
       handlePageChange();
       setShowManyDelete(false);
       setDeleteData({
@@ -136,7 +139,7 @@ const BlogCreation = () => {
       })
       .map((item) => item._id);
     setArrInfoSearch(targetIds);
-    let Targetblog = arrInfoSearch.map((id) => {
+    let TargetProduct = arrInfoSearch.map((id) => {
       let result = listTutorials.data.find((item1) => item1._id === id);
       return result;
     });
@@ -145,7 +148,7 @@ const BlogCreation = () => {
       setDisplayInfoArr([]);
       return; // Thoát khỏi hàm
     }
-    setDisplayInfoArr(Targetblog);
+    setDisplayInfoArr(TargetProduct);
   };
   if (!listTutorials || !listTutorials.data) {
     return (
@@ -208,13 +211,13 @@ const BlogCreation = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/blog" className="breadcrumb__item">
-              <p className="breadcrumb__name  breadcrumb__active">blog</p>
+            <NavLink to="/product" className="breadcrumb__item">
+              <p className="breadcrumb__name  breadcrumb__active">product</p>
             </NavLink>
           </div>
         </div>
-        <h1 className="blog__heading">Blog </h1>
-        <div className="blog__separate"></div>
+        <h1 className="link__heading">Sản phẩm tham khảo </h1>
+        <div className="link__separate"></div>
         <div className="user__search">
           <input
             type="text"
@@ -226,17 +229,17 @@ const BlogCreation = () => {
               handleGetSearchInfo();
               setGetInfoSearch(e.target.value);
             }}
-            className="blog__search--input"
+            className="link__search--input"
           />
           <button
             onClick={() => {
               handleGetSearchInfo();
             }}
-            className="blog__search--btn"
+            className="link__search--btn"
           >
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/search.svg`}
-              className="blog__adding--icon"
+              className="link__adding--icon"
               alt=""
             />
           </button>
@@ -244,20 +247,20 @@ const BlogCreation = () => {
 
         {showManyDelete && (
           <>
-            <div className="blog__delete">
-              <h1 className="blog__delete--notification">
-                Bạn xóa muốn tất cả các Blog đã chọn ?
+            <div className="link__delete">
+              <h1 className="link__delete--notification">
+                Bạn muốn xóa tất cả các sản phẩm đã chọn ?
               </h1>
-              <div className="blog__delete--action">
+              <div className="link__delete--action">
                 <button
                   onClick={() => setShowManyDelete(!showManyDelete)}
-                  className=" blog__delete--btn blog__delete--cancel"
+                  className=" link__delete--btn link__delete--cancel"
                 >
                   Hủy
                 </button>
                 <button
-                  onClick={() => deleteManyblog()}
-                  className="blog__delete--btn blog__delete--sure"
+                  onClick={() => deleteManyProduct()}
+                  className="link__delete--btn link__delete--sure"
                 >
                   Xóa
                 </button>
@@ -265,12 +268,12 @@ const BlogCreation = () => {
             </div>
             <div
               onClick={() => setShowModel(!showModel)}
-              className="blog__overlay"
+              className="link__overlay"
             ></div>
           </>
         )}
-        <div className="blog__list">
-          <div className="blog__item">
+        <div className="link__list">
+          <div className="link__item">
             <table>
               <thead>
                 <tr>
@@ -290,7 +293,7 @@ const BlogCreation = () => {
                       </label>
                     </div>
                   </th>
-                  <th>Thông tin Blog</th>
+                  <th>Thông tin sản phẩm</th>
                   <th>Thời gian</th>
                   <th>Tác giả</th>
                   <th>Ngày tạo</th>
@@ -326,7 +329,7 @@ const BlogCreation = () => {
                           </div>
                         </td>
                         <td>
-                          <div className="blog__avatar">
+                          <div className="link__avatar">
                             <img
                               src={
                                 item.urlImage
@@ -334,33 +337,33 @@ const BlogCreation = () => {
                                   : `${process.env.PUBLIC_URL}/images/avatarLesson.jpg`
                               }
                               alt=""
-                              className="blog__img"
+                              className="link__img"
                             />
-                            <p className="blog__name line-clamp">
+                            <p className="link__name line-clamp">
                               {item.title}
                             </p>
                           </div>
                         </td>
                         <td>{item.duration} phút</td>
                         <td>
-                          <span className="blog__name-author">
+                          <span className="link__name-author">
                             {item.author}
                           </span>
                         </td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-                        <td className="blog__action">
+                        <td className="link__action">
                           <button
                             onClick={() => {
                               setAction("U");
-                              setTargetBlogID(item._id);
+                              setTargetProductID(item._id);
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/blog/create_blog">
+                            <NavLink to="/product/create_product">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
-                                className="blog__icon"
+                                className="link__icon"
                               />
                             </NavLink>
                           </button>
@@ -396,7 +399,7 @@ const BlogCreation = () => {
                           </div>
                         </td>
                         <td>
-                          <div className="blog__avatar">
+                          <div className="link__avatar">
                             <img
                               src={
                                 item.blogImage
@@ -404,33 +407,33 @@ const BlogCreation = () => {
                                   : `${process.env.PUBLIC_URL}/images/avatarLesson.jpg`
                               }
                               alt=""
-                              className="blog__img"
+                              className="link__img"
                             />
-                            <p className="blog__name line-clamp">
+                            <p className="link__name line-clamp">
                               {item.title}
                             </p>
                           </div>
                         </td>
                         <td>
-                          <span className="blog__name-author">
+                          <span className="link__name-author">
                             {item.author}
                           </span>
                         </td>
                         <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                         <td>{new Date(item.updatedAt).toLocaleDateString()}</td>
-                        <td className="blog__action">
+                        <td className="link__action">
                           <button
                             onClick={() => {
                               setAction("U");
-                              setTargetBlogID(item._id);
+                              setTargetProductID(item._id);
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/blog/create_blog">
+                            <NavLink to="/product/create_product">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
-                                className="blog__icon"
+                                className="link__icon"
                               />
                             </NavLink>
                           </button>
@@ -440,41 +443,44 @@ const BlogCreation = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="7">Blog not found</td>
+                    <td colSpan="7">Product not found</td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
         </div>
-        <div className="blog__btn-wrap">
+        <div className="link__btn-wrap">
           <button
             style={{
               pointerEvents: isDisabled ? "none" : "auto", // Nếu mảng rỗng thì vô hiệu hóa
               opacity: isDisabled ? 0.5 : 1, // Giảm độ mờ khi bị vô hiệu hóa
             }}
             onClick={() => setShowManyDelete(!showManyDelete)}
-            className="blog__btn-delete"
+            className="link__btn-delete"
           >
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/trash.svg`}
               alt=""
-              className="blog__icon "
+              className="link__icon "
             />
             Xóa
           </button>
-          <div className="blog__create">
-            <NavLink to="/blog/create_blog" className={"blog__create--link"}>
+          <div className="link__create">
+            <NavLink
+              to="/product/create_product"
+              className={"link__create--link"}
+            >
               <button
                 onClick={() => setAction("C")}
-                className="blog__create--btn"
+                className="link__create--btn"
               >
                 <img
                   src={`${process.env.PUBLIC_URL}/images/icon/add.svg`}
                   alt=""
-                  className="blog__icon  icon-svg"
+                  className="link__icon  icon-svg"
                 />
-                Thêm Blog
+                Thêm Product
               </button>
             </NavLink>
           </div>
@@ -490,4 +496,4 @@ const BlogCreation = () => {
   );
 };
 
-export default BlogCreation;
+export default ProductCreation;

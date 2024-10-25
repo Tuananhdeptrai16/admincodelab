@@ -131,6 +131,19 @@ const LayoutAdmin = () => {
                 {
                   key: "7",
                   icon: (
+                    <NavLink to="/product">
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/icon/link.svg`}
+                        alt="svg"
+                        className="nav__icon icon"
+                      />
+                    </NavLink>
+                  ),
+                  label: <NavLink to="/product">Sản phẩm người dùng</NavLink>,
+                },
+                {
+                  key: "8",
+                  icon: (
                     <NavLink to="/comment">
                       <img
                         src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}

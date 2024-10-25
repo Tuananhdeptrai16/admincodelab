@@ -16,7 +16,8 @@ import { DetailsCourse } from "../components/lesson/detail";
 import LessonForm from "../components/lesson/lessonform";
 import { ExerciseForm } from "../components/lesson/exerciseform";
 import Admins from "../components/user/admin";
-import BlogEditor from "../components/blog/editorblog";
+import ProductCreation from "../components/link/link";
+import ProductForm from "../components/link/linkform";
 
 const AppRoutes = () => {
   return (
@@ -36,8 +37,9 @@ const AppRoutes = () => {
         <Route path="/course" element={<CourseCreation />} />
         <Route path="/course/create_courses" element={<CourseForm />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/blog_editor" element={<BlogEditor />} />
         <Route path="/blog/create_blog" element={<BlogForm />} />
+        <Route path="/product" element={<ProductCreation />} />
+        <Route path="/product/create_product" element={<ProductForm />} />\
         <Route path="/comment" element={<Comment />} />
         <Route path="/help" element={<Help />} />
       </Route>

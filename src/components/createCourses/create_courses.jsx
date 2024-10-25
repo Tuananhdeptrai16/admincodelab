@@ -20,7 +20,7 @@ const CourseForm = () => {
     description: "",
     duration: "",
     level: "beginner",
-    category: "Web Development",
+    category: "",
     price: {
       amount: 0,
       currency: "VND",
@@ -112,7 +112,7 @@ const CourseForm = () => {
       description: "",
       duration: "",
       level: "beginner",
-      category: "Web Development",
+      category: "",
       price: {
         amount: 0,
         currency: "VND",
@@ -232,7 +232,7 @@ const CourseForm = () => {
           <div className="row row-cols-2">
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="title" className="course-creation__label">
+                <label htmlFor="title" className="control__label">
                   Tiêu đề khóa học
                 </label>
                 <input
@@ -248,7 +248,7 @@ const CourseForm = () => {
             </div>
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="title" className="course-creation__label">
+                <label htmlFor="title" className="control__label">
                   Người hướng dẫn
                 </label>
                 <input
@@ -267,7 +267,7 @@ const CourseForm = () => {
           <div className="row row-cols-3">
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="price" className="course-creation__label">
+                <label htmlFor="price" className="control__label">
                   Giá khóa học
                 </label>
                 <input
@@ -284,7 +284,7 @@ const CourseForm = () => {
             </div>
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="duration" className="course-creation__label">
+                <label htmlFor="duration" className="control__label">
                   Thời gian (phút)
                 </label>
                 <input
@@ -302,7 +302,7 @@ const CourseForm = () => {
             </div>
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="level" className="course-creation__label">
+                <label htmlFor="level" className="control__label">
                   Cấp độ
                 </label>
                 <select
@@ -313,7 +313,7 @@ const CourseForm = () => {
                   onChange={handleChange}
                 >
                   <option value="beginner">Cơ bản</option>
-                  <option value="intermediate">Trung cấp</option>
+                  <option value="intermediate">Trung Cấp</option>
                   <option value="advanced">Nâng cao</option>
                 </select>
               </div>
@@ -322,7 +322,7 @@ const CourseForm = () => {
           <div className="row ">
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="category" className="course-creation__label">
+                <label htmlFor="category" className="control__label">
                   Danh mục
                 </label>
                 <select
@@ -332,15 +332,14 @@ const CourseForm = () => {
                   value={courseData.category}
                   onChange={handleChange}
                 >
-                  <option value="web-development">Web Development</option>
-                  <option value="mobile-development">Mobile Development</option>
-                  <option value="data-science">Data Science</option>
+                  <option value="FrontEnd">FrontEnd</option>
+                  <option value="BackEnd">BackEnd</option>
                 </select>
               </div>
             </div>
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="courseImage" className="course-creation__label">
+                <label htmlFor="courseImage" className="control__label">
                   URL ảnh nền
                 </label>
                 <input
@@ -357,7 +356,7 @@ const CourseForm = () => {
             </div>
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="star" className="course-creation__label">
+                <label htmlFor="star" className="control__label">
                   Tổng sao
                 </label>
                 <input
@@ -377,7 +376,7 @@ const CourseForm = () => {
           <div className="row">
             <div className="col g-2">
               <div className="form__group ">
-                <label htmlFor="description" className="course-creation__label">
+                <label htmlFor="description" className="control__label">
                   Mô tả
                 </label>
                 <textarea
