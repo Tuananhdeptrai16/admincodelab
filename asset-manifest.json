@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/admincodelab/static/css/main.c573b299.css",
+    "main.js": "/admincodelab/static/js/main.5e7c4911.js",
+    "index.html": "/admincodelab/index.html",
+    "main.c573b299.css.map": "/admincodelab/static/css/main.c573b299.css.map",
+    "main.5e7c4911.js.map": "/admincodelab/static/js/main.5e7c4911.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c573b299.css",
+    "static/js/main.5e7c4911.js"
+  ]
+}
