@@ -49,7 +49,7 @@ const AppRoutes = () => {
           path="/admincodelab/product/create_product"
           element={<ProductForm />}
         />
-        \
+
         <Route path="/admincodelab/comment" element={<Comment />} />
         <Route path="/admincodelab/help" element={<Help />} />
       </Route>
