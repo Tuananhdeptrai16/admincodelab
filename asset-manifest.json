@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/admincodelab/static/css/main.c9c3f87e.css",
-    "main.js": "/admincodelab/static/js/main.31bdb680.js",
+    "main.js": "/admincodelab/static/js/main.b2d82fff.js",
     "index.html": "/admincodelab/index.html",
     "main.c9c3f87e.css.map": "/admincodelab/static/css/main.c9c3f87e.css.map",
-    "main.31bdb680.js.map": "/admincodelab/static/js/main.31bdb680.js.map"
+    "main.b2d82fff.js.map": "/admincodelab/static/js/main.b2d82fff.js.map"
   },
   "entrypoints": [
     "static/css/main.c9c3f87e.css",
-    "static/js/main.31bdb680.js"
+    "static/js/main.b2d82fff.js"
   ]
 }
