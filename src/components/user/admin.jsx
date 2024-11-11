@@ -184,7 +184,7 @@ const Admins = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/user" className="breadcrumb__item">
+            <NavLink to="/#!" className="breadcrumb__item">
               <p className="breadcrumb__name  breadcrumb__active">
                 Quản lý nội bộ
               </p>

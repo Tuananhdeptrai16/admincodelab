@@ -1,8 +1,25 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes/router"; // Nhớ import AppRoutes
 import StoreContext from "./context/context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import DesktopNotice from "./components/admin/desktopnotice";
 function App() {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1224) {
+        setIsSmallScreen(true);
+      } else {
+        setIsSmallScreen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const [action, setAction] = useState("C");
   const [targetCourseID, setTargetCourseID] = useState("");
   const [targetBlogID, setTargetBlogID] = useState("");
@@ -33,7 +50,7 @@ function App() {
       }}
     >
       <Router>
-        <AppRoutes />
+        {isSmallScreen === true ? <DesktopNotice /> : <AppRoutes />}
       </Router>
     </StoreContext.Provider>
   );

@@ -20,7 +20,6 @@ const BlogForm = () => {
     description: "",
     duration: "",
     content: "",
-    rating: 0,
     studentsEnrolled: 0,
   });
 
@@ -53,7 +52,6 @@ const BlogForm = () => {
               description: foundBlog.description,
               duration: foundBlog.duration,
               content: foundBlog.content || "",
-              rating: foundBlog.rating,
               studentsEnrolled: foundBlog.studentsEnrolled || 0,
             });
           }
@@ -89,7 +87,6 @@ const BlogForm = () => {
       content: value,
     }));
   };
-  console.log(">>blogđât", blogData);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -202,7 +202,9 @@ const LessonForm = () => {
               />
             </NavLink>
             <NavLink to="#!" className="breadcrumb__item">
-              <p className="breadcrumb__name  breadcrumb__active">Form</p>
+              <p className="breadcrumb__name  breadcrumb__active">
+                Sửa bài học
+              </p>
             </NavLink>
           </div>
         </div>
