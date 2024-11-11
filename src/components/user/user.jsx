@@ -354,7 +354,7 @@ const Users = () => {
                           <p className="user__user">status</p>
                         </td>
                         {/* <td className="user__action">
-                          <NavLink to="/user/add_user">
+                          <NavLink to="/admincodelab/user/add_user">
                             <button
                               onClick={() => {
                                 setAction("U");
