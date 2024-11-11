@@ -74,7 +74,7 @@ const LayoutAdmin = () => {
                     {
                       key: "1",
                       icon: (
-                        <NavLink to="/dashboard">
+                        <NavLink to="/admincodelab/dashboard">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/dashboard.png`}
                             alt="svg"
@@ -82,12 +82,16 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/dashboard">Trang chủ</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/dashboard">
+                          Trang chủ
+                        </NavLink>
+                      ),
                     },
                     {
                       key: "2",
                       icon: (
-                        <NavLink to="/course">
+                        <NavLink to="/admincodelab/course">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
                             alt="svg"
@@ -95,12 +99,14 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/course">Khóa học</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/course">Khóa học</NavLink>
+                      ),
                     },
                     {
                       key: "3",
                       icon: (
-                        <NavLink to="/lesson">
+                        <NavLink to="/admincodelab/lesson">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/file.svg`}
                             alt="svg"
@@ -108,7 +114,9 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/lesson">Bài học</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/lesson">Bài học</NavLink>
+                      ),
                     },
                     {
                       key: "4",
@@ -121,13 +129,15 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/user">Người dùng</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/user">Người dùng</NavLink>
+                      ),
                     },
 
                     {
                       key: "5",
                       icon: (
-                        <NavLink to="/admin">
+                        <NavLink to="/admincodelab/admin">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
                             alt="svg"
@@ -135,13 +145,13 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/admin">Nội bộ</NavLink>,
+                      label: <NavLink to="/admincodelab/admin">Nội bộ</NavLink>,
                     },
 
                     {
                       key: "6",
                       icon: (
-                        <NavLink to="/blog">
+                        <NavLink to="/admincodelab/blog">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
                             alt="svg"
@@ -149,12 +159,12 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/blog">Blog</NavLink>,
+                      label: <NavLink to="/admincodelab/blog">Blog</NavLink>,
                     },
                     {
                       key: "7",
                       icon: (
-                        <NavLink to="/product">
+                        <NavLink to="/admincodelab/product">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/link.svg`}
                             alt="svg"
@@ -163,13 +173,15 @@ const LayoutAdmin = () => {
                         </NavLink>
                       ),
                       label: (
-                        <NavLink to="/product">Sản phẩm người dùng</NavLink>
+                        <NavLink to="/admincodelab/product">
+                          Sản phẩm người dùng
+                        </NavLink>
                       ),
                     },
                     {
                       key: "8",
                       icon: (
-                        <NavLink to="/comment">
+                        <NavLink to="/admincodelab/comment">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
                             alt="svg"
@@ -177,12 +189,14 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/comment">Bình luận</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/comment">Bình luận</NavLink>
+                      ),
                     },
                     {
                       key: "8",
                       icon: (
-                        <NavLink to="/calendar">
+                        <NavLink to="/admincodelab/calendar">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/calendar.svg`}
                             alt="svg"
@@ -190,12 +204,14 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/calendar">Lịch</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/calendar">Lịch</NavLink>
+                      ),
                     },
                     {
                       key: "9",
                       icon: (
-                        <NavLink to="/help">
+                        <NavLink to="/admincodelab/help">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/help.svg`}
                             alt="svg"
@@ -203,7 +219,7 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/help">Giúp đỡ</NavLink>,
+                      label: <NavLink to="/admincodelab/help">Giúp đỡ</NavLink>,
                     },
                   ]}
                 />
@@ -298,7 +314,7 @@ const LayoutAdmin = () => {
                     {
                       key: "1",
                       icon: (
-                        <NavLink to="/dashboard">
+                        <NavLink to="/admincodelab/dashboard">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/dashboard.png`}
                             alt="svg"
@@ -306,13 +322,17 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/dashboard">Dashboard</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/dashboard">
+                          Dashboard
+                        </NavLink>
+                      ),
                     },
 
                     {
                       key: "2",
                       icon: (
-                        <NavLink to="/user">
+                        <NavLink to="/admincodelab/user">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/user.svg`}
                             alt="svg"
@@ -320,7 +340,7 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/user">Members</NavLink>,
+                      label: <NavLink to="/admincodelab/user">Members</NavLink>,
                     },
 
                     {
@@ -340,7 +360,7 @@ const LayoutAdmin = () => {
                     {
                       key: "4",
                       icon: (
-                        <NavLink to="/course">
+                        <NavLink to="/admincodelab/course">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
                             alt="svg"
@@ -348,12 +368,14 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/course">Courses</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/course">Courses</NavLink>
+                      ),
                     },
                     {
                       key: "5",
                       icon: (
-                        <NavLink to="/blog">
+                        <NavLink to="/admincodelab/blog">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
                             alt="svg"
@@ -361,12 +383,12 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/blog">Blog</NavLink>,
+                      label: <NavLink to="/admincodelab/blog">Blog</NavLink>,
                     },
                     {
                       key: "6",
                       icon: (
-                        <NavLink to="/comment">
+                        <NavLink to="/admincodelab/comment">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
                             alt="svg"
@@ -374,12 +396,14 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/comment">Comment</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/comment">Comment</NavLink>
+                      ),
                     },
                     {
                       key: "7",
                       icon: (
-                        <NavLink to="/calendar">
+                        <NavLink to="/admincodelab/calendar">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/calendar.svg`}
                             alt="svg"
@@ -387,7 +411,9 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/calendar">Calendar</NavLink>,
+                      label: (
+                        <NavLink to="/admincodelab/calendar">Calendar</NavLink>
+                      ),
                     },
                     {
                       key: "8",
@@ -405,7 +431,7 @@ const LayoutAdmin = () => {
                     {
                       key: "9",
                       icon: (
-                        <NavLink to="/help">
+                        <NavLink to="/admincodelab/help">
                           <img
                             src={`${process.env.PUBLIC_URL}/images/icon/help.svg`}
                             alt="svg"
@@ -413,7 +439,7 @@ const LayoutAdmin = () => {
                           />
                         </NavLink>
                       ),
-                      label: <NavLink to="/help">Help</NavLink>,
+                      label: <NavLink to="/admincodelab/help">Help</NavLink>,
                     },
                   ]}
                 />

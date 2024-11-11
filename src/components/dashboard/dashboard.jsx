@@ -72,7 +72,7 @@ export const Dashboard = () => {
     <div className="dashboard">
       <div className="breadcrumb">
         <div className="breadcrumb__wrap">
-          <NavLink to="/home" className="breadcrumb__item">
+          <NavLink to="/admincodelab/home" className="breadcrumb__item">
             <p className="breadcrumb__name">Trang chủ</p>
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}

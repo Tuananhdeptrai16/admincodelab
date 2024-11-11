@@ -203,7 +203,7 @@ const ProductCreation = () => {
       <div className="blog">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
-            <NavLink to="/home" className="breadcrumb__item">
+            <NavLink to="/admincodelab/home" className="breadcrumb__item">
               <p className="breadcrumb__name">Trang chủ</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -211,7 +211,7 @@ const ProductCreation = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/product" className="breadcrumb__item">
+            <NavLink to="/admincodelab/product" className="breadcrumb__item">
               <p className="breadcrumb__name  breadcrumb__active">product</p>
             </NavLink>
           </div>
@@ -359,7 +359,7 @@ const ProductCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/product/create_product">
+                            <NavLink to="/admincodelab/product/create_product">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
@@ -429,7 +429,7 @@ const ProductCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/product/create_product">
+                            <NavLink to="/admincodelab/product/create_product">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
@@ -468,7 +468,7 @@ const ProductCreation = () => {
           </button>
           <div className="link__create">
             <NavLink
-              to="/product/create_product"
+              to="/admincodelab/product/create_product"
               className={"link__create--link"}
             >
               <button

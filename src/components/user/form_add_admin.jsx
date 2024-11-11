@@ -201,7 +201,7 @@ export const FormAddUser = () => {
       <div className="app-content">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
-            <Link to="/home" className="breadcrumb__item">
+            <Link to="/admincodelab/home" className="breadcrumb__item">
               <p className="breadcrumb__name">Trang chủ</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -209,7 +209,7 @@ export const FormAddUser = () => {
                 className="breadcrumb__icon-arrow"
               />
             </Link>
-            <Link to="/user" className="breadcrumb__item">
+            <Link to="/admincodelab/user" className="breadcrumb__item">
               <p className="breadcrumb__name ">Admin</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -217,7 +217,7 @@ export const FormAddUser = () => {
                 className="breadcrumb__icon-arrow"
               />
             </Link>
-            <Link to="/user/add_user" className="breadcrumb__item">
+            <Link to="/admincodelab/user/add_user" className="breadcrumb__item">
               <p className="breadcrumb__name  breadcrumb__active">Thêm Admin</p>
             </Link>
           </div>

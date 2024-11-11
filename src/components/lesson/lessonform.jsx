@@ -185,7 +185,7 @@ const LessonForm = () => {
       <div className="lesson-creation">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
-            <NavLink to="/home" className="breadcrumb__item">
+            <NavLink to="/admincodelab/home" className="breadcrumb__item">
               <p className="breadcrumb__name">Trang chủ</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -193,7 +193,7 @@ const LessonForm = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/lesson" className="breadcrumb__item">
+            <NavLink to="/admincodelab/lesson" className="breadcrumb__item">
               <p className="breadcrumb__name">Quản lý bài học</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}

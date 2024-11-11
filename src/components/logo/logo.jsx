@@ -4,7 +4,7 @@ import "./logo.scss";
 const Logo = () => {
   return (
     <div className="logo">
-      <NavLink to="/home" className="logo__wrap">
+      <NavLink to="/admincodelab/home" className="logo__wrap">
         <div>
           <img
             src={`${process.env.PUBLIC_URL}/images/logo.png`}

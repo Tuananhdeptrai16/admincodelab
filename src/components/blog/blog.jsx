@@ -200,7 +200,7 @@ const BlogCreation = () => {
       <div className="blog">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
-            <NavLink to="/home" className="breadcrumb__item">
+            <NavLink to="/admincodelab/home" className="breadcrumb__item">
               <p className="breadcrumb__name">Trang chủ</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -208,7 +208,7 @@ const BlogCreation = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/blog" className="breadcrumb__item">
+            <NavLink to="/admincodelab/blog" className="breadcrumb__item">
               <p className="breadcrumb__name  breadcrumb__active">blog</p>
             </NavLink>
           </div>
@@ -356,7 +356,7 @@ const BlogCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/blog/create_blog">
+                            <NavLink to="/admincodelab/blog/create_blog">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
@@ -426,7 +426,7 @@ const BlogCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/blog/create_blog">
+                            <NavLink to="/admincodelab/blog/create_blog">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
@@ -464,7 +464,10 @@ const BlogCreation = () => {
             Xóa
           </button>
           <div className="blog__create">
-            <NavLink to="/blog/create_blog" className={"blog__create--link"}>
+            <NavLink
+              to="/admincodelab/blog/create_blog"
+              className={"blog__create--link"}
+            >
               <button
                 onClick={() => setAction("C")}
                 className="blog__create--btn"

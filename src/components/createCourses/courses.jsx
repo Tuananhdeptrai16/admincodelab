@@ -196,7 +196,7 @@ const CourseCreation = () => {
       <div className="courses">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
-            <NavLink to="/home" className="breadcrumb__item">
+            <NavLink to="/admincodelab/home" className="breadcrumb__item">
               <p className="breadcrumb__name">Trang chủ</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -354,7 +354,7 @@ const CourseCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/course/create_courses">
+                            <NavLink to="/admincodelab/course/create_courses">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
@@ -425,7 +425,7 @@ const CourseCreation = () => {
                             }}
                             className="btn btn-warning mx-3 d-inline-block"
                           >
-                            <NavLink to="/course/create_courses">
+                            <NavLink to="/admincodelab/course/create_courses">
                               <img
                                 src={`${process.env.PUBLIC_URL}/images/icon/edit.svg`}
                                 alt=""
@@ -466,7 +466,7 @@ const CourseCreation = () => {
           </button>
           <div className="courses__create">
             <NavLink
-              to="/course/create_courses"
+              to="/admincodelab/course/create_courses"
               className={"courses__create--link"}
             >
               <button

@@ -129,7 +129,7 @@ export const DetailsCourse = () => {
         <div className="detail">
           <div className="breadcrumb">
             <div className="breadcrumb__wrap">
-              <NavLink to="/home" className="breadcrumb__item">
+              <NavLink to="/admincodelab/home" className="breadcrumb__item">
                 <p className="breadcrumb__name">Trang chủ</p>
                 <img
                   src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -137,7 +137,7 @@ export const DetailsCourse = () => {
                   className="breadcrumb__icon-arrow"
                 />
               </NavLink>
-              <NavLink to="/lesson" className="breadcrumb__item">
+              <NavLink to="/admincodelab/lesson" className="breadcrumb__item">
                 <p className="breadcrumb__name">Quản lý khóa học</p>
                 <img
                   src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -208,7 +208,7 @@ export const DetailsCourse = () => {
                                   {item.title}
                                 </p>
                               </div>
-                              <NavLink to="/lesson/form">
+                              <NavLink to="/admincodelab/lesson/form">
                                 <button
                                   onClick={() => {
                                     setAction("U");
@@ -232,7 +232,7 @@ export const DetailsCourse = () => {
                             {activeSection === item._id || toggle === true ? (
                               <div className="detail__lecture--wrap">
                                 <div className="detail__action">
-                                  <NavLink to="/lesson/formEx">
+                                  <NavLink to="/admincodelab/lesson/formEx">
                                     <button
                                       onClick={() => {
                                         setTargetLessonID(item._id);
@@ -249,7 +249,7 @@ export const DetailsCourse = () => {
                                       Thêm bài tập
                                     </button>
                                   </NavLink>
-                                  <NavLink to="/lesson/formEx">
+                                  <NavLink to="/admincodelab/lesson/formEx">
                                     <button
                                       onClick={() => {
                                         setTargetLessonID(item._id);
@@ -289,7 +289,7 @@ export const DetailsCourse = () => {
                         );
                       })
                     : ""}
-                  <NavLink to="/lesson/form">
+                  <NavLink to="/admincodelab/lesson/form">
                     <button
                       onClick={() => setAction("C")}
                       className="detail__add"

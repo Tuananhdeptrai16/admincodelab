@@ -10,6 +10,10 @@ export const Lesson = () => {
   const { setTargetCourseID } = useContext(StoreContext);
   useEffect(() => {
     const getListTutorials = async () => {
+      console.log(
+        "process.env.REACT_APP_API_BACKEND_URL",
+        process.env.REACT_APP_API_BACKEND_URL
+      );
       try {
         const res = await axios.get(
           `${process.env.REACT_APP_API_BACKEND_URL}/courses?populate=lessonInfo`
@@ -33,7 +37,7 @@ export const Lesson = () => {
     <div className="lesson">
       <div className="breadcrumb">
         <div className="breadcrumb__wrap">
-          <NavLink to="/home" className="breadcrumb__item">
+          <NavLink to="/admincodelab/home" className="breadcrumb__item">
             <p className="breadcrumb__name">Trang chủ</p>
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
@@ -41,7 +45,7 @@ export const Lesson = () => {
               className="breadcrumb__icon-arrow"
             />
           </NavLink>
-          <NavLink to="/lesson" className="breadcrumb__item">
+          <NavLink to="/admincodelab/lesson" className="breadcrumb__item">
             <p className="breadcrumb__name  breadcrumb__active">
               Quản lý bài học
             </p>
@@ -56,7 +60,10 @@ export const Lesson = () => {
           {listTutorials.data.map((item) => {
             return (
               <div className="col gx-2" key={item._id}>
-                <NavLink to="/lesson/details" className="lesson__link">
+                <NavLink
+                  to="/admincodelab/lesson/details"
+                  className="lesson__link"
+                >
                   <div
                     onClick={() => setTargetCourseID(item._id)}
                     className="lesson__item"
