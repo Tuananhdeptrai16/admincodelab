@@ -28,8 +28,7 @@ export const Dashboard = () => {
       };
       getLesson();
     } catch (error) {}
-  }, [userLogin]);
-  console.log("Lesson", Lesson);
+  }, []);
   useEffect(() => {
     try {
       const getUserAdmin = async () => {
@@ -37,7 +36,7 @@ export const Dashboard = () => {
           `${process.env.REACT_APP_API_BACKEND_URL}/admins`
         );
         const foundAdmin = res.data.filter((item) => {
-          return item._id === userLogin;
+          return item.username === userLogin.username;
         });
         setAdmin(res.data);
         setListTutorials(foundAdmin);
@@ -55,7 +54,7 @@ export const Dashboard = () => {
       };
       getCourses();
     } catch (error) {}
-  }, [userLogin]);
+  }, []);
   useEffect(() => {
     try {
       const getBlog = async () => {
@@ -66,8 +65,7 @@ export const Dashboard = () => {
       };
       getBlog();
     } catch (error) {}
-  }, [userLogin]);
-  console.log(blog);
+  }, []);
   return (
     <div className="dashboard">
       <div className="breadcrumb">
@@ -124,125 +122,140 @@ export const Dashboard = () => {
               </div>
               <div className="dashboard__list row row-cols-2">
                 <div className="col">
-                  <div className="dashboard__item dashboard__courses">
-                    <div className="dashboard__item--icon">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
-                        alt=""
-                        className="dashboard__icon icon"
-                      />
-                    </div>
-                    <div className="dashboard__item--content">
-                      <p className="dashboard__desc">khóa học đã tạo</p>
-                      <span className="dashboard__number">
-                        {courses
-                          ? courses.data.length < 10 &&
-                            `0${courses.data.length}`
-                          : "loading"}{" "}
-                        <span className="dashboard__number--desc">khóa</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col">
-                  <div className="dashboard__item dashboard__lesson">
-                    <div className="dashboard__item--icon">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
-                        alt="svg"
-                        className="dashboard__icon"
-                      />
-                    </div>
-                    <div className="dashboard__item--content">
-                      <p className="dashboard__desc">Bài giảng đã tạo</p>
-                      <span className="dashboard__number">
-                        {Lesson
-                          ? Lesson.data.length < 10 && `0${Lesson.data.length}`
-                          : "loading"}{" "}
-                        <span className="dashboard__number--desc">
-                          bài giảng
+                  <NavLink to="/admincodelab/course">
+                    <div className="dashboard__item dashboard__courses">
+                      <div className="dashboard__item--icon">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
+                          alt=""
+                          className="dashboard__icon icon"
+                        />
+                      </div>
+                      <div className="dashboard__item--content">
+                        <p className="dashboard__desc">khóa học đã tạo</p>
+                        <span className="dashboard__number">
+                          {courses
+                            ? courses.data.length < 10 &&
+                              `0${courses.data.length}`
+                            : "loading"}{" "}
+                          <span className="dashboard__number--desc">khóa</span>
                         </span>
-                      </span>
+                      </div>
                     </div>
-                  </div>
+                  </NavLink>
                 </div>
                 <div className="col">
-                  <div className="dashboard__item dashboard__blog">
-                    <div className="dashboard__item--icon">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
-                        alt="svg"
-                        className="dashboard__icon"
-                      />
-                    </div>
-                    <div className="dashboard__item--content">
-                      <p className="dashboard__desc">Blog đã tạo</p>
-                      <span className="dashboard__number">
-                        {blog
-                          ? blog.data.length < 10 && `0${blog.data.length}`
-                          : "loading"}{" "}
-                        <span className="dashboard__number--desc">trang</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="col">
-                  <div className="dashboard__item dashboard__comment">
-                    <div className="dashboard__item--icon">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
-                        alt="svg"
-                        className="dashboard__icon"
-                      />
-                    </div>
-                    <div className="dashboard__item--content">
-                      <p className="dashboard__desc">Số comment</p>
-                      <span className="dashboard__number">
-                        10{" "}
-                        <span className="dashboard__number--desc">
-                          comments
+                  <NavLink to="/admincodelab/lesson">
+                    <div className="dashboard__item dashboard__lesson">
+                      <div className="dashboard__item--icon">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
+                          alt="svg"
+                          className="dashboard__icon"
+                        />
+                      </div>
+                      <div className="dashboard__item--content">
+                        <p className="dashboard__desc">Bài giảng đã tạo</p>
+                        <span className="dashboard__number">
+                          {Lesson
+                            ? Lesson.data.length < 10 &&
+                              `0${Lesson.data.length}`
+                            : "loading"}{" "}
+                          <span className="dashboard__number--desc">
+                            bài giảng
+                          </span>
                         </span>
-                      </span>
+                      </div>
                     </div>
-                  </div>
+                  </NavLink>
                 </div>
                 <div className="col">
-                  <div className="dashboard__item dashboard__members">
-                    <div className="dashboard__item--icon">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/user_group.svg`}
-                        alt="svg"
-                        className="dashboard__icon"
-                      />
+                  <NavLink to="/admincodelab/blog">
+                    <div className="dashboard__item dashboard__blog">
+                      <div className="dashboard__item--icon">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
+                          alt="svg"
+                          className="dashboard__icon"
+                        />
+                      </div>
+                      <div className="dashboard__item--content">
+                        <p className="dashboard__desc">Blog đã tạo</p>
+                        <span className="dashboard__number">
+                          {blog
+                            ? blog.data.length < 10 && `0${blog.data.length}`
+                            : "loading"}{" "}
+                          <span className="dashboard__number--desc">trang</span>
+                        </span>
+                      </div>
                     </div>
-                    <div className="dashboard__item--content">
-                      <p className="dashboard__desc">Số người dùng</p>
-                      <span className="dashboard__number">
-                        10{" "}
-                        <span className="dashboard__number--desc">người</span>
-                      </span>
-                    </div>
-                  </div>
+                  </NavLink>
                 </div>
                 <div className="col">
-                  <div className="dashboard__item dashboard__admin-total">
-                    <div className="dashboard__item--icon">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
-                        alt="svg"
-                        className="dashboard__icon icon"
-                      />
+                  <NavLink to="/admincodelab/comment">
+                    <div className="dashboard__item dashboard__comment">
+                      <div className="dashboard__item--icon">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
+                          alt="svg"
+                          className="dashboard__icon"
+                        />
+                      </div>
+                      <div className="dashboard__item--content">
+                        <p className="dashboard__desc">Số comment</p>
+                        <span className="dashboard__number">
+                          10{" "}
+                          <span className="dashboard__number--desc">
+                            comments
+                          </span>
+                        </span>
+                      </div>
                     </div>
-                    <div className="dashboard__item--content">
-                      <p className="dashboard__desc">Nhân viên nội bộ</p>
-                      <span className="dashboard__number">
-                        {Admin
-                          ? Admin.length < 10 && `0${Admin.length}`
-                          : "loading"}{" "}
-                        <span className="dashboard__number--desc">Admins</span>
-                      </span>
+                  </NavLink>
+                </div>
+                <div className="col">
+                  <NavLink to="/admincodelab/user">
+                    <div className="dashboard__item dashboard__members">
+                      <div className="dashboard__item--icon">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/user_group.svg`}
+                          alt="svg"
+                          className="dashboard__icon"
+                        />
+                      </div>
+                      <div className="dashboard__item--content">
+                        <p className="dashboard__desc">Số người dùng</p>
+                        <span className="dashboard__number">
+                          10{" "}
+                          <span className="dashboard__number--desc">người</span>
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </NavLink>
+                </div>
+                <div className="col">
+                  <NavLink to="">
+                    <div className="dashboard__item dashboard__admin-total">
+                      <div className="dashboard__item--icon">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
+                          alt="svg"
+                          className="dashboard__icon icon"
+                        />
+                      </div>
+                      <div className="dashboard__item--content">
+                        <p className="dashboard__desc">Nhân viên nội bộ</p>
+                        <span className="dashboard__number">
+                          {Admin
+                            ? Admin.length < 10 && `0${Admin.length}`
+                            : "loading"}{" "}
+                          <span className="dashboard__number--desc">
+                            Admins
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </NavLink>
                 </div>
               </div>
             </div>
@@ -254,8 +267,10 @@ export const Dashboard = () => {
                 <div className="dashboard__item dashboard__admin-total">
                   <div style={{ width: 80, height: 80 }}>
                     <CircularProgressbar
-                      value={percentage}
-                      text={`${percentage}%`}
+                      value={courses && courses.data && courses.data.length}
+                      text={`${
+                        courses && courses.data && courses.data.length / 20
+                      }%`}
                       styles={buildStyles({
                         // rotation: 0.25,
                         strokeLinecap: "round",
@@ -273,7 +288,8 @@ export const Dashboard = () => {
                   <div className="dashboard__item--content">
                     <p className="dashboard__desc">khóa học đã tạo</p>
                     <span className="dashboard__number">
-                      01 <span className="dashboard__number--desc">khóa</span>
+                      {courses && courses.data && courses.data.length}{" "}
+                      <span className="dashboard__number--desc">khóa</span>
                     </span>
                   </div>
                 </div>

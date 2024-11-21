@@ -36,6 +36,7 @@ const LayoutAdmin = () => {
   }, []);
   const [collapsed, setCollapsed] = useState(false);
   const { userLogin, Logined } = useContext(StoreContext);
+  console.log("userLogin", userLogin);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -48,7 +49,7 @@ const LayoutAdmin = () => {
           `${process.env.REACT_APP_API_BACKEND_URL}/admins`
         );
         const foundAdmin = await res.data.filter((item) => {
-          return item._id === userLogin;
+          return item.username === userLogin.username;
         });
         setListTutorials(foundAdmin);
       };
@@ -194,7 +195,7 @@ const LayoutAdmin = () => {
                       ),
                     },
                     {
-                      key: "8",
+                      key: "9",
                       icon: (
                         <NavLink to="/admincodelab/calendar">
                           <img
@@ -209,7 +210,7 @@ const LayoutAdmin = () => {
                       ),
                     },
                     {
-                      key: "9",
+                      key: "10",
                       icon: (
                         <NavLink to="/admincodelab/help">
                           <img
