@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import "./login.css";
-import Logo from "../logo/logo";
-import StoreContext from "../../context/context";
-import { ToastSuccess } from "../toast/toastsuccess";
-import { Toast } from "../toast/toasterror";
+import "./login.scss";
+import Logo from "../logo/Logo";
+import StoreContext from "../../context/Context";
+import { ToastSuccess } from "../toast/Toast-Success";
+import { Toast } from "../toast/Toast-Error";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 
@@ -18,7 +17,7 @@ export const Login = () => {
 
   const handleLogin = async () => {
     try {
-      NProgress.start(); // Bắt đầu hiển thị thanh loading
+      NProgress.start();
       const response = await fetch(
         `${process.env.REACT_APP_API_BACKEND_URL}/login`,
         {
@@ -32,25 +31,19 @@ export const Login = () => {
           }),
         }
       );
-
-      // Kiểm tra nếu phản hồi thành công và có nội dung trước khi chuyển đổi thành JSON
       const text = await response.text();
       const data = text ? JSON.parse(text) : {};
-      console.log("data", data);
       if (response.ok && data.accessToken) {
-        // Lưu accessToken vào localStorage
         localStorage.setItem("accessToken", data.accessToken);
-        // Lưu thông tin người dùng nếu cần thiết
         localStorage.setItem("user", JSON.stringify(data.user));
         console.log("Data.user", data.user);
         setUserLogin(data.user);
         setLogined(true);
-        setShowModel(true); // Hiển thị thông báo thành công
+        setShowModel(true);
       } else {
         setShowError(true); // Hiển thị thông báo lỗi
       }
     } catch (error) {
-      console.error("Error during login:", error);
       setShowError(true); // Hiển thị thông báo lỗi
     } finally {
       NProgress.done(); // Kết thúc thanh loading

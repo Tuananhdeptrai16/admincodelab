@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "./excersise.scss";
 import { NavLink } from "react-router-dom";
-import { ToastSuccess } from "../toast/toastsuccess";
-import StoreContext from "../../context/context";
+import { ToastSuccess } from "../toast/Toast-Success";
+import StoreContext from "../../context/Context";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 export const ExerciseForm = () => {

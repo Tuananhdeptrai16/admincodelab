@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "./help.scss";
+import "./Help.scss";
 export const Help = () => {
   return (
     <div>

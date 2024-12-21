@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./courses.scss";
-import StoreContext from "../../context/context";
+import "./Courses.scss";
+import StoreContext from "../../context/Context";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 const CourseForm = () => {
@@ -49,7 +49,6 @@ const CourseForm = () => {
         if (listTutorials.length === 0) {
           await getListTutorials();
         }
-        console.log("Updated listTutorials:", listTutorials);
 
         if (listTutorials.data) {
           const foundCourses = listTutorials.data.find(

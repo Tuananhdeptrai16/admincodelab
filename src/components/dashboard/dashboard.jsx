@@ -2,13 +2,12 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import "./dashboard.scss";
+import "./Dashboard.scss";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import CalendarUI from "../calendar/calendar";
+import CalendarUI from "../calendar/Calendar";
 import { Link } from "react-router-dom";
-import StoreContext from "../../context/context";
-// import Calendar from "../calendar/calendar";
+import StoreContext from "../../context/Context";
 export const Dashboard = () => {
   const percentage = 50;
   const [listTutorials, setListTutorials] = useState([]);
@@ -16,8 +15,8 @@ export const Dashboard = () => {
   const [Lesson, setLesson] = useState(null);
   const [blog, setBlog] = useState(null);
   const [Admin, setAdmin] = useState(null);
-
   const { userLogin } = useContext(StoreContext);
+  console.log(Lesson);
   useEffect(() => {
     try {
       const getLesson = async () => {
@@ -42,7 +41,9 @@ export const Dashboard = () => {
         setListTutorials(foundAdmin);
       };
       getUserAdmin();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [userLogin]);
   useEffect(() => {
     try {
@@ -74,7 +75,7 @@ export const Dashboard = () => {
             <p className="breadcrumb__name">Trang chủ</p>
             <img
               src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
-              alt=""
+              alt="icon bread"
               className="breadcrumb__icon-arrow"
             />
           </NavLink>
@@ -83,7 +84,6 @@ export const Dashboard = () => {
           </NavLink>
         </div>
       </div>
-
       <div className="row">
         <div className="col-8">
           <div className="dashboard__wrap">
@@ -112,7 +112,7 @@ export const Dashboard = () => {
                       <div className="dashboard__background">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/background.svg`}
-                          alt=""
+                          alt="background"
                           className="dashboard__background--img"
                         />
                       </div>
@@ -127,7 +127,7 @@ export const Dashboard = () => {
                       <div className="dashboard__item--icon">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/icon/page.svg`}
-                          alt=""
+                          alt="page"
                           className="dashboard__icon icon"
                         />
                       </div>
@@ -144,38 +144,14 @@ export const Dashboard = () => {
                     </div>
                   </NavLink>
                 </div>
-                <div className="col">
-                  <NavLink to="/admincodelab/lesson">
-                    <div className="dashboard__item dashboard__lesson">
-                      <div className="dashboard__item--icon">
-                        <img
-                          src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
-                          alt="svg"
-                          className="dashboard__icon"
-                        />
-                      </div>
-                      <div className="dashboard__item--content">
-                        <p className="dashboard__desc">Bài giảng đã tạo</p>
-                        <span className="dashboard__number">
-                          {Lesson
-                            ? Lesson.data.length < 10 &&
-                              `0${Lesson.data.length}`
-                            : "loading"}{" "}
-                          <span className="dashboard__number--desc">
-                            bài giảng
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </NavLink>
-                </div>
+
                 <div className="col">
                   <NavLink to="/admincodelab/blog">
                     <div className="dashboard__item dashboard__blog">
                       <div className="dashboard__item--icon">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/icon/blog.svg`}
-                          alt="svg"
+                          alt="blog"
                           className="dashboard__icon"
                         />
                       </div>
@@ -197,7 +173,7 @@ export const Dashboard = () => {
                       <div className="dashboard__item--icon">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/icon/comment.svg`}
-                          alt="svg"
+                          alt="comment"
                           className="dashboard__icon"
                         />
                       </div>
@@ -219,7 +195,7 @@ export const Dashboard = () => {
                       <div className="dashboard__item--icon">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/icon/user_group.svg`}
-                          alt="svg"
+                          alt="user_group"
                           className="dashboard__icon"
                         />
                       </div>
@@ -239,7 +215,7 @@ export const Dashboard = () => {
                       <div className="dashboard__item--icon">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/icon/user_admin.svg`}
-                          alt="svg"
+                          alt="user_admin"
                           className="dashboard__icon icon"
                         />
                       </div>
@@ -251,6 +227,28 @@ export const Dashboard = () => {
                             : "loading"}{" "}
                           <span className="dashboard__number--desc">
                             Admins
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </NavLink>
+                </div>
+                <div className="col">
+                  <NavLink to="/admincodelab/lesson">
+                    <div className="dashboard__item dashboard__lesson">
+                      <div className="dashboard__item--icon">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/icon/lesson.svg`}
+                          alt="lesson"
+                          className="dashboard__icon"
+                        />
+                      </div>
+                      <div className="dashboard__item--content">
+                        <p className="dashboard__desc">Bài giảng đã tạo</p>
+                        <span className="dashboard__number">
+                          20{" "}
+                          <span className="dashboard__number--desc">
+                            bài giảng
                           </span>
                         </span>
                       </div>
@@ -280,7 +278,7 @@ export const Dashboard = () => {
                         textColor: "#333",
                         trailColor: "#d6d6d6",
                         backgroundColor: "#5795e1",
-                        strokeWidth: 50, // Tăng độ dày của viền
+                        strokeWidth: 50,
                       })}
                     />
                     ;
@@ -301,7 +299,6 @@ export const Dashboard = () => {
                       value={percentage}
                       text={`${percentage}%`}
                       styles={buildStyles({
-                        // rotation: 0.25,
                         strokeLinecap: "round",
                         textSize: "16px",
                         pathTransitionDuration: 0.5,
@@ -309,7 +306,7 @@ export const Dashboard = () => {
                         textColor: "#333",
                         trailColor: "#d6d6d6",
                         backgroundColor: "#3e98c7",
-                        strokeWidth: 50, // Tăng độ dày của viền
+                        strokeWidth: 50,
                       })}
                     />
                     ;
@@ -329,7 +326,6 @@ export const Dashboard = () => {
                       value={percentage}
                       text={`${percentage}%`}
                       styles={buildStyles({
-                        // rotation: 0.25,
                         strokeLinecap: "round",
                         textSize: "16px",
                         pathTransitionDuration: 0.5,
@@ -337,7 +333,7 @@ export const Dashboard = () => {
                         textColor: "#333",
                         trailColor: "#d6d6d6",
                         backgroundColor: "#3e98c7",
-                        strokeWidth: 50, // Tăng độ dày của viền
+                        strokeWidth: 50,
                       })}
                     />
                     ;
@@ -353,7 +349,7 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="col-3  dashboard__right">
+        <div className="col-3 dashboard__right">
           <div className="dashboard__information--wrap">
             <div className="dashboard__information">
               <div className="dashboard__info-bg">

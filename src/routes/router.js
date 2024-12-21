@@ -1,23 +1,23 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import LayoutAdmin from "../components/layout/layout";
-import CourseCreation from "../components/createCourses/courses";
-import CourseForm from "../components/createCourses/create_courses";
-import Blog from "../components/blog/blog";
-import Users from "../components/user/user";
-import { Comment } from "../components/comment/comment";
-import BlogForm from "../components/blog/create_blog";
-import { Dashboard } from "../components/dashboard/dashboard";
-import { Help } from "../components/help/help";
-import Calendar from "../components/calendar/calendar";
-import { FormAddUser } from "../components/user/form_add_admin";
+import LayoutAdmin from "../components/layout/Layout";
+import CourseCreation from "../components/createCourses/Courses";
+import CourseForm from "../components/createCourses/Create-Courses";
+import Blog from "../components/blog/Blog";
+import Users from "../components/user/User";
+import { Comment } from "../components/comment/Comment";
+import BlogForm from "../components/blog/Create-blog";
+import { Dashboard } from "../components/dashboard/Dashboard";
+import { Help } from "../components/help/Help";
+import Calendar from "../components/calendar/Calendar";
+import { FormAddUser } from "../components/user/Form-Add-Admin";
 import { Lesson } from "../components/lesson/lesson";
 import { DetailsCourse } from "../components/lesson/detail";
 import LessonForm from "../components/lesson/lessonform";
 import { ExerciseForm } from "../components/lesson/exerciseform";
-import Admins from "../components/user/admin";
-import ProductCreation from "../components/link/link";
-import ProductForm from "../components/link/linkform";
+import Admins from "../components/user/Admin";
+import ProductCreation from "../components/link/Link";
+import ProductForm from "../components/link/Link-Form";
 
 const AppRoutes = () => {
   return (

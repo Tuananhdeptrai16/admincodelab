@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./lesson.scss";
 import axios from "axios";
 import { useContext } from "react";
-import StoreContext from "../../context/context";
+import StoreContext from "../../context/Context";
 export const Lesson = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const { setTargetCourseID } = useContext(StoreContext);

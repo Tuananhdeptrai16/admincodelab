@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import "./details.scss";
 import axios from "axios";
-import StoreContext from "../../context/context";
+import StoreContext from "../../context/Context";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 export const DetailsCourse = () => {

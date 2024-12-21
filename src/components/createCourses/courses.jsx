@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import "./courses.scss";
+import "./Courses.scss";
 import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
-import StoreContext from "../../context/context";
+import StoreContext from "../../context/Context";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-
 const CourseCreation = () => {
   const [listTutorials, setListTutorials] = useState([]);
   const [showModel, setShowModel] = useState(false);
@@ -22,14 +21,21 @@ const CourseCreation = () => {
       },
     },
   });
+  const token = localStorage.getItem("accessToken");
   const handlePageChange = async (page) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/courses?limit=5&page=${page}`
+        `${process.env.REACT_APP_API_BACKEND_URL}/courses?limit=5&page=${page}`,
+        {
+          headers: {
+            Authorization: token,
+            "Accept-Language": "en-US",
+          },
+        }
       );
       setListTutorials(res.data);
     } catch (error) {
-      console.error("Error fetching data: ", error); // Bắt lỗi nếu xảy ra
+      console.error("Error fetching data: ", error);
     }
   };
 
@@ -70,7 +76,6 @@ const CourseCreation = () => {
   const [checkAll, setCheckAll] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
   const [listCheckItem, setListCheckItem] = useState([]);
-
   useEffect(() => {
     NProgress.start();
     const updateCheckedItems = () => {
@@ -94,7 +99,7 @@ const CourseCreation = () => {
       },
     });
     NProgress.done();
-  }, [checkedItems, listCheckItem]); // Chạy mỗi khi listCheckItem thay đổi
+  }, [checkedItems, listCheckItem]);
   useEffect(() => {
     NProgress.start();
     handlePageChange(1);
@@ -140,7 +145,7 @@ const CourseCreation = () => {
     if (getInfoSearch.trim() === "") {
       setArrInfoSearch([]);
       setDisplayInfoArr([]);
-      return; // Thoát khỏi hàm
+      return;
     }
     setDisplayInfoArr(TargetCourse);
   };
@@ -167,9 +172,6 @@ const CourseCreation = () => {
             <h3 className="toast__title">Thành Công</h3>
             <p className="toast__msg">Bạn vui lòng đợi kết quả ...</p>
           </div>
-          <div className="toast__close">
-            <i className="fas fa-times"></i>
-          </div>
         </div>
       ) : toastError === true ? (
         <div>
@@ -184,9 +186,6 @@ const CourseCreation = () => {
             <div className="toast__body">
               <h3 className="toast__title">Thông báo lỗi</h3>
               <p className="toast__msg">{error}</p>
-            </div>
-            <div className="toast__close">
-              <i className="fas fa-times"></i>
             </div>
           </div>
         </div>

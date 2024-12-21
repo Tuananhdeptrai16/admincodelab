@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import "./blog.scss";
+import "./Blog.scss";
 import { Pagination } from "antd";
 import { NavLink } from "react-router-dom";
-import StoreContext from "../../context/context";
+import StoreContext from "../../context/Context";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 

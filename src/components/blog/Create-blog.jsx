@@ -1,40 +1,32 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./link.scss";
+import "./Blog.scss";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import StoreContext from "../../context/context";
+import StoreContext from "../../context/Context";
 import axios from "axios";
-import Select from "react-select";
 import { NavLink } from "react-router-dom";
-const ProductForm = () => {
-  const { action, targetProductID } = useContext(StoreContext);
+const BlogForm = () => {
+  const { action, targetBlogID } = useContext(StoreContext);
   const [listTutorials, setListTutorials] = useState([]);
   const [toastSuccess, setToastSuccess] = useState(false);
   const [error, setError] = useState("");
 
   const [toastError, setToastError] = useState(false);
-  const [productData, setProductData] = useState({
-    type: "EMPTY_PRODUCT",
+  const [blogData, setBlogData] = useState({
+    type: "EMPTY_BLOG",
     title: "",
     author: "",
     urlImage: "",
-    linkProduct: "",
     description: "",
-    category: [],
     duration: "",
     content: "",
-    rating: 0,
     studentsEnrolled: 0,
   });
-  const categoryOptions = [
-    { value: "ReactJs", label: "ReactJs" },
-    { value: "HTML, CSS", label: "HTML, CSS" },
-    { value: "JavaScript", label: "JavaScript" },
-  ];
+
   const getListTutorials = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_BACKEND_URL}/product`
+        `${process.env.REACT_APP_API_BACKEND_URL}/blog`
       );
       setListTutorials(res.data);
     } catch (error) {
@@ -48,22 +40,19 @@ const ProductForm = () => {
           await getListTutorials();
         }
         if (listTutorials.data) {
-          const foundProduct = listTutorials.data.find(
-            (blog) => blog._id === targetProductID
+          const foundBlog = listTutorials.data.find(
+            (blog) => blog._id === targetBlogID
           );
-          if (foundProduct) {
-            setProductData({
-              id: targetProductID,
-              title: foundProduct.title,
-              author: foundProduct.author,
-              urlImage: foundProduct.urlImage,
-              description: foundProduct.description,
-              duration: foundProduct.duration,
-              category: foundProduct.category || [],
-              linkProduct: foundProduct.linkProduct,
-              content: foundProduct.content || "",
-              rating: foundProduct.rating,
-              studentsEnrolled: foundProduct.studentsEnrolled || 0,
+          if (foundBlog) {
+            setBlogData({
+              id: targetBlogID,
+              title: foundBlog.title,
+              author: foundBlog.author,
+              urlImage: foundBlog.urlImage,
+              description: foundBlog.description,
+              duration: foundBlog.duration,
+              content: foundBlog.content || "",
+              studentsEnrolled: foundBlog.studentsEnrolled || 0,
             });
           }
         }
@@ -72,15 +61,13 @@ const ProductForm = () => {
       }
     };
     renderUpdateUser();
-  }, [action, targetProductID, listTutorials]); // Bỏ listTutorials ra khỏi dependencies
+  }, [action, targetBlogID, listTutorials]); // Bỏ listTutorials ra khỏi dependencies
   const resetForm = () => {
-    setProductData({
-      type: "EMPTY_PRODUCT",
+    setBlogData({
+      type: "EMPTY_BLOG",
       title: "",
       author: "",
       urlImage: "",
-      linkProduct: "",
-      category: [],
       description: "",
       duration: "",
       content: "", // Sửa content thành chuỗi rỗng
@@ -89,14 +76,13 @@ const ProductForm = () => {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProductData((prevData) => ({
+    setBlogData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-
   const handleContentChange = (value) => {
-    setProductData((prevData) => ({
+    setBlogData((prevData) => ({
       ...prevData,
       content: value,
     }));
@@ -104,12 +90,12 @@ const ProductForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/product`;
+      const apiUrl = `${process.env.REACT_APP_API_BACKEND_URL}/blog`;
       if (action === "C") {
-        await axios.post(apiUrl, { ...productData });
+        await axios.post(apiUrl, { ...blogData });
       } else {
         await axios.put(apiUrl, {
-          ...productData,
+          ...blogData,
         });
       }
       resetForm();
@@ -174,7 +160,7 @@ const ProductForm = () => {
       ) : (
         ""
       )}
-      <div className="link-creation">
+      <div className="blog-creation">
         <div className="breadcrumb">
           <div className="breadcrumb__wrap">
             <NavLink to="/admincodelab/home" className="breadcrumb__item">
@@ -185,8 +171,8 @@ const ProductForm = () => {
                 className="breadcrumb__icon-arrow"
               />
             </NavLink>
-            <NavLink to="/admincodelab/product" className="breadcrumb__item">
-              <p className="breadcrumb__name">Sản phẩm tham khảo</p>
+            <NavLink to="/admincodelab/blog" className="breadcrumb__item">
+              <p className="breadcrumb__name">Blog</p>
               <img
                 src={`${process.env.PUBLIC_URL}/images/icon/iconbread.svg`}
                 alt=""
@@ -195,19 +181,19 @@ const ProductForm = () => {
             </NavLink>
             <NavLink to="#!" className="breadcrumb__item">
               <p className="breadcrumb__name  breadcrumb__active">
-                Update Product
+                Update Blog
               </p>
             </NavLink>
           </div>
         </div>
-        <h1 className="link-creation__title">Thông tin Product</h1>
-        <div className="link__separate"></div>
-        <form className="link-creation__form" onSubmit={handleSubmit}>
+        <h1 className="blog-creation__title">Thông tin Blog</h1>
+        <div className="blog__separate"></div>
+        <form className="blog-creation__form" onSubmit={handleSubmit}>
           <div className="row row-cols-2">
             <div className="col g-2">
               <div className="form__group ">
                 <label htmlFor="title" className="control__label">
-                  Tiêu đề sản phẩm
+                  Tiêu đề blog
                 </label>
                 <input
                   type="text"
@@ -215,7 +201,7 @@ const ProductForm = () => {
                   name="title"
                   className="form__control"
                   placeholder="Nhập tiêu đề khóa học"
-                  value={productData.title || ""}
+                  value={blogData.title || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -231,14 +217,14 @@ const ProductForm = () => {
                   name="author"
                   className="form__control"
                   placeholder="Nhập tên tác giả"
-                  value={productData.author || ""}
+                  value={blogData.author || ""}
                   onChange={handleChange}
                 />
               </div>
             </div>
           </div>
 
-          <div className="row row-cols-3">
+          <div className="row row-cols-2">
             <div className="col g-2">
               <div className="form__group ">
                 <label htmlFor="duration" className="control__label">
@@ -251,7 +237,7 @@ const ProductForm = () => {
                   className="form__control"
                   placeholder="Nhập thời gian"
                   min="0"
-                  value={productData.duration || ""}
+                  value={blogData.duration || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -267,88 +253,45 @@ const ProductForm = () => {
                   name="urlImage"
                   className="form__control"
                   placeholder="Nhập link hình ảnh"
-                  value={productData.urlImage || ""}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="col g-2">
-              <div className="form__group ">
-                <label htmlFor="linkProduct" className="control__label">
-                  Link tới sản phẩm
-                </label>
-                <input
-                  type="text"
-                  id="linkProduct"
-                  name="linkProduct"
-                  className="form__control"
-                  placeholder="Nhập link dẫn tới sản phẩm"
-                  value={productData.linkProduct || ""}
+                  value={blogData.urlImage || ""}
                   onChange={handleChange}
                 />
               </div>
             </div>
           </div>
 
-          <div className="row row-cols-2">
+          <div className="row">
             <div className="col g-2">
               <div className="form__group">
                 <label htmlFor="description" className="control__label">
-                  Mô tả sản phẩm
+                  Mô tả blog
                 </label>
                 <textarea
                   id="description"
                   name="description"
                   className="form__control"
-                  placeholder="Nhập mô tả sản phẩm"
-                  value={productData.description}
+                  placeholder="Nhập mô tả blog"
+                  value={blogData.description}
                   onChange={handleChange}
                 ></textarea>
               </div>
             </div>
-            <div className="col g-2">
-              <div className="form__group ">
-                <label htmlFor="category" className="control__label">
-                  Danh mục
-                </label>
-                <Select
-                  id="category"
-                  name="category"
-                  options={categoryOptions}
-                  value={productData.category.map((cat) => ({
-                    value: cat,
-                    label: cat,
-                  }))}
-                  onChange={(selectedOptions) => {
-                    const selectedValues = selectedOptions
-                      ? selectedOptions.map((option) => option.value)
-                      : [];
-                    setProductData((prevData) => ({
-                      ...prevData,
-                      category: selectedValues,
-                    }));
-                  }}
-                  isMulti // Để cho phép chọn nhiều mục
-                  className="form__control"
-                />
-              </div>
-            </div>
           </div>
-          <h2 className="link-creation__subtitle">Chi tiết</h2>
-          <div className="link__separate"></div>
+          <h2 className="blog-creation__subtitle">Chi tiết</h2>
+          <div className="blog__separate"></div>
           <ReactQuill
             name="content"
-            value={productData.content}
+            value={blogData.content}
             onChange={handleContentChange}
           />
-          <div className="link-creation__lessons"></div>
+          <div className="blog-creation__lessons"></div>
 
-          <div className="link-creation__submit">
+          <div className="blog-creation__submit">
             <button
               type="submit"
-              className="  link-creation__button link-creation__submit--btn"
+              className="  blog-creation__button blog-creation__submit--btn"
             >
-              {action === "C" ? "Tạo" : "Cập nhật"} sản phẩm
+              {action === "C" ? "Tạo" : "Cập nhật"} Blog
             </button>
           </div>
         </form>
@@ -357,4 +300,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default BlogForm;

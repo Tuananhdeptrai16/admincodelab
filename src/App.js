@@ -1,8 +1,8 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import AppRoutes from "./routes/router"; // Nhớ import AppRoutes
-import StoreContext from "./context/context";
+import AppRoutes from "./routes/Router"; // Nhớ import AppRoutes
+import StoreContext from "./context/Context";
 import { useState, useEffect } from "react";
-import DesktopNotice from "./components/admin/desktopnotice";
+import DesktopNotice from "./components/admin/Desktopnotice";
 function App() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   useEffect(() => {

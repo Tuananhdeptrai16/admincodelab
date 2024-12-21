@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./form.scss";
 import { useContext } from "react";
-import StoreContext from "../../context/context";
+import StoreContext from "../../context/Context";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css"; // Import CSS để hiển thị thanh loading
 export const FormAddUser = () => {

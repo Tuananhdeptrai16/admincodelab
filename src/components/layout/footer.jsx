@@ -3,7 +3,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import Logo from "../logo/logo";
+import Logo from "../logo/Logo";
 import "./footer.scss";
 export const Footer = () => {
   return (
